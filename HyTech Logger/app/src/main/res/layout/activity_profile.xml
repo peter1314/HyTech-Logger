@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/pure_white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="@dimen/profile_w_h"
+            android:layout_height="@dimen/profile_w_h"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10sp"
+            android:src="@mipmap/default_profile_basic_foreground" />
+
+        <TextView
+            android:id="@+id/user_id_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:text="User ID"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/change_username_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="@color/colorPrimary"
+            android:text="Change Username"
+            android:textColor="@color/pure_white"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="0sp"
+            tools:layout_editor_absoluteY="202sp" />
+
+        <Button
+            android:id="@+id/change_password_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="@color/colorPrimary"
+            android:text="Change Password"
+            android:textColor="@color/pure_white"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="0sp"
+            tools:layout_editor_absoluteY="202sp" />
+
+        <Button
+            android:id="@+id/delete_user_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="@color/colorPrimary"
+            android:text="Delete User"
+            android:textColor="@color/pure_white"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="0sp"
+            tools:layout_editor_absoluteY="202sp" />
+
+        <Button
+            android:id="@+id/sign_out_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="@color/colorPrimary"
+            android:text="Sign Out"
+            android:textColor="@color/pure_white"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="0sp"
+            tools:layout_editor_absoluteY="202sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
