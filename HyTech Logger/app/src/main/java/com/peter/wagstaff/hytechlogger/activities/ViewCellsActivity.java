@@ -1,5 +1,6 @@
 package com.peter.wagstaff.hytechlogger.activities;
 
+import DatabaseInteraction.CellDataEntry;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.content.Intent;
@@ -18,6 +19,9 @@ import com.peter.wagstaff.hytechlogger.CellEntry;
 import com.peter.wagstaff.hytechlogger.DataUpdate;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +30,8 @@ public class ViewCellsActivity extends AppCompatActivity {
     boolean cabinet = true, ht04 = true, ht05 = true, other = true;
     double minVolt, maxVolt, minCap, maxCap, minIR, maxIR;
 
-    List<CellEntry> allCells = new ArrayList<>();
-    List<CellEntry> filteredCells = new ArrayList<>();
+    List<CellDataEntry> allCells = new ArrayList<>();
+    List<CellDataEntry> filteredCells = new ArrayList<>();
 
     TableLayout cellTable;
 
@@ -166,7 +170,7 @@ public class ViewCellsActivity extends AppCompatActivity {
     private void getAllCells() {
         allCells.clear();
 
-        DataUpdate.onUpdate("CELLS", new DataUpdate() {
+        DataUpdate.onUpdate("CELLS2", new DataUpdate() {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -176,7 +180,10 @@ public class ViewCellsActivity extends AppCompatActivity {
 
                     for(DataSnapshot child: snapshot.getChildren()) {
                         if(child.child("LOGS").child("LAST").exists()) {
-                            CellEntry lastEntry = CellEntry.fromString(child.child("LOGS").child("LAST").getValue().toString());
+                            CellDataEntry lastEntry = null;
+                            try {
+                                lastEntry = new CellDataEntry(child.child("LOGS").child("LAST").getValue().toString());
+                            } catch (JSONException e) {}
                             allCells.add(lastEntry);
                             addRow(lastEntry);
                         }
@@ -190,16 +197,21 @@ public class ViewCellsActivity extends AppCompatActivity {
 
         filteredCells.clear();
 
-        for(CellEntry curEntry: allCells) {
+        for(CellDataEntry curEntry: allCells) {
             boolean include = true;
 
-            if(curEntry.getLocation().contains("Cabinet") && !cabinet) { include = false; }
-            if(curEntry.getLocation().contains("HT04") && !ht04) { include = false; }
-            if(curEntry.getLocation().contains("HT05") && !ht05) { include = false; }
-            if(curEntry.getLocation().contains("Other") && !other) { include = false; }
-            if((minVolt != 0 && curEntry.getVoltage() <= minVolt) || (maxVolt != 0 && curEntry.getVoltage() >= maxVolt)) { include = false; }
-            if((minCap != 0 && curEntry.getDischargeCapacity() <= minCap) || (maxCap != 0 && curEntry.getDischargeCapacity() >= maxCap)) { include = false; }
-            if((minIR != 0 && curEntry.getIR() <= minIR) || (maxIR != 0 && curEntry.getIR() >= maxIR)) { include = false; }
+            String locationString = curEntry.getData(CellDataEntry.LOCATION);
+            Double voltage = Double.parseDouble(curEntry.getData(CellDataEntry.VOLTAGE));
+            Double dischargeCap = Double.parseDouble(curEntry.getData(CellDataEntry.DISCHARGE_CAP));
+            Double ir = Double.parseDouble(curEntry.getData(CellDataEntry.INTERNAL_RES));
+
+            if(locationString.contains("Cabinet") && !cabinet) { include = false; }
+            else if(locationString.contains("HT04") && !ht04) { include = false; }
+            else if(locationString.contains("HT05") && !ht05) { include = false; }
+            else if(locationString.contains("Other") && !other) { include = false; }
+            else if((minVolt != 0 && voltage <= minVolt) || (maxVolt != 0 && voltage >= maxVolt)) { include = false; }
+            else if((minCap != 0 && dischargeCap <= minCap) || (maxCap != 0 && dischargeCap >= maxCap)) { include = false; }
+            if((minIR != 0 && ir <= minIR) || (maxIR != 0 && ir >= maxIR)) { include = false; }
 
             if(include) { filteredCells.add(curEntry); }
         }
@@ -211,18 +223,18 @@ public class ViewCellsActivity extends AppCompatActivity {
 
         cellTable.removeAllViews();
 
-        for(CellEntry includedCell: filteredCells) {
+        for(CellDataEntry includedCell: filteredCells) {
             addRow(includedCell);
         }
     }
 
-    private void addRow(final CellEntry entry) {
+    private void addRow(final CellDataEntry entry) {
         TableRow newRow = new TableRow(this);
         newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         newRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
         Button cellButton = new Button(this);
-        cellButton.setText(entry.getCode());
+        cellButton.setText(entry.getData(CellDataEntry.CODE));
         cellButton.setWidth(cellTable.getWidth());
         cellButton.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryLight), PorterDuff.Mode.MULTIPLY);
         cellButton.setTextColor(ContextCompat.getColor(this, R.color.pure_white));
@@ -230,7 +242,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         cellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GlobalVariables.currentCellCode = entry.getCode();
+                GlobalVariables.currentCellCode = entry.getData(CellDataEntry.CODE);
                 startActivity(new Intent(ViewCellsActivity.this, ViewCellActivity.class));
             }
         });

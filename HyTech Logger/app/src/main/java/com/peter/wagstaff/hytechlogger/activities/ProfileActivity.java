@@ -11,14 +11,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.peter.wagstaff.hytechlogger.GlobalFunctions;
+import com.peter.wagstaff.hytechlogger.InputVerification;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
-import com.peter.wagstaff.hytechlogger.InputDialog;
-import com.peter.wagstaff.hytechlogger.PasswordInputDialog;
+import com.peter.wagstaff.hytechlogger.DialogBoxes.InputBox;
+import com.peter.wagstaff.hytechlogger.DialogBoxes.PasswordInputBox;
 import com.peter.wagstaff.hytechlogger.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,10 +34,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         userId.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
-        final InputDialog usernameInputDialog = new InputDialog(ProfileActivity.this, "Enter New Username", "", "") {
+        final InputBox usernameInputDialog = new InputBox(ProfileActivity.this, "Enter New Username", "", "") {
             @Override
             public boolean onPositiveClicked(String userInput) {
-                if(!GlobalFunctions.checkUserNameRequirements(userInput, getApplicationContext())) {return false;}
+                if(!InputVerification.checkUserNameRequirements(userInput, getApplicationContext())) {return false;}
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(userInput).build();
                 user.updateProfile(profileUpdates);
@@ -57,11 +53,11 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        final PasswordInputDialog passwordInputDialog = new PasswordInputDialog(ProfileActivity.this, "Enter New Password", "", "") {
+        final PasswordInputBox passwordInputDialog = new PasswordInputBox(ProfileActivity.this, "Enter New Password", "", "") {
             @Override
             public boolean onPositiveClicked(String userInput) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if(!GlobalFunctions.checkUserPasswordRequirements(userInput, getApplicationContext())) {return false;}
+                if(!InputVerification.checkUserPasswordRequirements(userInput, getApplicationContext())) {return false;}
 
                 user.updatePassword(userInput).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

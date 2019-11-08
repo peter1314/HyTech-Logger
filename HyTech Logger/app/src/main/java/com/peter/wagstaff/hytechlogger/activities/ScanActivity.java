@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.CodeInputDialog;
+import com.peter.wagstaff.hytechlogger.DialogBoxes.CodeInputDialog;
 import com.google.zxing.Result;
 import com.peter.wagstaff.hytechlogger.DataUpdate;
-import com.peter.wagstaff.hytechlogger.GlobalFunctions;
+import com.peter.wagstaff.hytechlogger.InputVerification;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 
@@ -39,10 +39,10 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
 
             @Override
             public boolean onPositiveClicked(final String userInput) {
-                if(GlobalFunctions.verifyCode(userInput)) {
+                if(InputVerification.verifyCode(userInput)) {
                     GlobalVariables.currentCellCode = userInput;
 
-                    DataUpdate.onUpdate("CELLS", new DataUpdate() {
+                    DataUpdate.onUpdate("CELLS2", new DataUpdate() {
                         @Override
                         public void onUpdate(DataSnapshot snapshot) {
                             if(snapshot.hasChild(userInput)) {
@@ -76,10 +76,10 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
     public void handleResult(Result result) {
         final String readCode = result.getText();
 
-        if(GlobalFunctions.verifyCode(readCode)) {
+        if(InputVerification.verifyCode(readCode)) {
             GlobalVariables.currentCellCode = readCode;
 
-            DataUpdate.onUpdate("CELLS", new DataUpdate() {
+            DataUpdate.onUpdate("CELLS2", new DataUpdate() {
                 @Override
                 public void onUpdate(DataSnapshot snapshot) {
                     if(snapshot.hasChild(readCode)) {

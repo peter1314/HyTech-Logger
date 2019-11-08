@@ -9,6 +9,30 @@ public class CellEntry {
 
     }
 
+    @Override
+    public String toString() {
+        return code + "&" + author + "&" + entryDate + "&" + voltage + "&" + voltageDate + "&" + cap + "&" + ir + "&" + capDate + "&" + chargeDate + "&" + location;
+    }
+
+    public static CellEntry fromString(String entry) {
+        CellEntry gen = new CellEntry();
+
+        String[] data = entry.split("&", 0);
+
+        gen.setCode(data[0]);
+        gen.setAuthor(data[1]);
+        gen.setEntryDate(data[2]);
+        gen.setVoltage(Double.parseDouble(data[3]));
+        gen.setVoltageDate(data[4]);
+        gen.setDischargeCapacity(Double.parseDouble(data[5]));
+        gen.setIR(Double.parseDouble(data[6]));
+        gen.setCapacityDate(data[7]);
+        gen.setChargeDate(data[8]);
+        gen.setLocation(data[9]);
+
+        return gen;
+    }
+
     public void setVoltage(double newVoltage) {
         voltage =  newVoltage;
     }
@@ -60,28 +84,4 @@ public class CellEntry {
     public String getLocation() {return location;}
 
     public String getAuthor() {return author;}
-
-    @Override
-    public String toString() {
-        return code + "&" + author + "&" + entryDate + "&" + voltage + "&" + voltageDate + "&" + cap + "&" + ir + "&" + capDate + "&" + chargeDate + "&" + location;
-    }
-
-    public static CellEntry fromString(String entry) {
-        CellEntry gen = new CellEntry();
-
-        String[] data = entry.split("&", 0);
-
-        gen.setCode(data[0]);
-        gen.setAuthor(data[1]);
-        gen.setEntryDate(data[2]);
-        gen.setVoltage(Double.parseDouble(data[3]));
-        gen.setVoltageDate(data[4]);
-        gen.setDischargeCapacity(Double.parseDouble(data[5]));
-        gen.setIR(Double.parseDouble(data[6]));
-        gen.setCapacityDate(data[7]);
-        gen.setChargeDate(data[8]);
-        gen.setLocation(data[9]);
-
-        return gen;
-    }
 }

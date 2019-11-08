@@ -3,7 +3,7 @@ package com.peter.wagstaff.hytechlogger;
 import android.content.Context;
 import android.widget.Toast;
 
-public class GlobalFunctions {
+public class InputVerification {
 
     public static String correctDate(String date) {
         date = date.replaceAll("-" , "/");
@@ -90,16 +90,16 @@ public class GlobalFunctions {
         return true;
     }
 
-    public static boolean verifyDouble(String dub) {
+    public static boolean verifyDecimal(String dec) {
 
-        if(dub == null || dub.length() == 0) {
+        if(dec == null || dec.length() == 0) {
             return false;
         }
 
-        if(dub.length() - dub.replace(".", "").length() > 1) {
+        if(dec.length() - dec.replace(".", "").length() > 1) {
             return  false;
         }
-        if(dub.length() - dub.replaceAll("[^\\d.]", "").length() != 0) {
+        if(dec.length() - dec.replaceAll("[^\\d.]", "").length() != 0) {
             return false;
         }
 
