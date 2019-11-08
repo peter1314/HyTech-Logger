@@ -7,6 +7,7 @@ import org.json.JSONObject;
 public class CabinetLocation extends Location {
 
     private int shelf;
+    public static final int SHELF_COUNT = 9;
     public static final String[] OPTIONS = getStaticOptions();
 
     public CabinetLocation() {
@@ -30,8 +31,8 @@ public class CabinetLocation extends Location {
     }
 
     private static String[] getStaticOptions() {
-        String[] optionArray  = new String[9];
-        for(int i = 0; i < 9; i++) {
+        String[] optionArray  = new String[SHELF_COUNT];
+        for(int i = 0; i < SHELF_COUNT; i++) {
             optionArray[i] = "Shelf " + (i + 1);
         }
         return optionArray;

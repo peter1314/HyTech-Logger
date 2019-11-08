@@ -3,16 +3,16 @@ package com.peter.wagstaff.hytechlogger.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.firebase.DataUpdate;
+import com.peter.wagstaff.hytechlogger.customviews.LocationSpinner;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
+import com.peter.wagstaff.hytechlogger.firebase.UpdateAction;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
@@ -32,7 +32,7 @@ public class NewCellEntryActivity extends AppCompatActivity {
     private boolean isNew = true;
     EditText voltageEditText, voltageRecordedEditText, dischargeEditText, irEditText, dischargeRecordedEditText, lastChargedEditText;
     RadioButton cabinetButton, ht04Button, ht05Button, otherButton;
-    Spinner locationSpinner;
+    LocationSpinner locationSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +57,9 @@ public class NewCellEntryActivity extends AppCompatActivity {
 
         locationSpinner = findViewById(R.id.spinner);
 
-        Button enterButton = findViewById(R.id.enter_button);
+        final Button enterButton = findViewById(R.id.enter_button);
 
-        DataUpdate.onUpdate("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS/LAST", new DataUpdate() {
+        FirebaseExchange.onGrab(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", new UpdateAction() {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -72,25 +72,22 @@ public class NewCellEntryActivity extends AppCompatActivity {
         });
 
         cabinetButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { populateSpinner(locationSpinner, CabinetLocation.OPTIONS);}
+            public void onClick(View v) { locationSpinner.populate(CabinetLocation.OPTIONS);}
         });
-
         ht04Button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { populateSpinner(locationSpinner, AccumulatorLocation.OPTIONS); }});
-
+            public void onClick(View v) { locationSpinner.populate(AccumulatorLocation.OPTIONS); }});
         ht05Button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { populateSpinner(locationSpinner, AccumulatorLocation.OPTIONS); }});
-
+            public void onClick(View v) { locationSpinner.populate(AccumulatorLocation.OPTIONS); }});
         otherButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { populateSpinner(locationSpinner, OtherLocation.OPTIONS); }});
+            public void onClick(View v) { locationSpinner.populate(OtherLocation.OPTIONS); }});
 
         enterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 CellDataEntry entry = buildEntryFromInputs();
-                if(entry == null) {return;}
+                if(entry == null) return;
 
-                GlobalVariables.rootRef.child("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS/LAST").setValue(entry.toString());
-                GlobalVariables.rootRef.child("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS/" + InputFormating.ORDER_DATE_FORMAT.format(Calendar.getInstance().getTime())).setValue(entry.toString());
+                String timeStamp = InputFormating.ORDER_DATE_FORMAT.format(Calendar.getInstance().getTime());
+                FirebaseExchange.addDataEntry(timeStamp, entry);
 
                 if(isNew){
                     Intent intent = new Intent(NewCellEntryActivity.this, ViewCellActivity.class);
@@ -125,13 +122,8 @@ public class NewCellEntryActivity extends AppCompatActivity {
         } else if(location.getType().equals("other")) {
             otherButton.setChecked(true);
         }
-        populateSpinner(locationSpinner, location.getOptions());
+        locationSpinner.populate(location.getOptions());
         locationSpinner.setSelection(location.getCurrentOption());
-    }
-
-    private void populateSpinner(Spinner spinner, String[] spinnerArray) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, spinnerArray);
-        spinner.setAdapter(adapter);
     }
 
     private CellDataEntry buildEntryFromInputs() {

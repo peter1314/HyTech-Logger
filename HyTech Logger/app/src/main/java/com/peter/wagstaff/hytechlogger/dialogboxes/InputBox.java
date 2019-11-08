@@ -1,10 +1,11 @@
 package com.peter.wagstaff.hytechlogger.dialogboxes;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AlertDialog;
 
 //A version of popup box that allows for an input and performs an action on that input
 public abstract class InputBox extends PopupBox{

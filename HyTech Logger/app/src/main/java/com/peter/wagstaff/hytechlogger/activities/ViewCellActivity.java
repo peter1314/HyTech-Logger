@@ -11,7 +11,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.firebase.DataUpdate;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
+import com.peter.wagstaff.hytechlogger.firebase.UpdateAction;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
@@ -70,7 +71,7 @@ public class ViewCellActivity extends AppCompatActivity {
         entrySpinner = findViewById(R.id.spinner);
         Button newEntryButton = findViewById(R.id.new_entry_button);
 
-        DataUpdate.onUpdate("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS", new DataUpdate() {
+        FirebaseExchange.onChange(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS", new UpdateAction() {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -86,7 +87,7 @@ public class ViewCellActivity extends AppCompatActivity {
 
                 String date = entrySpinner.getSelectedItem().toString();
 
-                DataUpdate.onUpdate("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS/" + InputFormating.orderedDate(date), new DataUpdate() {
+                FirebaseExchange.onGrab(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/" + InputFormating.orderedDate(date), new UpdateAction() {
                     @Override
                     public void onUpdate(DataSnapshot snapshot) {
                         if(snapshot.exists()) {

@@ -19,8 +19,9 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.firebase.DataUpdate;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
+import com.peter.wagstaff.hytechlogger.firebase.UpdateAction;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.R;
 import org.json.JSONException;
@@ -171,7 +172,7 @@ public class ViewCellsActivity extends AppCompatActivity {
     private void getAllCells() {
         allCells.clear();
 
-        DataUpdate.onUpdate("CELLS2", new DataUpdate() {
+        FirebaseExchange.onGrab(GlobalVariables.BRANCH, new UpdateAction() {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {

@@ -1,8 +1,9 @@
 package com.peter.wagstaff.hytechlogger.dialogboxes;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import androidx.appcompat.app.AlertDialog;
 
 //Displays a popup message and can be dismissed
 public class PopupBox {

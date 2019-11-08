@@ -7,6 +7,8 @@ import org.json.JSONObject;
 public class AccumulatorLocation extends Location {
 
     private int iteration, segment, cell;
+    public static final int SEGMENT_COUNT = 4;
+    public static final int SEGMENT_SIZE = 18;
     public static final String[] OPTIONS = getStaticOptions();
 
     public AccumulatorLocation() {
@@ -42,9 +44,9 @@ public class AccumulatorLocation extends Location {
     }
 
     private static String[] getStaticOptions() {
-        String[] optionArray  = new String[72];
-        for(int i = 0; i < 72; i++) {
-            optionArray[i] = "Segment " + (i / 18 + 1) + ", Cell " + ((i % 18) + 1);
+        String[] optionArray  = new String[SEGMENT_COUNT * SEGMENT_SIZE];
+        for(int i = 0; i < SEGMENT_COUNT * SEGMENT_SIZE; i++) {
+            optionArray[i] = "Segment " + (i / SEGMENT_SIZE + 1) + ", Cell " + ((i % SEGMENT_SIZE) + 1);
         }
         return optionArray;
     }
