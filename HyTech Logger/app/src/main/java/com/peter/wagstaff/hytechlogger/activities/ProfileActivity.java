@@ -26,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        final TextView userId = findViewById(R.id.user_id_textView);
+        final TextView userId = findViewById(R.id.username_textView);
         Button changeUsernameButton = findViewById(R.id.change_username_button);
         Button changePasswordButton = findViewById(R.id.change_password_button);
         Button deleteUserButton = findViewById(R.id.delete_user_button);

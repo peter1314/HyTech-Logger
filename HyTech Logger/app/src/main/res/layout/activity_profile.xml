@@ -17,27 +17,27 @@
             android:layout_width="@dimen/profile_w_h"
             android:layout_height="@dimen/profile_w_h"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10sp"
+            android:layout_marginBottom="10dp"
             app:srcCompat="@mipmap/default_profile_basic_foreground" />
 
         <TextView
-            android:id="@+id/user_id_textView"
+            android:id="@+id/username_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20sp"
-            android:text="User ID"
+            android:layout_marginBottom="20dp"
+            android:text="Username"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textSize="@dimen/text_size_large" />
 
         <Button
             android:id="@+id/change_username_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:text="Change Username"
             android:textColor="@color/pure_white"
-            android:textSize="18sp"
+            android:textSize="@dimen/default_button_sp"
             tools:layout_editor_absoluteX="0sp"
             tools:layout_editor_absoluteY="202sp" />
 
@@ -45,11 +45,11 @@
             android:id="@+id/change_password_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:text="Change Password"
             android:textColor="@color/pure_white"
-            android:textSize="18sp"
+            android:textSize="@dimen/default_button_sp"
             tools:layout_editor_absoluteX="0sp"
             tools:layout_editor_absoluteY="202sp" />
 
@@ -57,11 +57,11 @@
             android:id="@+id/delete_user_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:text="Delete User"
             android:textColor="@color/pure_white"
-            android:textSize="18sp"
+            android:textSize="@dimen/default_button_sp"
             tools:layout_editor_absoluteX="0sp"
             tools:layout_editor_absoluteY="202sp" />
 
@@ -69,11 +69,11 @@
             android:id="@+id/sign_out_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
             android:text="Sign Out"
             android:textColor="@color/pure_white"
-            android:textSize="18sp"
+            android:textSize="@dimen/default_button_sp"
             tools:layout_editor_absoluteX="0sp"
             tools:layout_editor_absoluteY="202sp" />
 

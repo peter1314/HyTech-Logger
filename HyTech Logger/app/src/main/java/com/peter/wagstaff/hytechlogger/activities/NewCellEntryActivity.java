@@ -1,11 +1,14 @@
 package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +29,7 @@ import com.peter.wagstaff.hytechlogger.location.OtherLocation;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntryBuilder;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class NewCellEntryActivity extends AppCompatActivity {
 
@@ -172,5 +176,21 @@ public class NewCellEntryActivity extends AppCompatActivity {
         entryBuilder.addJSONObject(CellDataEntry.LOCATION, cellLocation.toDict());
 
         return entryBuilder.buildEntry();
+    }
+
+    private void addInputRow(String name, String previousValue, int id) {
+        TableRow newRow = new TableRow(this);
+        newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+        TextView label = new TextView((this));
+        EditText input = new EditText((this));
+
+        label.setText(name);
+        input.setText(previousValue);
+        input.setId(id);
+
+        //newRow.addView(cellButton);
+
+        //cellTable.addView(newRow);
     }
 }
