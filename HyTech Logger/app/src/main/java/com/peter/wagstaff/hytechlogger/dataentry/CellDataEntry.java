@@ -1,4 +1,4 @@
-package DatabaseInteraction;
+package com.peter.wagstaff.hytechlogger.dataentry;
 
 import org.json.JSONException;
 
@@ -13,7 +13,7 @@ public class CellDataEntry extends DataEntry {
     public static final String INTERNAL_RES = "internal_resistance";
     public static final String CAPACITY_DATE = "capacity_date";
     public static final String CHARGE_DATE = "charge_date";
-    public static final String LOCATION = "location";
+    public static final String LOCATION = "com/peter/wagstaff/hytechlogger/location";
 
     public CellDataEntry() {
         super();

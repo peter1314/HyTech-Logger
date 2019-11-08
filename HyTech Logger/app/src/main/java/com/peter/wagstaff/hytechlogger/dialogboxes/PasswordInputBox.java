@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.DialogBoxes;
+package com.peter.wagstaff.hytechlogger.dialogboxes;
 
 import android.content.Context;
 import android.text.InputType;

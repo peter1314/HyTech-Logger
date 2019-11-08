@@ -1,4 +1,4 @@
-package DatabaseInteraction;
+package com.peter.wagstaff.hytechlogger.dataentry;
 
 public abstract class DataEntryBuilder {
 

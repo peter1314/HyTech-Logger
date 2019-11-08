@@ -1,7 +1,9 @@
-package DatabaseInteraction;
+package com.peter.wagstaff.hytechlogger.dataentry;
 
-import com.peter.wagstaff.hytechlogger.InputFormating;
-import com.peter.wagstaff.hytechlogger.InputVerification;
+import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
+import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
+
+import org.json.JSONObject;
 
 public class CellDataEntryBuilder extends DataEntryBuilder {
 
@@ -28,6 +30,11 @@ public class CellDataEntryBuilder extends DataEntryBuilder {
             return true;
         }
         return false;
+    }
+
+    public boolean addJSONObject(String key, JSONObject object) {
+        dataEntry.setData(key, object);
+        return true;
     }
 
     @Override

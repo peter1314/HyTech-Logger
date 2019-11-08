@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.DialogBoxes.CodeInputDialog;
+import com.peter.wagstaff.hytechlogger.dialogboxes.CodeInputDialog;
 import com.google.zxing.Result;
-import com.peter.wagstaff.hytechlogger.DataUpdate;
-import com.peter.wagstaff.hytechlogger.InputVerification;
+import com.peter.wagstaff.hytechlogger.firebase.DataUpdate;
+import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 

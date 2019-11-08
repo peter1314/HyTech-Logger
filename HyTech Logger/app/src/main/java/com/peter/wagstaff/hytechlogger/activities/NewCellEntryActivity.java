@@ -12,18 +12,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.CellEntry;
-import com.peter.wagstaff.hytechlogger.DataUpdate;
-import com.peter.wagstaff.hytechlogger.InputFormating;
-import com.peter.wagstaff.hytechlogger.InputVerification;
+import com.peter.wagstaff.hytechlogger.firebase.DataUpdate;
+import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
-
 import org.json.JSONException;
-
 import java.util.Calendar;
-import DatabaseInteraction.CellDataEntry;
-import DatabaseInteraction.CellDataEntryBuilder;
+import com.peter.wagstaff.hytechlogger.location.AccumulatorLocation;
+import com.peter.wagstaff.hytechlogger.location.CabinetLocation;
+import com.peter.wagstaff.hytechlogger.location.Location;
+import com.peter.wagstaff.hytechlogger.location.LocationBuilder;
+import com.peter.wagstaff.hytechlogger.location.OtherLocation;
+import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
+import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntryBuilder;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class NewCellEntryActivity extends AppCompatActivity {
@@ -62,70 +63,30 @@ public class NewCellEntryActivity extends AppCompatActivity {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    isNew = false;
-                    CellDataEntry lastEntry = null;
                     try {
-                        lastEntry = new CellDataEntry(snapshot.getValue().toString());
+                        isNew = false;
+                        populateFieldsFromEntry(new CellDataEntry(snapshot.getValue().toString()));
                     } catch (JSONException e) {}
-
-                    voltageEditText.setText(lastEntry.getData(CellDataEntry.VOLTAGE));
-                    voltageRecordedEditText.setText((lastEntry.getData(CellDataEntry.VOLTAGE_DATE)));
-                    dischargeEditText.setText(lastEntry.getData(CellDataEntry.DISCHARGE_CAP));
-                    irEditText.setText(lastEntry.getData(CellDataEntry.INTERNAL_RES));
-                    dischargeRecordedEditText.setText(lastEntry.getData(CellDataEntry.CAPACITY_DATE));
-                    lastChargedEditText.setText(lastEntry.getData(CellDataEntry.CHARGE_DATE));
-
-                    String[] locationData = lastEntry.getData(CellDataEntry.LOCATION).split("\\.", 2);
-
-                    if(locationData[0].equals("Cabinet")) {
-                        cabinetButton.setChecked(true);
-                        populateSpinnerCabinet(locationSpinner);
-                        locationSpinner.setSelection(InputVerification.selectionFromString(locationData[1]));
-                    } else if(locationData[0].equals("HT04")) {
-                        ht04Button.setChecked(true);
-                        populateSpinnerAccumulator(locationSpinner);
-                        locationSpinner.setSelection(InputVerification.selectionFromString(locationData[1]));
-                    } else if(locationData[0].equals("HT05")) {
-                        ht05Button.setChecked(true);
-                        populateSpinnerAccumulator(locationSpinner);
-                        locationSpinner.setSelection(InputVerification.selectionFromString(locationData[1]));
-                    } else if(locationData[0].equals("Other")) {
-                        otherButton.setChecked(true);
-                        populateSpinnerOther(locationSpinner);
-                        locationSpinner.setSelection(InputVerification.selectionFromString(locationData[1]));
-                    }
                 }
             }
         });
 
         cabinetButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                populateSpinnerCabinet(locationSpinner);
-            }
+            public void onClick(View v) { populateSpinner(locationSpinner, CabinetLocation.OPTIONS);}
         });
 
         ht04Button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                populateSpinnerAccumulator(locationSpinner);
-            }
-        });
+            public void onClick(View v) { populateSpinner(locationSpinner, AccumulatorLocation.OPTIONS); }});
 
         ht05Button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                populateSpinnerAccumulator(locationSpinner);
-            }
-        });
+            public void onClick(View v) { populateSpinner(locationSpinner, AccumulatorLocation.OPTIONS); }});
 
         otherButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                populateSpinnerOther(locationSpinner);
-            }
-        });
+            public void onClick(View v) { populateSpinner(locationSpinner, OtherLocation.OPTIONS); }});
 
         enterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 CellDataEntry entry = buildEntryFromInputs();
-
                 if(entry == null) {return;}
 
                 GlobalVariables.rootRef.child("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS/LAST").setValue(entry.toString());
@@ -139,31 +100,36 @@ public class NewCellEntryActivity extends AppCompatActivity {
                 } else {
                     onBackPressed();
                 }
-
             }
         });
     }
 
-    private void populateSpinnerCabinet(Spinner spinner) {
-        String[] spinnerArray  = new String[9];
-        for(int i = 0; i < 9; i++) {
-            spinnerArray[i] = "Shelf " + (i + 1);
+    private void populateFieldsFromEntry(CellDataEntry entry) {
+        voltageEditText.setText(entry.getData(CellDataEntry.VOLTAGE));
+        voltageRecordedEditText.setText((entry.getData(CellDataEntry.VOLTAGE_DATE)));
+        dischargeEditText.setText(entry.getData(CellDataEntry.DISCHARGE_CAP));
+        irEditText.setText(entry.getData(CellDataEntry.INTERNAL_RES));
+        dischargeRecordedEditText.setText(entry.getData(CellDataEntry.CAPACITY_DATE));
+        lastChargedEditText.setText(entry.getData(CellDataEntry.CHARGE_DATE));
+
+        Location location = LocationBuilder.buildLocation(entry.getData(CellDataEntry.LOCATION));
+
+        if(location.getType().equals("cabinet")) {
+            cabinetButton.setChecked(true);
+        } else if(location.getType().equals("accumulator")) {
+            if(((AccumulatorLocation) location).getIteration() == 4) {
+                ht04Button.setChecked(true);
+            } else if(((AccumulatorLocation) location).getIteration() == 5) {
+                ht05Button.setChecked(true);
+            }
+        } else if(location.getType().equals("other")) {
+            otherButton.setChecked(true);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, spinnerArray);
-        spinner.setAdapter(adapter);
+        populateSpinner(locationSpinner, location.getOptions());
+        locationSpinner.setSelection(location.getCurrentOption());
     }
 
-    private void populateSpinnerAccumulator(Spinner spinner) {
-        String[] spinnerArray  = new String[72];
-        for(int i = 0; i < 72; i++) {
-            spinnerArray[i] = "Segment " + (i / 18 + 1) + ", Cell " + ((i % 18) + 1);
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, spinnerArray);
-        spinner.setAdapter(adapter);
-    }
-
-    private void populateSpinnerOther(Spinner spinner) {
-        String[] spinnerArray  = {"Shop Space", "Lost", "Other"};
+    private void populateSpinner(Spinner spinner, String[] spinnerArray) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, spinnerArray);
         spinner.setAdapter(adapter);
     }
@@ -195,23 +161,23 @@ public class NewCellEntryActivity extends AppCompatActivity {
             return null;
         }
 
-        String location = "";
+        Location cellLocation;
 
         if(cabinetButton.isChecked()) {
-            location = "Cabinet.";
+            cellLocation = new CabinetLocation();
         } else if(ht04Button.isChecked()) {
-            location = "HT04.";
+            cellLocation = new AccumulatorLocation(4);
         } else if(ht05Button.isChecked()) {
-            location = "HT05.";
+            cellLocation = new AccumulatorLocation(5);
         } else if(otherButton.isChecked()) {
-            location = "Other.";
+            cellLocation = new OtherLocation();
         } else {
             Toast.makeText(getApplicationContext(), "Invalid Location", Toast.LENGTH_SHORT).show();
             return null;
         }
 
-        location = location + InputFormating.correctLocation(locationSpinner.getSelectedItem().toString());
-        entryBuilder.addString(CellDataEntry.LOCATION, location);
+        cellLocation.addSpinnerInput(locationSpinner.getSelectedItem().toString());
+        entryBuilder.addJSONObject(CellDataEntry.LOCATION, cellLocation.toDict());
 
         return entryBuilder.buildEntry();
     }

@@ -1,6 +1,10 @@
 package com.peter.wagstaff.hytechlogger.activities;
 
-import DatabaseInteraction.CellDataEntry;
+import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
+import com.peter.wagstaff.hytechlogger.dataentry.DataEntry;
+import com.peter.wagstaff.hytechlogger.dataentry.tests.DataEntryFilter;
+import com.peter.wagstaff.hytechlogger.dataentry.tests.DecimalTest;
+import com.peter.wagstaff.hytechlogger.dataentry.tests.LocationTest;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.content.Intent;
@@ -15,23 +19,23 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.CellEntry;
-import com.peter.wagstaff.hytechlogger.DataUpdate;
+import com.peter.wagstaff.hytechlogger.firebase.DataUpdate;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
+import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.R;
-
 import org.json.JSONException;
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ViewCellsActivity extends AppCompatActivity {
 
-    boolean cabinet = true, ht04 = true, ht05 = true, other = true;
+    Set<String> validLocations;
     double minVolt, maxVolt, minCap, maxCap, minIR, maxIR;
 
-    List<CellDataEntry> allCells = new ArrayList<>();
-    List<CellDataEntry> filteredCells = new ArrayList<>();
+    List<DataEntry> allCells = new ArrayList<>();
+    List<DataEntry> filteredCells = new ArrayList<>();
 
     TableLayout cellTable;
 
@@ -40,10 +44,15 @@ public class ViewCellsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_cells);
 
+        validLocations = new HashSet<>();
         final CheckBox cabinetCheckBox = findViewById(R.id.cabinet_checkbox);
+        validLocations.add("Cabinet");
         final CheckBox ht04CheckBox = findViewById(R.id.ht04_checkbox);
+        validLocations.add("HT04");
         final CheckBox ht05CheckBox = findViewById(R.id.ht05_checkbox);
+        validLocations.add("HT05");
         final CheckBox otherCheckBox = findViewById(R.id.other_checkbox);
+        validLocations.add("Other");
 
         cabinetCheckBox.setChecked(true);
         ht04CheckBox.setChecked(true);
@@ -62,28 +71,44 @@ public class ViewCellsActivity extends AppCompatActivity {
 
         cabinetCheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                cabinet = cabinetCheckBox.isChecked();
+                if (cabinetCheckBox.isChecked()) {
+                    validLocations.add("Cabinet");
+                } else {
+                    validLocations.remove("Cabinet");
+                }
                 filterCells();
             }
         });
 
         ht04CheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ht04 = ht04CheckBox.isChecked();
+                if (ht04CheckBox.isChecked()) {
+                    validLocations.add("HT04");
+                } else {
+                    validLocations.remove("HT04");
+                }
                 filterCells();
             }
         });
 
         ht05CheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ht05 = ht05CheckBox.isChecked();
+                if (ht05CheckBox.isChecked()) {
+                    validLocations.add("HT05");
+                } else {
+                    validLocations.remove("HT05");
+                }
                 filterCells();
             }
         });
 
         otherCheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                other = otherCheckBox.isChecked();
+                if (otherCheckBox.isChecked()) {
+                    validLocations.add("Other");
+                } else {
+                    validLocations.remove("Other");
+                }
                 filterCells();
             }
         });
@@ -91,11 +116,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         minVoltageEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(minVoltageEditText.getText().toString().trim().length() == 0) {
-                    minVolt = 0;
-                } else {
-                    minVolt = Double.parseDouble(String.valueOf(minVoltageEditText.getText()));
-                }
+                minVolt = InputFormating.decimalFromString(minVoltageEditText.getText().toString());
                 filterCells();
                 return false;
             }
@@ -104,11 +125,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         maxVoltageEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(maxVoltageEditText.getText().toString().trim().length() == 0) {
-                    maxVolt = 0;
-                } else {
-                    maxVolt = Double.parseDouble(String.valueOf(maxVoltageEditText.getText()));
-                }
+                maxVolt = InputFormating.decimalFromString(maxVoltageEditText.getText().toString());
                 filterCells();
                 return false;
             }
@@ -117,11 +134,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         minCapacityEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(minCapacityEditText.getText().toString().trim().length() == 0) {
-                    minCap = 0;
-                } else {
-                    minCap = Double.parseDouble(String.valueOf(minCapacityEditText.getText()));
-                }
+                minCap = InputFormating.decimalFromString(minCapacityEditText.getText().toString());
                 filterCells();
                 return false;
             }
@@ -130,11 +143,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         maxCapacityEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(maxCapacityEditText.getText().toString().trim().length() == 0) {
-                    maxCap = 0;
-                } else {
-                    maxCap = Double.parseDouble(String.valueOf(maxCapacityEditText.getText()));
-                }
+                maxCap = InputFormating.decimalFromString(maxCapacityEditText.getText().toString());
                 filterCells();
                 return false;
             }
@@ -143,11 +152,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         minIREditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(minIREditText.getText().toString().trim().length() == 0) {
-                    minIR = 0;
-                } else {
-                    minIR = Double.parseDouble(String.valueOf(minIREditText.getText()));
-                }
+                minIR = InputFormating.decimalFromString(minIREditText.getText().toString());
                 filterCells();
                 return false;
             }
@@ -156,11 +161,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         maxIREditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(maxIREditText.getText().toString().trim().length() == 0) {
-                    maxIR = 0;
-                } else {
-                    maxIR = Double.parseDouble(String.valueOf(maxIREditText.getText()));
-                }
+                maxIR = InputFormating.decimalFromString(maxIREditText.getText().toString());
                 filterCells();
                 return false;
             }
@@ -195,27 +196,13 @@ public class ViewCellsActivity extends AppCompatActivity {
 
     private void filterCells() {
 
-        filteredCells.clear();
+        DataEntryFilter filter = new DataEntryFilter();
+        filter.addTest(new LocationTest(CellDataEntry.LOCATION, validLocations));
+        filter.addTest(new DecimalTest(CellDataEntry.VOLTAGE, minVolt, maxVolt));
+        filter.addTest(new DecimalTest(CellDataEntry.DISCHARGE_CAP, minCap, maxCap));
+        filter.addTest(new DecimalTest(CellDataEntry.INTERNAL_RES, minIR, maxIR));
 
-        for(CellDataEntry curEntry: allCells) {
-            boolean include = true;
-
-            String locationString = curEntry.getData(CellDataEntry.LOCATION);
-            Double voltage = Double.parseDouble(curEntry.getData(CellDataEntry.VOLTAGE));
-            Double dischargeCap = Double.parseDouble(curEntry.getData(CellDataEntry.DISCHARGE_CAP));
-            Double ir = Double.parseDouble(curEntry.getData(CellDataEntry.INTERNAL_RES));
-
-            if(locationString.contains("Cabinet") && !cabinet) { include = false; }
-            else if(locationString.contains("HT04") && !ht04) { include = false; }
-            else if(locationString.contains("HT05") && !ht05) { include = false; }
-            else if(locationString.contains("Other") && !other) { include = false; }
-            else if((minVolt != 0 && voltage <= minVolt) || (maxVolt != 0 && voltage >= maxVolt)) { include = false; }
-            else if((minCap != 0 && dischargeCap <= minCap) || (maxCap != 0 && dischargeCap >= maxCap)) { include = false; }
-            if((minIR != 0 && ir <= minIR) || (maxIR != 0 && ir >= maxIR)) { include = false; }
-
-            if(include) { filteredCells.add(curEntry); }
-        }
-
+        filteredCells = filter.filterDataEntries(allCells);
         updateScroll();
     }
 
@@ -223,12 +210,12 @@ public class ViewCellsActivity extends AppCompatActivity {
 
         cellTable.removeAllViews();
 
-        for(CellDataEntry includedCell: filteredCells) {
+        for(DataEntry includedCell: filteredCells) {
             addRow(includedCell);
         }
     }
 
-    private void addRow(final CellDataEntry entry) {
+    private void addRow(final DataEntry entry) {
         TableRow newRow = new TableRow(this);
         newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         newRow.setGravity(Gravity.CENTER_HORIZONTAL);

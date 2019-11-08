@@ -1,4 +1,4 @@
-package DatabaseInteraction;
+package com.peter.wagstaff.hytechlogger.dataentry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +10,7 @@ import java.util.Map;
 public abstract class DataEntry {
 
     //Stores pieces of data in map
-    private Map<String, String>  dataMap;
+    private Map<String, Object>  dataMap;
 
     //creates an empty data entry
     public DataEntry() {
@@ -25,7 +25,7 @@ public abstract class DataEntry {
         dataMap = new HashMap();
         while(jsonKeys.hasNext()) {
             String key = jsonKeys.next();
-            dataMap.put(key, entryAsJSON.getString(key));
+            dataMap.put(key, entryAsJSON.get(key));
         }
     }
 
@@ -53,16 +53,32 @@ public abstract class DataEntry {
     public String setData(String key, String value){
         String output = null;
         if(dataMap.containsKey(key)) {
-            output = dataMap.get(key);
+            output = dataMap.get(key).toString();
         }
         dataMap.put(key, value);
+        return output;
+    }
+
+    public JSONObject setData(String key, JSONObject object) {
+        JSONObject output = null;
+        if(dataMap.containsKey(key)) {
+            output = (JSONObject) dataMap.get(key);
+        }
+        dataMap.put(key, object);
         return output;
     }
 
     //returns data in entry or null
     public String getData(String key) {
         if(dataMap.containsKey(key)) {
-            return dataMap.get(key);
+            return dataMap.get(key).toString();
+        }
+        return null;
+    }
+
+    public JSONObject getJSONObject(String key) {
+        if(dataMap.containsKey(key)) {
+            return (JSONObject) dataMap.get(key);
         }
         return null;
     }

@@ -11,16 +11,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.DataUpdate;
-import com.peter.wagstaff.hytechlogger.InputFormating;
-import com.peter.wagstaff.hytechlogger.InputVerification;
+import com.peter.wagstaff.hytechlogger.firebase.DataUpdate;
+import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
-import DatabaseInteraction.CellDataEntry;
+import com.peter.wagstaff.hytechlogger.location.Location;
+import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import androidx.appcompat.app.AppCompatActivity;
+import com.peter.wagstaff.hytechlogger.location.LocationBuilder;
 
 public class ViewCellActivity extends AppCompatActivity {
 
@@ -85,7 +86,7 @@ public class ViewCellActivity extends AppCompatActivity {
 
                 String date = entrySpinner.getSelectedItem().toString();
 
-                DataUpdate.onUpdate("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS/" + InputVerification.orderedDate(date), new DataUpdate() {
+                DataUpdate.onUpdate("CELLS2/" + GlobalVariables.currentCellCode + "/LOGS/" + InputFormating.orderedDate(date), new DataUpdate() {
                     @Override
                     public void onUpdate(DataSnapshot snapshot) {
                         if(snapshot.exists()) {
@@ -121,7 +122,9 @@ public class ViewCellActivity extends AppCompatActivity {
         irEditText.setText(lastEntry.getData(CellDataEntry.INTERNAL_RES) + "");
         dischargeRecordedEditText.setText(lastEntry.getData(CellDataEntry.CAPACITY_DATE));
         lastChargedEditText.setText(lastEntry.getData(CellDataEntry.CHARGE_DATE));
-        locationEditText.setText(InputFormating.reformLocation(lastEntry.getData(CellDataEntry.LOCATION)));
+
+        Location location = LocationBuilder.buildLocation(lastEntry.getData(CellDataEntry.LOCATION));
+        locationEditText.setText(location.fancyPrint());
     }
 
     private void populateSpinner(DataSnapshot snapshot) {
@@ -139,6 +142,5 @@ public class ViewCellActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, entryDates.toArray(new String[entryDates.size()]));
         entrySpinner.setAdapter(adapter);
-
     }
 }

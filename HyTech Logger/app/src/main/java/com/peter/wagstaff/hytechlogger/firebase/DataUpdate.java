@@ -1,9 +1,9 @@
-package com.peter.wagstaff.hytechlogger;
-
+package com.peter.wagstaff.hytechlogger.firebase;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import androidx.annotation.NonNull;
 
 public abstract class DataUpdate {
