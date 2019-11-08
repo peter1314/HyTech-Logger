@@ -43,7 +43,7 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
                 if(InputVerification.verifyCode(userInput)) {
                     GlobalVariables.currentCellCode = userInput;
 
-                    FirebaseExchange.onGrab(GlobalVariables.BRANCH, new UpdateAction() {
+                    FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new UpdateAction() {
                         @Override
                         public void onUpdate(DataSnapshot snapshot) {
                             if(snapshot.hasChild(userInput)) {
@@ -80,7 +80,7 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
         if(InputVerification.verifyCode(readCode)) {
             GlobalVariables.currentCellCode = readCode;
 
-            FirebaseExchange.onGrab(GlobalVariables.BRANCH, new UpdateAction() {
+            FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new UpdateAction() {
                 @Override
                 public void onUpdate(DataSnapshot snapshot) {
                     if(snapshot.hasChild(readCode)) {

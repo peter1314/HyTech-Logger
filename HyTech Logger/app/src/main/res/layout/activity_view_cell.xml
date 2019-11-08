@@ -68,7 +68,7 @@
                     android:text="Voltage"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.peter.wagstaff.hytechlogger.customviews.LockedEditText
                     android:id="@+id/voltage_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                     android:text="Recorded"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.peter.wagstaff.hytechlogger.customviews.LockedEditText
                     android:id="@+id/voltage_recorded_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                     android:text="Discharge Cap"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.peter.wagstaff.hytechlogger.customviews.LockedEditText
                     android:id="@+id/capacity_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                     android:text="Int Resistance"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.peter.wagstaff.hytechlogger.customviews.LockedEditText
                     android:id="@+id/ir_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
                     android:text="Recorded"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.peter.wagstaff.hytechlogger.customviews.LockedEditText
                     android:id="@+id/min_voltage_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -209,7 +209,7 @@
                     android:text="Last Charged"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.peter.wagstaff.hytechlogger.customviews.LockedEditText
                     android:id="@+id/last_charged_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -238,7 +238,7 @@
                     android:text="Location"
                     android:textSize="20sp" />
 
-                <EditText
+                <com.peter.wagstaff.hytechlogger.customviews.LockedEditText
                     android:id="@+id/location_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -283,7 +283,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <Spinner
+                <com.peter.wagstaff.hytechlogger.customviews.EntrySpinner
                     android:id="@+id/spinner"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"

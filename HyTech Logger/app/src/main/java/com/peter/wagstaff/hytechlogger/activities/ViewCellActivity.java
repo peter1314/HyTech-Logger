@@ -1,24 +1,20 @@
 package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
+import com.peter.wagstaff.hytechlogger.customviews.EntrySpinner;
+import com.peter.wagstaff.hytechlogger.customviews.LockedEditText;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.firebase.UpdateAction;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 import org.json.JSONException;
-import java.util.ArrayList;
-import java.util.List;
 import com.peter.wagstaff.hytechlogger.location.Location;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,8 +23,8 @@ import com.peter.wagstaff.hytechlogger.location.LocationBuilder;
 public class ViewCellActivity extends AppCompatActivity {
 
     TextView entryText;
-    EditText voltageEditText, voltageRecordedEditText, dischargeEditText, irEditText, dischargeRecordedEditText, lastChargedEditText, locationEditText;
-    Spinner entrySpinner;
+    LockedEditText voltageEditText, voltageRecordedEditText, dischargeEditText, irEditText, dischargeRecordedEditText, lastChargedEditText, locationEditText;
+    EntrySpinner entrySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,42 +37,22 @@ public class ViewCellActivity extends AppCompatActivity {
         entryText = findViewById(R.id.entry_textView);
 
         voltageEditText = findViewById(R.id.voltage_editText);
-        voltageEditText.setEnabled(false);
-        voltageEditText.setTextColor(Color.BLACK);
-
         voltageRecordedEditText = findViewById(R.id.voltage_recorded_editText);
-        voltageRecordedEditText.setEnabled(false);
-        voltageRecordedEditText.setTextColor(Color.BLACK);
-
         dischargeEditText = findViewById(R.id.capacity_editText);
-        dischargeEditText.setEnabled(false);
-        dischargeEditText.setTextColor(Color.BLACK);
-
         irEditText = findViewById(R.id.ir_editText);
-        irEditText.setEnabled(false);
-        irEditText.setTextColor(Color.BLACK);
-
         dischargeRecordedEditText = findViewById(R.id.min_voltage_editText);
-        dischargeRecordedEditText.setEnabled(false);
-        dischargeRecordedEditText.setTextColor(Color.BLACK);
-
         lastChargedEditText = findViewById(R.id.last_charged_editText);
-        lastChargedEditText.setEnabled(false);
-        lastChargedEditText.setTextColor(Color.BLACK);
-
         locationEditText = findViewById(R.id.location_editText);
-        locationEditText.setEnabled(false);
-        locationEditText.setTextColor(Color.BLACK);
 
         entrySpinner = findViewById(R.id.spinner);
         Button newEntryButton = findViewById(R.id.new_entry_button);
 
-        FirebaseExchange.onChange(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS", new UpdateAction() {
+        FirebaseExchange.onUpdate(FirebaseExchange.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS", new UpdateAction() {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     populateFields(snapshot.child("LAST"));
-                    populateSpinner(snapshot);
+                    entrySpinner.populate(snapshot);
                 }
             }
         });
@@ -84,10 +60,9 @@ public class ViewCellActivity extends AppCompatActivity {
         entrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
                 String date = entrySpinner.getSelectedItem().toString();
 
-                FirebaseExchange.onGrab(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/" + InputFormating.orderedDate(date), new UpdateAction() {
+                FirebaseExchange.onGrab(FirebaseExchange.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/" + InputFormating.orderedDate(date), new UpdateAction() {
                     @Override
                     public void onUpdate(DataSnapshot snapshot) {
                         if(snapshot.exists()) {
@@ -126,22 +101,5 @@ public class ViewCellActivity extends AppCompatActivity {
 
         Location location = LocationBuilder.buildLocation(lastEntry.getData(CellDataEntry.LOCATION));
         locationEditText.setText(location.fancyPrint());
-    }
-
-    private void populateSpinner(DataSnapshot snapshot) {
-
-        List<String> entryDates = new ArrayList<>();
-
-        for(DataSnapshot child: snapshot.getChildren()) {
-            CellDataEntry curEntry = null;
-            try {
-                curEntry = new CellDataEntry(child.getValue().toString());
-            } catch (JSONException e) {}
-            entryDates.add(0, curEntry.getData(CellDataEntry.ENTRY_DATE));
-        }
-        entryDates.remove(0);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, entryDates.toArray(new String[entryDates.size()]));
-        entrySpinner.setAdapter(adapter);
     }
 }

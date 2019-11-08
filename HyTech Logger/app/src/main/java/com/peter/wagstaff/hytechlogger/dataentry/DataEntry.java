@@ -19,10 +19,10 @@ public abstract class DataEntry {
 
     //creates a data entry from a string representing a JSON
     public DataEntry(String entryAsJSONString) throws JSONException {
+        this();
+
         JSONObject entryAsJSON = new JSONObject(entryAsJSONString);
         Iterator<String> jsonKeys = entryAsJSON.keys();
-
-        dataMap = new HashMap();
         while(jsonKeys.hasNext()) {
             String key = jsonKeys.next();
             dataMap.put(key, entryAsJSON.get(key));

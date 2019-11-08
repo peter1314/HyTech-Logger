@@ -59,7 +59,7 @@ public class NewCellEntryActivity extends AppCompatActivity {
 
         final Button enterButton = findViewById(R.id.enter_button);
 
-        FirebaseExchange.onGrab(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", new UpdateAction() {
+        FirebaseExchange.onGrab(FirebaseExchange.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", new UpdateAction() {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {

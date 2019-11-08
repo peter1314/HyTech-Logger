@@ -24,19 +24,28 @@ import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.firebase.UpdateAction;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.R;
+import com.peter.wagstaff.hytechlogger.location.Location;
+import com.peter.wagstaff.hytechlogger.location.LocationBuilder;
+
 import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ViewCellsActivity extends AppCompatActivity {
 
-    Set<String> validLocations;
+    Set<Map<String, Object>> validLocationConfigs;
     double minVolt, maxVolt, minCap, maxCap, minIR, maxIR;
 
     List<DataEntry> allCells = new ArrayList<>();
     List<DataEntry> filteredCells = new ArrayList<>();
+
+    private static final Map<String, Object> cabinetConfig = LocationBuilder.buildConfig(new String[]{"type"}, new Object[]{"cabinet"});
+    private static final Map<String, Object> ht04Config = LocationBuilder.buildConfig(new String[]{"type", "iteration"}, new Object[]{"accumulator", 4});
+    private static final Map<String, Object> ht05Config = LocationBuilder.buildConfig(new String[]{"type", "iteration"}, new Object[]{"accumulator", 5});
+    private static final Map<String, Object> otherConfig = LocationBuilder.buildConfig(new String[]{"type"}, new Object[]{"other"});
 
     TableLayout cellTable;
 
@@ -45,15 +54,15 @@ public class ViewCellsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_cells);
 
-        validLocations = new HashSet<>();
+        validLocationConfigs = new HashSet<>();
         final CheckBox cabinetCheckBox = findViewById(R.id.cabinet_checkbox);
-        validLocations.add("Cabinet");
+        validLocationConfigs.add(cabinetConfig);
         final CheckBox ht04CheckBox = findViewById(R.id.ht04_checkbox);
-        validLocations.add("HT04");
+        validLocationConfigs.add(ht04Config);
         final CheckBox ht05CheckBox = findViewById(R.id.ht05_checkbox);
-        validLocations.add("HT05");
+        validLocationConfigs.add(ht05Config);
         final CheckBox otherCheckBox = findViewById(R.id.other_checkbox);
-        validLocations.add("Other");
+        validLocationConfigs.add(otherConfig);
 
         cabinetCheckBox.setChecked(true);
         ht04CheckBox.setChecked(true);
@@ -73,9 +82,9 @@ public class ViewCellsActivity extends AppCompatActivity {
         cabinetCheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (cabinetCheckBox.isChecked()) {
-                    validLocations.add("Cabinet");
+                    validLocationConfigs.add(cabinetConfig);
                 } else {
-                    validLocations.remove("Cabinet");
+                    validLocationConfigs.remove(cabinetConfig);
                 }
                 filterCells();
             }
@@ -84,9 +93,9 @@ public class ViewCellsActivity extends AppCompatActivity {
         ht04CheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (ht04CheckBox.isChecked()) {
-                    validLocations.add("HT04");
+                    validLocationConfigs.add(ht04Config);
                 } else {
-                    validLocations.remove("HT04");
+                    validLocationConfigs.remove(ht04Config);
                 }
                 filterCells();
             }
@@ -95,9 +104,9 @@ public class ViewCellsActivity extends AppCompatActivity {
         ht05CheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (ht05CheckBox.isChecked()) {
-                    validLocations.add("HT05");
+                    validLocationConfigs.add(ht05Config);
                 } else {
-                    validLocations.remove("HT05");
+                    validLocationConfigs.remove(ht05Config);
                 }
                 filterCells();
             }
@@ -106,9 +115,9 @@ public class ViewCellsActivity extends AppCompatActivity {
         otherCheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (otherCheckBox.isChecked()) {
-                    validLocations.add("Other");
+                    validLocationConfigs.add(otherConfig);
                 } else {
-                    validLocations.remove("Other");
+                    validLocationConfigs.remove(otherConfig);
                 }
                 filterCells();
             }
@@ -172,7 +181,7 @@ public class ViewCellsActivity extends AppCompatActivity {
     private void getAllCells() {
         allCells.clear();
 
-        FirebaseExchange.onGrab(GlobalVariables.BRANCH, new UpdateAction() {
+        FirebaseExchange.onUpdate(FirebaseExchange.BRANCH, new UpdateAction() {
             @Override
             public void onUpdate(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -188,6 +197,7 @@ public class ViewCellsActivity extends AppCompatActivity {
                             } catch (JSONException e) {}
                             allCells.add(lastEntry);
                             addRow(lastEntry);
+                            System.out.println("Unfiltered Entry: " + lastEntry);
                         }
                     }
                 }
@@ -198,7 +208,8 @@ public class ViewCellsActivity extends AppCompatActivity {
     private void filterCells() {
 
         DataEntryFilter filter = new DataEntryFilter();
-        filter.addTest(new LocationTest(CellDataEntry.LOCATION, validLocations));
+        System.out.println("Location configs: " + validLocationConfigs);
+        filter.addTest(new LocationTest(CellDataEntry.LOCATION, validLocationConfigs));
         filter.addTest(new DecimalTest(CellDataEntry.VOLTAGE, minVolt, maxVolt));
         filter.addTest(new DecimalTest(CellDataEntry.DISCHARGE_CAP, minCap, maxCap));
         filter.addTest(new DecimalTest(CellDataEntry.INTERNAL_RES, minIR, maxIR));
@@ -211,8 +222,9 @@ public class ViewCellsActivity extends AppCompatActivity {
 
         cellTable.removeAllViews();
 
-        for(DataEntry includedCell: filteredCells) {
-            addRow(includedCell);
+        for(DataEntry filteredCell: filteredCells) {
+            System.out.println("Filtered Entry: " + filteredCell);
+            addRow(filteredCell);
         }
     }
 

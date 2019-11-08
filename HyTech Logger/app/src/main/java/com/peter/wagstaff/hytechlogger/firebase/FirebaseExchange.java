@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 public class FirebaseExchange {
 
     public static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
+    public static final String BRANCH = "CELLS2";
 
     public static void setData(String path, String data) {
         ROOT_REF.child(path).setValue(data);
@@ -38,7 +39,7 @@ public class FirebaseExchange {
     }
 
     public static void onGrab(String path, final UpdateAction action) {
-        GlobalVariables.ROOT_REF.child(path).addListenerForSingleValueEvent(new ValueEventListener() {
+        ROOT_REF.child(path).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 action.onUpdate(dataSnapshot);
@@ -49,8 +50,8 @@ public class FirebaseExchange {
         });
     }
 
-    public static void onChange(String path, final UpdateAction action) {
-        GlobalVariables.ROOT_REF.child(path).addValueEventListener(new ValueEventListener() {
+    public static void onUpdate(String path, final UpdateAction action) {
+        ROOT_REF.child(path).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 action.onUpdate(dataSnapshot);
@@ -62,7 +63,7 @@ public class FirebaseExchange {
     }
 
     public static void addDataEntry(String timeStamp, DataEntry entry) {
-        setData(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", entry.toString());
-        setData(GlobalVariables.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/" + timeStamp, entry.toString());
+        setData(BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", entry.toString());
+        setData(BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/" + timeStamp, entry.toString());
     }
 }
