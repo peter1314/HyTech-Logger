@@ -14,4 +14,6 @@
     <dimen name="text_size_med">20sp</dimen>
     <dimen name="text_size_large">25sp</dimen>
     <dimen name="text_size_header">30sp</dimen>
+    <dimen name="scan_w">250dp</dimen>
+    <dimen name="scan_h">350dp</dimen>
 </resources>

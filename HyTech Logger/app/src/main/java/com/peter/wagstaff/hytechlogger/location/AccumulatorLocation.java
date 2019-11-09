@@ -46,7 +46,7 @@ public class AccumulatorLocation extends Location {
 
     @Override
     public String fancyPrint() {
-        return "HT0" + tags.get("iteration") + ": Segment " + tags.get("segment") + ", Cell " + tags.get("cell");
+        return "HT0" + tags.get("iteration") + ": Seg " + tags.get("segment") + ", Cell " + tags.get("cell");
     }
 
     public int getIteration() { return (int) tags.get("iteration"); }

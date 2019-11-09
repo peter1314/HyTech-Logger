@@ -1,13 +1,12 @@
 package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +28,11 @@ import com.peter.wagstaff.hytechlogger.location.OtherLocation;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntryBuilder;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 public class NewCellEntryActivity extends AppCompatActivity {
 
     private boolean isNew = true;
+    TableLayout inputTable;
     EditText voltageEditText, voltageRecordedEditText, dischargeEditText, irEditText, dischargeRecordedEditText, lastChargedEditText;
     RadioButton cabinetButton, ht04Button, ht05Button, otherButton;
     LocationSpinner locationSpinner;
@@ -47,17 +46,19 @@ public class NewCellEntryActivity extends AppCompatActivity {
         TextView cellCodeText = findViewById(R.id.cell_code_textView);
         cellCodeText.setText("Cell " + GlobalVariables.currentCellCode);
 
-        voltageEditText = findViewById(R.id.voltage_editText);
-        voltageRecordedEditText = findViewById(R.id.voltage_recorded_editText);
-        dischargeEditText = findViewById(R.id.capacity_editText);
-        irEditText = findViewById(R.id.ir_editText);
-        dischargeRecordedEditText = findViewById(R.id.min_voltage_editText);
-        lastChargedEditText = findViewById(R.id.last_charged_editText);
+        inputTable = findViewById(R.id.table_layout);
 
-        cabinetButton = findViewById(R.id.cabinet_radioButton);
-        ht04Button = findViewById(R.id.ht04_radioButton);
-        ht05Button = findViewById(R.id.ht05_radioButton);
-        otherButton = findViewById(R.id.other_radioButton);
+        voltageEditText = addInputRow("Voltage", "0");
+        voltageRecordedEditText = addInputRow("Recorded", "0/0/00");
+        dischargeEditText = addInputRow("Discharge Cap", "0");
+        irEditText = addInputRow("Internal Res", "0");
+        dischargeRecordedEditText = addInputRow("Recorded", "0/0/00");
+        lastChargedEditText = addInputRow("Last Charge", "0/0/00");
+
+        cabinetButton = findViewById(R.id.radioButton_0);
+        ht04Button = findViewById(R.id.radioButton_1);
+        ht05Button = findViewById(R.id.radioButton_2);
+        otherButton = findViewById(R.id.radioButton_3);
 
         locationSpinner = findViewById(R.id.spinner);
 
@@ -178,19 +179,20 @@ public class NewCellEntryActivity extends AppCompatActivity {
         return entryBuilder.buildEntry();
     }
 
-    private void addInputRow(String name, String previousValue, int id) {
+    private EditText addInputRow(String name, String previousValue) {
         TableRow newRow = new TableRow(this);
         newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-        TextView label = new TextView((this));
-        EditText input = new EditText((this));
+        TextView label = (TextView)getLayoutInflater().inflate(R.layout.input_label, null);
+        EditText input = (EditText)getLayoutInflater().inflate(R.layout.input_text, null);
 
         label.setText(name);
         input.setText(previousValue);
-        input.setId(id);
 
-        //newRow.addView(cellButton);
+        newRow.addView(label);
+        newRow.addView(input);
 
-        //cellTable.addView(newRow);
+        inputTable.addView(newRow);
+        return input;
     }
 }
