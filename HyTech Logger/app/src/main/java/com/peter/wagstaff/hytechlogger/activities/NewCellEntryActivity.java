@@ -2,19 +2,19 @@ package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.peter.wagstaff.hytechlogger.activities.rowinjection.EntryTableLayout;
 import com.peter.wagstaff.hytechlogger.customviews.LocationSpinner;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
-import com.peter.wagstaff.hytechlogger.firebase.UpdateAction;
+import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class NewCellEntryActivity extends AppCompatActivity {
 
     private boolean isNew = true;
-    TableLayout inputTable;
+    EntryTableLayout<EditText> inputTable;
     EditText voltageEditText, voltageRecordedEditText, dischargeEditText, irEditText, dischargeRecordedEditText, lastChargedEditText;
     RadioButton cabinetButton, ht04Button, ht05Button, otherButton;
     LocationSpinner locationSpinner;
@@ -47,13 +47,14 @@ public class NewCellEntryActivity extends AppCompatActivity {
         cellCodeText.setText("Cell " + GlobalVariables.currentCellCode);
 
         inputTable = findViewById(R.id.table_layout);
+        inputTable.setTools(getLayoutInflater(), R.layout.input_text);
 
-        voltageEditText = addInputRow("Voltage", "0");
-        voltageRecordedEditText = addInputRow("Recorded", "0/0/00");
-        dischargeEditText = addInputRow("Discharge Cap", "0");
-        irEditText = addInputRow("Internal Res", "0");
-        dischargeRecordedEditText = addInputRow("Recorded", "0/0/00");
-        lastChargedEditText = addInputRow("Last Charge", "0/0/00");
+        voltageEditText = inputTable.addRow("Voltage", "0", InputType.TYPE_CLASS_NUMBER);
+        voltageRecordedEditText = inputTable.addRow("Recorded", "0/0/00", InputType.TYPE_CLASS_DATETIME);
+        dischargeEditText = inputTable.addRow("Discharge Cap", "0", InputType.TYPE_CLASS_NUMBER);
+        irEditText = inputTable.addRow("Internal Res", "0", InputType.TYPE_CLASS_NUMBER);
+        dischargeRecordedEditText = inputTable.addRow("Recorded", "0/0/00", InputType.TYPE_CLASS_DATETIME);
+        lastChargedEditText = inputTable.addRow("Last Charge", "0/0/00", InputType.TYPE_CLASS_DATETIME);
 
         cabinetButton = findViewById(R.id.radioButton_0);
         ht04Button = findViewById(R.id.radioButton_1);
@@ -64,9 +65,9 @@ public class NewCellEntryActivity extends AppCompatActivity {
 
         final Button enterButton = findViewById(R.id.enter_button);
 
-        FirebaseExchange.onGrab(FirebaseExchange.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", new UpdateAction() {
+        FirebaseExchange.onGrab(FirebaseExchange.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", new DataUpdateAction() {
             @Override
-            public void onUpdate(DataSnapshot snapshot) {
+            public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     try {
                         isNew = false;
@@ -177,22 +178,5 @@ public class NewCellEntryActivity extends AppCompatActivity {
         entryBuilder.addJSONObject(CellDataEntry.LOCATION, cellLocation.toDict());
 
         return entryBuilder.buildEntry();
-    }
-
-    private EditText addInputRow(String name, String previousValue) {
-        TableRow newRow = new TableRow(this);
-        newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-        TextView label = (TextView)getLayoutInflater().inflate(R.layout.input_label, null);
-        EditText input = (EditText)getLayoutInflater().inflate(R.layout.input_text, null);
-
-        label.setText(name);
-        input.setText(previousValue);
-
-        newRow.addView(label);
-        newRow.addView(input);
-
-        inputTable.addView(newRow);
-        return input;
     }
 }

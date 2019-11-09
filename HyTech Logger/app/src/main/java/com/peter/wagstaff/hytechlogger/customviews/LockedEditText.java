@@ -13,10 +13,12 @@ public class LockedEditText extends AppCompatEditText {
 
     public LockedEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initialize();
     }
 
     public LockedEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initialize();
     }
 
     private void initialize() {

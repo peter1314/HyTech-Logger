@@ -22,9 +22,9 @@ public class FirebaseExchange {
         final CountDownLatch done = new CountDownLatch(1);
         final String data[] = {null};
 
-        onGrab(path, new UpdateAction() {
+        onGrab(path, new DataUpdateAction() {
             @Override
-            public void onUpdate(DataSnapshot snapshot) {
+            public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     data[0] = (String) snapshot.getValue();
                     done.countDown();
@@ -38,11 +38,11 @@ public class FirebaseExchange {
         return data[0];
     }
 
-    public static void onGrab(String path, final UpdateAction action) {
+    public static void onGrab(String path, final DataUpdateAction action) {
         ROOT_REF.child(path).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                action.onUpdate(dataSnapshot);
+                action.doAction(dataSnapshot);
             }
 
             @Override
@@ -50,11 +50,11 @@ public class FirebaseExchange {
         });
     }
 
-    public static void onUpdate(String path, final UpdateAction action) {
+    public static void onUpdate(String path, final DataUpdateAction action) {
         ROOT_REF.child(path).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                action.onUpdate(dataSnapshot);
+                action.doAction(dataSnapshot);
             }
 
             @Override

@@ -14,6 +14,9 @@
     <string name="loc_3">Other</string>
     <string name="enter">Enter</string>
 
+    <string name="cell_sig_placeholder">Author: XX/XX/XXXX</string>
+    <string name="new_entry">New Entry</string>
+
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>

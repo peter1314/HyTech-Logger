@@ -10,7 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.dialogboxes.CodeInputDialog;
 import com.google.zxing.Result;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
-import com.peter.wagstaff.hytechlogger.firebase.UpdateAction;
+import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
 import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
@@ -43,9 +43,9 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
                 if(InputVerification.verifyCode(userInput)) {
                     GlobalVariables.currentCellCode = userInput;
 
-                    FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new UpdateAction() {
+                    FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new DataUpdateAction() {
                         @Override
-                        public void onUpdate(DataSnapshot snapshot) {
+                        public void doAction(DataSnapshot snapshot) {
                             if(snapshot.hasChild(userInput)) {
                                 Intent intent = new Intent(ScanActivity.this, ViewCellActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -80,9 +80,9 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
         if(InputVerification.verifyCode(readCode)) {
             GlobalVariables.currentCellCode = readCode;
 
-            FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new UpdateAction() {
+            FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new DataUpdateAction() {
                 @Override
-                public void onUpdate(DataSnapshot snapshot) {
+                public void doAction(DataSnapshot snapshot) {
                     if(snapshot.hasChild(readCode)) {
                         Intent intent = new Intent(ScanActivity.this, ViewCellActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

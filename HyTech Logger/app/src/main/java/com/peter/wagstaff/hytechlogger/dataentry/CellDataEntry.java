@@ -15,6 +15,18 @@ public class CellDataEntry extends DataEntry {
     public static final String CHARGE_DATE = "charge_date";
     public static final String LOCATION = "com/peter/wagstaff/hytechlogger/location";
 
+    public static final String[] ATTRIBUTES = {
+            CODE,
+            ENTRY_DATE,
+            AUTHOR,
+            VOLTAGE,
+            VOLTAGE_DATE,
+            DISCHARGE_CAP,
+            INTERNAL_RES,
+            CAPACITY_DATE,
+            CHARGE_DATE,
+            LOCATION};
+
     public CellDataEntry() {
         super();
     }
