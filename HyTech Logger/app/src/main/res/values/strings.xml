@@ -7,15 +7,16 @@
 
     <string name="enter_code">Enter Code Manually</string>
 
-    <string name="cell_code_placeholder">Cell Code</string>
-    <string name="loc_0">Cabinet</string>
-    <string name="loc_1">HT04</string>
-    <string name="loc_2">HT05</string>
-    <string name="loc_3">Other</string>
+    <string name="data_code_placeholder">Data Code</string>
+    <string name="loc_button_placeholder">Location</string>
     <string name="enter">Enter</string>
 
-    <string name="cell_sig_placeholder">Author: XX/XX/XXXX</string>
+    <string name="entry_sig_placeholder">Author: XX/XX/XXXX</string>
     <string name="new_entry">New Entry</string>
+
+    <string name="voltage_bounds">&lt;&#032;&#032;&#032;Voltage&#032;&#032;&#032;&lt;</string>
+    <string name="capacity_bounds">&lt;&#032;Discharge Cap&#032;&lt;</string>
+    <string name="ir_bounds">&lt;&#032;Int Resistance&#032;&lt;</string>
 
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
@@ -43,7 +44,5 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
-    <string name="voltage_bounds">&lt;&#032;&#032;&#032;Voltage&#032;&#032;&#032;&lt;</string>
-    <string name="capacity_bounds">&lt;&#032;Discharge Cap&#032;&lt;</string>
-    <string name="ir_bounds">&lt;&#032;Int Resistance&#032;&lt;</string>
+
 </resources>

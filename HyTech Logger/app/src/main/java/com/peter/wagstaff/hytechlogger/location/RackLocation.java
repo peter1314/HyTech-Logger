@@ -2,23 +2,23 @@ package com.peter.wagstaff.hytechlogger.location;
 
 import org.json.JSONException;
 
-public class OtherLocation extends Location {
+public class RackLocation extends Location {
 
-    public static final String TYPE = "other";
+    public static final String TYPE = "rack";
     public static final String[] OPTIONS = getStaticOptions();
 
-    public OtherLocation() {
+    public RackLocation() {
         super();
         tags.put("type", TYPE);
     }
 
-    public OtherLocation(String locationAsJSONString) throws JSONException {
+    public RackLocation(String locationAsJSONString) throws JSONException {
         super(locationAsJSONString);
     }
 
     @Override
     public void addSpinnerInput(String input) {
-        tags.put("other", input);
+        tags.put("rack", input);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class OtherLocation extends Location {
 
     @Override
     public int getCurrentOption() {
-        String currentAsOption = tags.get("other").toString();
+        String currentAsOption = tags.get("rack").toString();
         for(int i = 0; i < OPTIONS.length; i++) {
             if(currentAsOption.equals(OPTIONS[i])) return i;
         }
@@ -37,11 +37,11 @@ public class OtherLocation extends Location {
 
     @Override
     public String fancyPrint() {
-        return tags.get("other").toString();
+        return tags.get("rack").toString();
     }
 
     private static String[] getStaticOptions() {
-        String[] optionArray  = {"Shop Space", "Lost", "Other"};
+        String[] optionArray  = {"Rack Top", "Rack Bottom", "Rack Side"};
         return optionArray;
     }
 }

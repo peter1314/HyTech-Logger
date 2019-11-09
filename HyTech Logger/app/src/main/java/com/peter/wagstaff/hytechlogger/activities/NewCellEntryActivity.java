@@ -1,164 +1,38 @@
 package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.text.InputType;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.activities.rowinjection.EntryTableLayout;
-import com.peter.wagstaff.hytechlogger.customviews.LocationSpinner;
-import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
-import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
-import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
-import com.peter.wagstaff.hytechlogger.GlobalVariables;
+import com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton;
+import com.peter.wagstaff.hytechlogger.dataentry.Attribute;
 import com.peter.wagstaff.hytechlogger.R;
-import org.json.JSONException;
-import java.util.Calendar;
+import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import com.peter.wagstaff.hytechlogger.location.AccumulatorLocation;
 import com.peter.wagstaff.hytechlogger.location.CabinetLocation;
 import com.peter.wagstaff.hytechlogger.location.Location;
-import com.peter.wagstaff.hytechlogger.location.LocationBuilder;
 import com.peter.wagstaff.hytechlogger.location.OtherLocation;
-import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
-import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntryBuilder;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class NewCellEntryActivity extends AppCompatActivity {
+public class NewCellEntryActivity extends NewDataEntryActivity {
 
-    private boolean isNew = true;
-    EntryTableLayout<EditText> inputTable;
-    EditText voltageEditText, voltageRecordedEditText, dischargeEditText, irEditText, dischargeRecordedEditText, lastChargedEditText;
-    RadioButton cabinetButton, ht04Button, ht05Button, otherButton;
-    LocationSpinner locationSpinner;
+    private LocationRadioButton cabinetButton, ht04Button, ht05Button, otherButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_cell_entry);
-
-        TextView cellCodeText = findViewById(R.id.cell_code_textView);
-        cellCodeText.setText("Cell " + GlobalVariables.currentCellCode);
-
-        inputTable = findViewById(R.id.table_layout);
-        inputTable.setTools(getLayoutInflater(), R.layout.input_text);
-
-        voltageEditText = inputTable.addRow("Voltage", "0", InputType.TYPE_CLASS_NUMBER);
-        voltageRecordedEditText = inputTable.addRow("Recorded", "0/0/00", InputType.TYPE_CLASS_DATETIME);
-        dischargeEditText = inputTable.addRow("Discharge Cap", "0", InputType.TYPE_CLASS_NUMBER);
-        irEditText = inputTable.addRow("Internal Res", "0", InputType.TYPE_CLASS_NUMBER);
-        dischargeRecordedEditText = inputTable.addRow("Recorded", "0/0/00", InputType.TYPE_CLASS_DATETIME);
-        lastChargedEditText = inputTable.addRow("Last Charge", "0/0/00", InputType.TYPE_CLASS_DATETIME);
-
-        cabinetButton = findViewById(R.id.radioButton_0);
-        ht04Button = findViewById(R.id.radioButton_1);
-        ht05Button = findViewById(R.id.radioButton_2);
-        otherButton = findViewById(R.id.radioButton_3);
-
-        locationSpinner = findViewById(R.id.spinner);
-
-        final Button enterButton = findViewById(R.id.enter_button);
-
-        FirebaseExchange.onGrab(FirebaseExchange.BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", new DataUpdateAction() {
-            @Override
-            public void doAction(DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    try {
-                        isNew = false;
-                        populateFieldsFromEntry(new CellDataEntry(snapshot.getValue().toString()));
-                    } catch (JSONException e) {}
-                }
-            }
-        });
-
-        cabinetButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { locationSpinner.populate(CabinetLocation.OPTIONS);}
-        });
-        ht04Button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { locationSpinner.populate(AccumulatorLocation.OPTIONS); }});
-        ht05Button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { locationSpinner.populate(AccumulatorLocation.OPTIONS); }});
-        otherButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { locationSpinner.populate(OtherLocation.OPTIONS); }});
-
-        enterButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                CellDataEntry entry = buildEntryFromInputs();
-                if(entry == null) return;
-
-                String timeStamp = InputFormating.ORDER_DATE_FORMAT.format(Calendar.getInstance().getTime());
-                FirebaseExchange.addDataEntry(timeStamp, entry);
-
-                if(isNew){
-                    Intent intent = new Intent(NewCellEntryActivity.this, ViewCellActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    onBackPressed();
-                }
-            }
-        });
+    int getContentView() {
+        return R.layout.activity_new_data_entry;
     }
 
-    private void populateFieldsFromEntry(CellDataEntry entry) {
-        voltageEditText.setText(entry.getData(CellDataEntry.VOLTAGE));
-        voltageRecordedEditText.setText((entry.getData(CellDataEntry.VOLTAGE_DATE)));
-        dischargeEditText.setText(entry.getData(CellDataEntry.DISCHARGE_CAP));
-        irEditText.setText(entry.getData(CellDataEntry.INTERNAL_RES));
-        dischargeRecordedEditText.setText(entry.getData(CellDataEntry.CAPACITY_DATE));
-        lastChargedEditText.setText(entry.getData(CellDataEntry.CHARGE_DATE));
+    @Override
+    String getType() { return CellDataEntry.CODE.DISPLAY; }
 
-        Location location = LocationBuilder.buildLocation(entry.getData(CellDataEntry.LOCATION));
+    @Override
+    String getBranch() { return CellDataEntry.BRANCH; }
 
-        if(location.getType().equals("cabinet")) {
-            cabinetButton.setChecked(true);
-        } else if(location.getType().equals("accumulator")) {
-            if(((AccumulatorLocation) location).getIteration() == 4) {
-                ht04Button.setChecked(true);
-            } else if(((AccumulatorLocation) location).getIteration() == 5) {
-                ht05Button.setChecked(true);
-            }
-        } else if(location.getType().equals("other")) {
-            otherButton.setChecked(true);
-        }
-        locationSpinner.populate(location.getOptions());
-        locationSpinner.setSelection(location.getCurrentOption());
-    }
+    @Override
+    Attribute[] getRowAttributes() { return CellDataEntry.ROW_ATTRIBUTES; }
 
-    private CellDataEntry buildEntryFromInputs() {
-        CellDataEntryBuilder entryBuilder = new CellDataEntryBuilder();
+    @Override
+    Intent nextIntent() { return new Intent(NewCellEntryActivity.this, ViewCellActivity.class); }
 
-        entryBuilder.addString(CellDataEntry.CODE, GlobalVariables.currentCellCode);
-        entryBuilder.addString(CellDataEntry.ENTRY_DATE, InputFormating.READ_DATE_FORMAT.format(Calendar.getInstance().getTime()));
-        entryBuilder.addString(CellDataEntry.AUTHOR, FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-
-        if (!entryBuilder.addDecimal(CellDataEntry.VOLTAGE, String.valueOf(voltageEditText.getText()))) {
-            Toast.makeText(getApplicationContext(), "Invalid Voltage", Toast.LENGTH_SHORT).show();
-            return null;
-        } else if (!entryBuilder.addDate(CellDataEntry.VOLTAGE_DATE, String.valueOf(voltageRecordedEditText.getText()))) {
-            Toast.makeText(getApplicationContext(), "Invalid Voltage Date", Toast.LENGTH_SHORT).show();
-            return null;
-        } else if (!entryBuilder.addDecimal(CellDataEntry.DISCHARGE_CAP, String.valueOf(dischargeEditText.getText()))) {
-            Toast.makeText(getApplicationContext(), "Invalid Discharge Capacity", Toast.LENGTH_SHORT).show();
-            return null;
-        } else if (!entryBuilder.addDecimal(CellDataEntry.INTERNAL_RES, String.valueOf(irEditText.getText()))) {
-            Toast.makeText(getApplicationContext(), "Invalid Internal Resistance", Toast.LENGTH_SHORT).show();
-            return null;
-        } else if (!entryBuilder.addDate(CellDataEntry.CAPACITY_DATE, String.valueOf(dischargeRecordedEditText.getText()))) {
-            Toast.makeText(getApplicationContext(), "Invalid Discharge Capacity Date", Toast.LENGTH_SHORT).show();
-            return null;
-        } else if (!entryBuilder.addDate(CellDataEntry.CHARGE_DATE, String.valueOf(lastChargedEditText.getText()))) {
-            Toast.makeText(getApplicationContext(), "Invalid Last Charged Date", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-
+    @Override
+    Location buildLocation() {
         Location cellLocation;
 
         if(cabinetButton.isChecked()) {
@@ -170,13 +44,44 @@ public class NewCellEntryActivity extends AppCompatActivity {
         } else if(otherButton.isChecked()) {
             cellLocation = new OtherLocation();
         } else {
-            Toast.makeText(getApplicationContext(), "Invalid Location", Toast.LENGTH_SHORT).show();
             return null;
         }
 
         cellLocation.addSpinnerInput(locationSpinner.getSelectedItem().toString());
-        entryBuilder.addJSONObject(CellDataEntry.LOCATION, cellLocation.toDict());
+        return cellLocation;
+    }
 
-        return entryBuilder.buildEntry();
+    @Override
+    void addLocationButtons() {
+        cabinetButton = findViewById(R.id.radioButton_0);
+        cabinetButton.setOptions(CabinetLocation.OPTIONS);
+        locationRadioButtions.add(cabinetButton);
+
+        ht04Button = findViewById(R.id.radioButton_1);
+        ht04Button.setOptions(AccumulatorLocation.OPTIONS);
+        locationRadioButtions.add(ht04Button);
+
+        ht05Button = findViewById(R.id.radioButton_2);
+        ht05Button.setOptions(AccumulatorLocation.OPTIONS);
+        locationRadioButtions.add(ht05Button);
+
+        otherButton = findViewById(R.id.radioButton_3);
+        otherButton.setOptions(OtherLocation.OPTIONS);
+        locationRadioButtions.add(otherButton);
+    }
+
+    @Override
+    void updateLocationButtons(Location location) {
+        if(location.getType().equals("cabinet")) {
+            cabinetButton.setChecked(true);
+        } else if(location.getType().equals("accumulator")) {
+            if(((AccumulatorLocation) location).getIteration() == 4) {
+                ht04Button.setChecked(true);
+            } else if(((AccumulatorLocation) location).getIteration() == 5) {
+                ht05Button.setChecked(true);
+            }
+        } else if(location.getType().equals("other")) {
+            otherButton.setChecked(true);
+        }
     }
 }

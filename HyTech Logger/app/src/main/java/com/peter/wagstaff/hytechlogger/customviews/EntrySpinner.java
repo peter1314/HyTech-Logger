@@ -36,7 +36,7 @@ public class EntrySpinner extends AppCompatSpinner {
             CellDataEntry curEntry = null;
             try {
                 curEntry = new CellDataEntry(child.getValue().toString());
-                entryDates.add(0, curEntry.getData(CellDataEntry.ENTRY_DATE));
+                entryDates.add(0, curEntry.getData(CellDataEntry.ENTRY_DATE.toString()));
             } catch (JSONException e) {}
         }
         entryDates.remove(0);

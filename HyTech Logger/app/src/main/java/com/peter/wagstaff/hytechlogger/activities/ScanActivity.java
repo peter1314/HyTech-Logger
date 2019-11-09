@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
+import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import com.peter.wagstaff.hytechlogger.dialogboxes.CodeInputDialog;
 import com.google.zxing.Result;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
@@ -41,9 +42,9 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
             @Override
             public boolean onPositiveClicked(final String userInput) {
                 if(InputVerification.verifyCode(userInput)) {
-                    GlobalVariables.currentCellCode = userInput;
+                    GlobalVariables.currentEntryCode = userInput;
 
-                    FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new DataUpdateAction() {
+                    FirebaseExchange.onGrab(FirebaseExchange.TREE + "/" + CellDataEntry.BRANCH, new DataUpdateAction() {
                         @Override
                         public void doAction(DataSnapshot snapshot) {
                             if(snapshot.hasChild(userInput)) {
@@ -78,9 +79,9 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
         final String readCode = result.getText();
 
         if(InputVerification.verifyCode(readCode)) {
-            GlobalVariables.currentCellCode = readCode;
+            GlobalVariables.currentEntryCode = readCode;
 
-            FirebaseExchange.onGrab(FirebaseExchange.BRANCH, new DataUpdateAction() {
+            FirebaseExchange.onGrab(FirebaseExchange.TREE, new DataUpdateAction() {
                 @Override
                 public void doAction(DataSnapshot snapshot) {
                     if(snapshot.hasChild(readCode)) {

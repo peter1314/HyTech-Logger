@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/cell_code_placeholder"
+        android:text="@string/data_code_placeholder"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size_header"
         android:textStyle="bold"
@@ -48,40 +48,40 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <RadioButton
+                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
                     android:id="@+id/radioButton_0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:text="@string/loc_0"
+                    android:text="@string/loc_button_placeholder"
                     android:textColor="#666666" />
 
-                <RadioButton
+                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
                     android:id="@+id/radioButton_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:text="@string/loc_1"
+                    android:text="@string/loc_button_placeholder"
                     android:textColor="#666666" />
 
-                <RadioButton
+                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
                     android:id="@+id/radioButton_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
-                    android:text="@string/loc_2"
+                    android:text="@string/loc_button_placeholder"
                     android:textColor="#666666" />
 
-                <RadioButton
+                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
                     android:id="@+id/radioButton_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4sp"
                     android:layout_marginRight="4sp"
-                    android:text="@string/loc_3"
+                    android:text="@string/loc_button_placeholder"
                     android:textColor="#666666" />
 
             </RadioGroup>

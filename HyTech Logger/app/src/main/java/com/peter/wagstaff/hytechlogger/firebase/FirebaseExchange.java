@@ -5,37 +5,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
+import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import com.peter.wagstaff.hytechlogger.dataentry.DataEntry;
-import java.util.concurrent.CountDownLatch;
+import com.peter.wagstaff.hytechlogger.dataentry.StockDataEntry;
+import org.json.JSONException;
 import androidx.annotation.NonNull;
 
 public class FirebaseExchange {
 
     public static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
-    public static final String BRANCH = "CELLS2";
+    public static final String TREE = "HYTECH_MAIN";
 
     public static void setData(String path, String data) {
         ROOT_REF.child(path).setValue(data);
-    }
-
-    public static String getData(String path) {
-        final CountDownLatch done = new CountDownLatch(1);
-        final String data[] = {null};
-
-        onGrab(path, new DataUpdateAction() {
-            @Override
-            public void doAction(DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    data[0] = (String) snapshot.getValue();
-                    done.countDown();
-                }
-            }
-        });
-
-        try {
-            done.await(); //it will wait till the response is received from firebase.
-        } catch(InterruptedException e) {}
-        return data[0];
     }
 
     public static void onGrab(String path, final DataUpdateAction action) {
@@ -63,7 +45,18 @@ public class FirebaseExchange {
     }
 
     public static void addDataEntry(String timeStamp, DataEntry entry) {
-        setData(BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/LAST", entry.toString());
-        setData(BRANCH + "/" + GlobalVariables.currentCellCode + "/LOGS/" + timeStamp, entry.toString());
+        setData(TREE + "/" + entry.getBranch() + "/" + GlobalVariables.currentEntryCode + "/LOGS/LAST", entry.toString());
+        setData(TREE + "/" + entry.getBranch() + "/" + GlobalVariables.currentEntryCode + "/LOGS/" + timeStamp, entry.toString());
+    }
+
+    public static DataEntry entryFromSnapshot(String branch, DataSnapshot snapshot) {
+        try {
+            if(branch.equals(CellDataEntry.BRANCH)) {
+                return new CellDataEntry(snapshot.getValue().toString());
+            } else if(branch.equals(StockDataEntry.BRANCH)) {
+                return new StockDataEntry(snapshot.getValue().toString());
+            }
+        } catch (JSONException e) {}
+        return null;
     }
 }

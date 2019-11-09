@@ -116,7 +116,7 @@ public class ViewCellsActivity extends AppCompatActivity {
         cellTable.setListnerAction(new ListnerAction<DataEntry>() {
             @Override
             public void doAction(DataEntry entry) {
-                GlobalVariables.currentCellCode = entry.getData(CellDataEntry.CODE);
+                GlobalVariables.currentEntryCode = entry.getData(CellDataEntry.CODE.toString());
                 startActivity(new Intent(ViewCellsActivity.this, ViewCellActivity.class));
             }
         });
@@ -125,7 +125,7 @@ public class ViewCellsActivity extends AppCompatActivity {
     }
 
     private void getAllCells() {
-        FirebaseExchange.onUpdate(FirebaseExchange.BRANCH, new DataUpdateAction() {
+        FirebaseExchange.onUpdate(FirebaseExchange.TREE, new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -146,10 +146,10 @@ public class ViewCellsActivity extends AppCompatActivity {
 
     private void filterCells() {
         DataEntryFilter filter = new DataEntryFilter();
-        filter.addTest(new LocationTest(CellDataEntry.LOCATION, validLocationConfigs));
-        filter.addTest(new DecimalTest(CellDataEntry.VOLTAGE, minVoltageEditText.getValue(), maxVoltageEditText.getValue()));
-        filter.addTest(new DecimalTest(CellDataEntry.DISCHARGE_CAP, minCapacityEditText.getValue(), maxCapacityEditText.getValue()));
-        filter.addTest(new DecimalTest(CellDataEntry.INTERNAL_RES, minIREditText.getValue(), maxIREditText.getValue()));
+        filter.addTest(new LocationTest(CellDataEntry.LOCATION.toString(), validLocationConfigs));
+        filter.addTest(new DecimalTest(CellDataEntry.VOLTAGE.toString(), minVoltageEditText.getValue(), maxVoltageEditText.getValue()));
+        filter.addTest(new DecimalTest(CellDataEntry.DISCHARGE_CAP.toString(), minCapacityEditText.getValue(), maxCapacityEditText.getValue()));
+        filter.addTest(new DecimalTest(CellDataEntry.INTERNAL_RES.toString(), minIREditText.getValue(), maxIREditText.getValue()));
 
         updateTable(filter.filterDataEntries(allCells));
     }

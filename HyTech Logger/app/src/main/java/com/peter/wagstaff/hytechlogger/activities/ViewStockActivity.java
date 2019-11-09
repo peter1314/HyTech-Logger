@@ -3,9 +3,9 @@ package com.peter.wagstaff.hytechlogger.activities;
 import android.content.Intent;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.dataentry.Attribute;
-import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
+import com.peter.wagstaff.hytechlogger.dataentry.StockDataEntry;
 
-public class ViewCellActivity extends ViewDataActivity {
+public class ViewStockActivity extends ViewDataActivity {
 
     @Override
     int getContentView() {
@@ -14,21 +14,21 @@ public class ViewCellActivity extends ViewDataActivity {
 
     @Override
     String getType() {
-        return CellDataEntry.CODE.DISPLAY;
+        return StockDataEntry.CODE.DISPLAY;
     }
 
     @Override
     String getBranch() {
-        return CellDataEntry.BRANCH;
+        return StockDataEntry.BRANCH;
     }
 
     @Override
     Attribute[] getRowAttributes() {
-        return CellDataEntry.ROW_ATTRIBUTES;
+        return StockDataEntry.ROW_ATTRIBUTES;
     }
 
     @Override
     Intent nextIntent() {
-        return new Intent(ViewCellActivity.this, NewCellEntryActivity.class);
+        return new Intent(ViewStockActivity.this, NewStockEntryActivity.class);
     }
 }

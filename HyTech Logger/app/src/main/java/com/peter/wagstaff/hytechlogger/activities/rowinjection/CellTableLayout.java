@@ -35,7 +35,7 @@ public class CellTableLayout extends TableLayout  {
         newRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
         Button cellButton = new Button(getContext());
-        cellButton.setText(entry.getData(CellDataEntry.CODE));
+        cellButton.setText(entry.getData(CellDataEntry.CODE.toString()));
         cellButton.setWidth(getWidth());
         cellButton.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight), PorterDuff.Mode.MULTIPLY);
         cellButton.setTextColor(ContextCompat.getColor(getContext(), R.color.pure_white));

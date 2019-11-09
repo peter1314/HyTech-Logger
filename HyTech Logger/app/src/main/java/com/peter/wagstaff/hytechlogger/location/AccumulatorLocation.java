@@ -5,13 +5,14 @@ import org.json.JSONException;
 
 public class AccumulatorLocation extends Location {
 
+    public static final String TYPE = "accumulator";
     public static final int SEGMENT_COUNT = 4;
     public static final int SEGMENT_SIZE = 18;
     public static final String[] OPTIONS = getStaticOptions();
 
     public AccumulatorLocation() {
         super();
-        tags.put("type", "accumulator");
+        tags.put("type", TYPE);
     }
 
     public AccumulatorLocation(int iteration) {

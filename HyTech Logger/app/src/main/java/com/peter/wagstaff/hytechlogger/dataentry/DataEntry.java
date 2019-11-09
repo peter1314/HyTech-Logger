@@ -2,12 +2,17 @@ package com.peter.wagstaff.hytechlogger.dataentry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public abstract class DataEntry {
+
+    public static final Attribute
+            CODE = new Attribute("code", "None", "#"),
+            ENTRY_DATE = new Attribute("entry_date", "", "00/00/0000"),
+            AUTHOR = new Attribute("author", "By", "Anon"),
+            LOCATION = new Attribute("location", "Location", "None");
 
     //Stores pieces of data in map
     private Map<String, Object>  dataMap;
@@ -28,6 +33,11 @@ public abstract class DataEntry {
             dataMap.put(key, entryAsJSON.get(key));
         }
     }
+
+
+    public abstract String getBranch();
+
+    public abstract Attribute[] rowAttributes();
 
     //returns the contents of the data entry as a JSON object
     public JSONObject toDict() throws JSONException {
@@ -73,7 +83,7 @@ public abstract class DataEntry {
         if(dataMap.containsKey(key)) {
             return dataMap.get(key).toString();
         }
-        return null;
+        return "";
     }
 
     public JSONObject getJSONObject(String key) {

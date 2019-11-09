@@ -1,6 +1,6 @@
 package com.peter.wagstaff.hytechlogger;
 
 public class GlobalVariables {
-    public static String currentCellCode;
+    public static String currentEntryCode;
     public static boolean justLoggedOut = false;
 }

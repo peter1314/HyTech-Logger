@@ -5,12 +5,13 @@ import org.json.JSONException;
 
 public class CabinetLocation extends Location {
 
+    public static final String TYPE = "cabinet";
     public static final int SHELF_COUNT = 9;
     public static final String[] OPTIONS = getStaticOptions();
 
     public CabinetLocation() {
         super();
-        tags.put("type", "cabinet");
+        tags.put("type", TYPE);
     }
 
     public CabinetLocation(String locationAsJSONString) throws JSONException {
