@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ViewDatasActivities.ViewCellsActivity">
+    tools:context=".activities.viewItemsPresenters.ViewCellsPresenter">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,11 +49,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.peter.wagstaff.hytechlogger.customviews.holders.DataTableLayout
+                <com.peter.wagstaff.hytechlogger.customFragments.holders.DataTableLayout
                     android:id="@+id/tableLayout"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:padding="10dip"></com.peter.wagstaff.hytechlogger.customviews.holders.DataTableLayout>
+                    android:padding="10dip"></com.peter.wagstaff.hytechlogger.customFragments.holders.DataTableLayout>
 
             </LinearLayout>
 

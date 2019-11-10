@@ -2,16 +2,29 @@ package com.peter.wagstaff.hytechlogger.location;
 
 import org.json.JSONException;
 
+//Represents an unspecified or vague location
 public class OtherLocation extends Location {
 
+    //Value of the special type tag for an OtherLocation
     public static final String TYPE = "other";
+
+    //Array of the possible other locations
     public static final String[] OPTIONS = getStaticOptions();
 
+    /**
+     * Declares a OtherLocation
+     */
     public OtherLocation() {
         super();
         tags.put(Location.TYPE_KEY, TYPE);
     }
 
+    /**
+     * Create a new OtherLocation from a Location as a JSON String
+     * The JSON String should represent an OtherLocation
+     * @param locationAsJSONString A Location represented by a JSON String
+     * @throws JSONException
+     */
     public OtherLocation(String locationAsJSONString) throws JSONException {
         super(locationAsJSONString);
     }
@@ -40,6 +53,10 @@ public class OtherLocation extends Location {
         return tags.get("other").toString();
     }
 
+    /**
+     * Used to initialize the options of an OtherLocation
+     * @return The options of an OtherLocation
+     */
     private static String[] getStaticOptions() {
         String[] optionArray  = {"Shop Space", "Lost", "Other"};
         return optionArray;

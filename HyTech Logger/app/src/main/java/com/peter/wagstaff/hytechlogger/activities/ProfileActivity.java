@@ -13,8 +13,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
-import com.peter.wagstaff.hytechlogger.customviews.dialogboxes.InputBox;
-import com.peter.wagstaff.hytechlogger.customviews.dialogboxes.PasswordInputBox;
+import com.peter.wagstaff.hytechlogger.customFragments.dialogs.InputBox;
+import com.peter.wagstaff.hytechlogger.customFragments.dialogs.PasswordInputBox;
 import com.peter.wagstaff.hytechlogger.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
         final InputBox usernameInputDialog = new InputBox(ProfileActivity.this, "Enter New Username", "", "") {
             @Override
             public boolean onPositiveClicked(String userInput) {
-                if(!InputVerification.checkUserNameRequirements(userInput, getApplicationContext())) {return false;}
+                if(!InputVerification.verifyUserName(userInput, getApplicationContext())) {return false;}
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(userInput).build();
                 user.updateProfile(profileUpdates);
@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public boolean onPositiveClicked(String userInput) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if(!InputVerification.checkUserPasswordRequirements(userInput, getApplicationContext())) {return false;}
+                if(!InputVerification.verifyPassword(userInput, getApplicationContext())) {return false;}
 
                 user.updatePassword(userInput).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -93,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(ProfileActivity.this, "Your profile is deleted", Toast.LENGTH_SHORT).show();
                                         GlobalVariables.justLoggedOut = true;
-                                        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                        startActivity(new Intent(ProfileActivity.this, LoginPresenter.class));
                                         finish();
                                     } else {
                                         Toast.makeText(ProfileActivity.this, "Failed to delete your account, try signing out and back in", Toast.LENGTH_SHORT).show();
@@ -109,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 GlobalVariables.justLoggedOut = true;
-                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                startActivity(new Intent(ProfileActivity.this, LoginPresenter.class));
                 finish();
             }
         });

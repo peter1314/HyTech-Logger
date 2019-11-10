@@ -14,7 +14,7 @@ package="com.peter.wagstaff.hytechlogger">
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
-    <activity android:name="com.peter.wagstaff.hytechlogger.activities.LoginActivity"
+    <activity android:name="com.peter.wagstaff.hytechlogger.activities.LoginPresenter"
         android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -23,70 +23,70 @@ package="com.peter.wagstaff.hytechlogger">
     </activity>
 
     <activity
-        android:name="com.peter.wagstaff.hytechlogger.activities.MainActivity"
+        android:name="com.peter.wagstaff.hytechlogger.activities.MainPresenter"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:theme="@style/SecondAppTheme">
     </activity>
 
     <activity
-        android:name=".activities.ScanDataActivities.ScanCellActivity"
+        android:name=".activities.scanItemPresenters.ScanCellPresenter"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
     <activity
-        android:name=".activities.ScanDataActivities.ScanStockActivity"
+        android:name=".activities.scanItemPresenters.ScanStockPresenter"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
 
     <activity
-        android:name=".activities.NewDataEntryActivities.NewCellEntryActivity"
+        android:name=".activities.newItemEntryPresenters.NewCellEntryPresenter"
         android:screenOrientation="portrait"
         android:theme="@style/SecondAppTheme"
         android:label="@string/app_name">
     </activity>
     <activity
-        android:name=".activities.NewDataEntryActivities.NewStockEntryActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/SecondAppTheme"
-        android:label="@string/app_name">
-    </activity>
-
-    <activity
-        android:name=".activities.ViewDataActivities.ViewCellActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/SecondAppTheme"
-        android:label="@string/app_name">
-    </activity>
-    <activity
-        android:name=".activities.ViewDataActivities.ViewStockActivity"
+        android:name=".activities.newItemEntryPresenters.NewStockEntryPresenter"
         android:screenOrientation="portrait"
         android:theme="@style/SecondAppTheme"
         android:label="@string/app_name">
     </activity>
 
     <activity
-        android:name=".activities.ViewDatasActivities.ViewCellsActivity"
+        android:name=".activities.viewItemPresenters.ViewCellPresenter"
+        android:screenOrientation="portrait"
+        android:theme="@style/SecondAppTheme"
+        android:label="@string/app_name">
+    </activity>
+    <activity
+        android:name=".activities.viewItemPresenters.ViewStockPresenter"
+        android:screenOrientation="portrait"
+        android:theme="@style/SecondAppTheme"
+        android:label="@string/app_name">
+    </activity>
+
+    <activity
+        android:name=".activities.viewItemsPresenters.ViewCellsPresenter"
         android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:theme="@style/SecondAppTheme">
     </activity>
     <activity
-        android:name=".activities.ViewDatasActivities.ViewStocksActivity"
+        android:name=".activities.viewItemsPresenters.ViewStocksPresenter"
         android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:theme="@style/SecondAppTheme">
     </activity>
 
     <activity
-        android:name="com.peter.wagstaff.hytechlogger.activities.SignupActivity"
+        android:name="com.peter.wagstaff.hytechlogger.activities.SignupPresenter"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
 
     <activity
-        android:name="com.peter.wagstaff.hytechlogger.activities.ResetPasswordActivity"
+        android:name="com.peter.wagstaff.hytechlogger.activities.ResetPasswordPresenter"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
