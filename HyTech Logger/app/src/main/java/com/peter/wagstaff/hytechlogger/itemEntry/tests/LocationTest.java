@@ -1,5 +1,6 @@
 package com.peter.wagstaff.hytechlogger.itemEntry.tests;
 
+import java.util.HashSet;
 import java.util.Set;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.location.Location;
@@ -11,25 +12,33 @@ public class LocationTest extends AttributeTest {
     //Set of valid LocationConfigurations
     private final Set<LocationConfiguration> VALID_CONFIGS;
 
+    public LocationTest(String key, LocationConfiguration validLocationConfig) {
+        super(key);
+        VALID_CONFIGS = new HashSet<>();
+        VALID_CONFIGS.add(validLocationConfig);
+    }
+
     /**
      * Declare LocationTest
      * @param key Key of Attribute to test, should be a Location Attribute
-     * @param validLocations Set of LocationConfigurations to test against
+     * @param validLocationConfigs Set of LocationConfigurations to test against
      */
-    public LocationTest(String key, Set<LocationConfiguration> validLocations) {
+    public LocationTest(String key, Set<LocationConfiguration> validLocationConfigs) {
         super(key);
-        this.VALID_CONFIGS = validLocations;
+        VALID_CONFIGS = validLocationConfigs;
     }
 
-    @Override
-    public boolean TestDataEntry(ItemEntry itemEntry) {
-
-        Location location = Location.buildLocation(itemEntry.getData(KEY));
-
+    public boolean testLocation(Location location) {
         for(LocationConfiguration validConfig: VALID_CONFIGS) {
             if(validConfig.checkCompliance(location)) { return true; }
         }
         return false;
+    }
+
+    @Override
+    public boolean testDataEntry(ItemEntry itemEntry) {
+        return testLocation(Location.buildLocation(itemEntry.getData(KEY)));
+
     }
 
 

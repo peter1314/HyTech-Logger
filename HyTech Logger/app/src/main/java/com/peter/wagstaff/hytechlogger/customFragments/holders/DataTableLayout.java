@@ -10,8 +10,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
-import com.peter.wagstaff.hytechlogger.itemEntry.CellEntry;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 
 import androidx.core.content.ContextCompat;
 
@@ -37,7 +37,7 @@ public class DataTableLayout extends TableLayout  {
         newRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
         Button dataButton = new Button(getContext());
-        dataButton.setText(entry.getData(CellEntry.CODE.KEY));
+        dataButton.setText(entry.getData(Attributes.CODE.KEY));
         dataButton.setWidth(getWidth());
         dataButton.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight), PorterDuff.Mode.MULTIPLY);
         dataButton.setTextColor(ContextCompat.getColor(getContext(), R.color.pure_white));

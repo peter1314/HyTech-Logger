@@ -1,5 +1,6 @@
 package com.peter.wagstaff.hytechlogger.itemEntry;
 
+import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -7,19 +8,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 //Represents an entry on a Item, these items are stores in the Firebase database under the LOGS of the Item
-public abstract class ItemEntry {
+public class ItemEntry {
 
-    private  static final String BRANCH = "ITEMS";
-
-    //Generic Attributes which all ItemEntries should have
-    public static final Attribute
-            CODE = new Attribute("code", "Item", "#"), //Subclasses should change "Item" to reflect their type
-            ENTRY_DATE = new Attribute("entry_date", "", "00/00/0000"),
-            AUTHOR = new Attribute("author", "By", "Anon"),
-            LOCATION = new Attribute("location", "Location", "None");
-
-    public static final Attribute[] ROW_ATTRIBUTES = {};
-
+    public final ItemType TYPE;
 
     //Stores the ItemEntry's data in a Map
     private Map<String, Object>  dataMap;
@@ -27,7 +18,8 @@ public abstract class ItemEntry {
     /**
      * Declare ItemEntry
      */
-    public ItemEntry() {
+    public ItemEntry(ItemType type) {
+        TYPE = type;
         dataMap = new HashMap();
     }
 
@@ -35,8 +27,8 @@ public abstract class ItemEntry {
      * Create an ItemEntry from a String representing a JSONObject representing an ItemEntry
      * @param entryAsJSONString String representing a JSONObject
      */
-    public ItemEntry(String entryAsJSONString) {
-        this();
+    public ItemEntry(ItemType type, String entryAsJSONString) {
+        this(type);
 
         try {
             JSONObject entryAsJSON = new JSONObject(entryAsJSONString);
@@ -49,6 +41,32 @@ public abstract class ItemEntry {
             }
         } catch(JSONException e) {}
     }
+
+    public ItemType getType() {
+        return TYPE;
+    }
+/*
+    *//**
+     * Returns the type of the ItemEntry
+     * @return the type of the ItemEntry
+     *//*
+    public String getType() { return Type.getInstance().CODE.DISPLAY; }
+
+    *//**
+     * Gets the branch of the Firebase database ItemEntries of this type are stored in
+     * @return The branch of the ItemEntry
+     *//*
+    public String getBranch() {
+        return Type.getInstance().BRANCH;
+    }
+
+    *//**
+     * Returns the row attributes of the ItemEntry, dynamically entered and displayed
+     * @return List of Attributes to be dynamically handled
+     *//*
+    public Attribute[] getRowAttributes() {
+        return Type.getInstance().ROW_ATTRIBUTES;
+    }*/
 
     //returns the contents of the data entry as a JSON object
 

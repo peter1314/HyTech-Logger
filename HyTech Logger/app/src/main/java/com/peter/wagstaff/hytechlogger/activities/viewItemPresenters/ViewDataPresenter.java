@@ -17,6 +17,8 @@ import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
+import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.location.Location;
 
 import java.util.LinkedList;
@@ -38,10 +40,10 @@ public abstract class ViewDataPresenter extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
+        setContentView(R.layout.activity_view_data);
 
         cellCodeText = findViewById(R.id.cell_code_textView);
-        cellCodeText.setText(getType() + " " + GlobalVariables.currentEntryCode);
+        cellCodeText.setText(getType().NAME + " " + GlobalVariables.currentEntryCode);
         entryText = findViewById(R.id.entry_textView);
         displayTable = findViewById(R.id.table_layout);
         displayTable.setTools(getLayoutInflater(), R.layout.fragment_locked_input_text);
@@ -49,13 +51,13 @@ public abstract class ViewDataPresenter extends AppCompatActivity {
         entrySpinner = findViewById(R.id.spinner);
         newEntryButton = findViewById(R.id.new_entry_button);
 
-        cellRowAttributes = getRowAttributes();
+        cellRowAttributes = getType().ROW_ATTRIBUTES;
         for(Attribute attribute: cellRowAttributes) {
             rowEditTexts.add(displayTable.addRow(attribute.DISPLAY));
         }
-        locationEditText = displayTable.addRow(ItemEntry.LOCATION.DISPLAY);
+        locationEditText = displayTable.addRow(Attributes.LOCATION.DISPLAY);
 
-        branch = getBranch();
+        branch = getType().BRANCH;
         FirebaseExchange.onUpdate( branch + "/" + GlobalVariables.currentEntryCode + "/LOGS", new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
@@ -95,21 +97,15 @@ public abstract class ViewDataPresenter extends AppCompatActivity {
     }
 
     private void populateFieldsFromEntry(ItemEntry entry) {
-        entryText.setText(entry.getData(ItemEntry.AUTHOR.KEY) + ": " + entry.getData(ItemEntry.ENTRY_DATE.KEY));
-        for(int i = 0; i < entry.getRowAttributes().length; i++) {
-            rowEditTexts.get(i).setText(entry.getData(entry.getRowAttributes()[i].KEY));
+        entryText.setText(entry.getData(Attributes.AUTHOR.KEY) + ": " + entry.getData(Attributes.ENTRY_DATE.KEY));
+        for(int i = 0; i < entry.getType().ROW_ATTRIBUTES.length; i++) {
+            rowEditTexts.get(i).setText(entry.getData(entry.getType().ROW_ATTRIBUTES[i].KEY));
         }
-        Location location = Location.buildLocation(entry.getData(ItemEntry.LOCATION.KEY));
+        Location location = Location.buildLocation(entry.getData(Attributes.LOCATION.KEY));
         locationEditText.setText(location.fancyPrint());
     }
 
-    abstract int getContentView();
-
-    abstract String getType();
-
-    abstract String getBranch();
-
-    abstract Attribute[] getRowAttributes();
+    abstract ItemType getType();
 
     abstract Intent nextIntent();
 }

@@ -5,9 +5,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
-import com.peter.wagstaff.hytechlogger.itemEntry.CellEntry;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
-import com.peter.wagstaff.hytechlogger.itemEntry.StockEntry;
+import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
+import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
 
 import androidx.annotation.NonNull;
 
@@ -71,8 +71,8 @@ public class FirebaseExchange {
      * @param entry ItemEntry to set as node value
      */
     public static void addDataEntry(String timeStamp, ItemEntry entry) {
-        setData(entry.getBranch() + "/" +GlobalVariables.currentEntryCode + "/LOGS/LAST", entry.toString());
-        setData(entry.getBranch() + "/" + GlobalVariables.currentEntryCode + "/LOGS/" + timeStamp, entry.toString());
+        setData(entry.getType().BRANCH + "/" +GlobalVariables.currentEntryCode + "/LOGS/LAST", entry.toString());
+        setData(entry.getType().BRANCH + "/" + GlobalVariables.currentEntryCode + "/LOGS/" + timeStamp, entry.toString());
     }
 
     /**
@@ -82,10 +82,10 @@ public class FirebaseExchange {
      * @return ItemEntry initialized from snapshot
      */
     public static ItemEntry entryFromSnapshot(String branch, DataSnapshot snapshot) {
-        if(branch.equals(CellEntry.BRANCH)) {
-            return new CellEntry(snapshot.getValue().toString());
-        } else if(branch.equals(StockEntry.BRANCH)) {
-            return new StockEntry(snapshot.getValue().toString());
+        if(branch.equals(CellType.getInstance().BRANCH)) {
+            return new ItemEntry(CellType.getInstance(), snapshot.getValue().toString());
+        } else if(branch.equals(StockType.getInstance().BRANCH)) {
+            return new ItemEntry(StockType.getInstance(), snapshot.getValue().toString());
         }
         return null;
     }

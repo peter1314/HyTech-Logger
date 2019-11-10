@@ -19,7 +19,7 @@ public class ExactValueTest extends AttributeTest {
     }
 
     @Override
-    public boolean TestDataEntry(ItemEntry itemEntry) {
+    public boolean testDataEntry(ItemEntry itemEntry) {
         String entryValue = itemEntry.getData(KEY).trim().toLowerCase();
         return value.equals(entryValue);
     }

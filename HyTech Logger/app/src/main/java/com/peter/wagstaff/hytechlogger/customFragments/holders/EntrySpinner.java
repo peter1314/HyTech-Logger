@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +34,7 @@ public class EntrySpinner extends AppCompatSpinner {
         for(DataSnapshot child: snapshot.getChildren()) {
             try {
                 JSONObject curEntryJSON = new JSONObject(child.getValue().toString());
-                entryDates.add(0, curEntryJSON.getString(ItemEntry.ENTRY_DATE.KEY));
+                entryDates.add(0, curEntryJSON.getString(Attributes.ENTRY_DATE.KEY));
             } catch (JSONException e) {}
         }
         entryDates.remove(0);

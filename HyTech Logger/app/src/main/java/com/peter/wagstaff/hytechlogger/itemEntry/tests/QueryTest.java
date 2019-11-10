@@ -19,7 +19,7 @@ public class QueryTest extends AttributeTest {
     }
 
     @Override
-    public boolean TestDataEntry(ItemEntry itemEntry) {
+    public boolean testDataEntry(ItemEntry itemEntry) {
         if(QUERY.equals("")) return true;
         return itemEntry.getData(KEY).trim().toLowerCase().contains(QUERY);
     }

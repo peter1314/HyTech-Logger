@@ -45,7 +45,7 @@ public class ItemEntryFilter {
             boolean passed = true;
 
             for (AttributeTest currentTest: tests) {
-                if(!currentTest.TestDataEntry(currentEntry)) {
+                if(!currentTest.testDataEntry(currentEntry)) {
                     passed = false;
                 }
             }

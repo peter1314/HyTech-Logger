@@ -3,13 +3,13 @@ package com.peter.wagstaff.hytechlogger.activities.scanItemPresenters;
 import android.content.Intent;
 import com.peter.wagstaff.hytechlogger.activities.newItemEntryPresenters.NewStockEntryPresenter;
 import com.peter.wagstaff.hytechlogger.activities.viewItemPresenters.ViewStockPresenter;
-import com.peter.wagstaff.hytechlogger.itemEntry.StockEntry;
+import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
 
 public class ScanStockPresenter extends ScanDataPresenter {
 
     @Override
     public String getBranch() {
-        return StockEntry.BRANCH;
+        return StockType.getInstance().BRANCH;
     }
 
     @Override

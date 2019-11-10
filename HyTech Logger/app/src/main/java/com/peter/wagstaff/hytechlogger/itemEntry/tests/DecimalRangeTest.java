@@ -21,7 +21,7 @@ public class DecimalRangeTest extends AttributeTest {
     }
 
     @Override
-    public boolean TestDataEntry(ItemEntry itemEntry) {
+    public boolean testDataEntry(ItemEntry itemEntry) {
         Double value = Double.parseDouble(itemEntry.getData(KEY));
 
         if(MIN != 0 && value <= MIN) {

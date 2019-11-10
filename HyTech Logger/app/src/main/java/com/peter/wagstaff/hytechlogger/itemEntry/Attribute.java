@@ -1,5 +1,7 @@
 package com.peter.wagstaff.hytechlogger.itemEntry;
 
+import android.text.InputType;
+
 //Represents an attribute of an Item to be logged
 public class Attribute {
 
@@ -42,7 +44,7 @@ public class Attribute {
      * @param defaultValue Default value of the Attribute
      */
     public Attribute(String key, String name, String defaultValue) {
-        this(key, name, defaultValue, 0);
+        this(key, name, defaultValue, InputType.TYPE_CLASS_TEXT);
     }
 
     /**

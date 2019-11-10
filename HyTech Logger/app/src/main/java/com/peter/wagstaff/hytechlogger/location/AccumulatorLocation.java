@@ -17,19 +17,12 @@ public class AccumulatorLocation extends Location {
     public static final String[] OPTIONS = getStaticOptions();
 
     /**
-     * Declare an AccumulatorLocation
-     */
-    private AccumulatorLocation() {
-        super();
-        tags.put(Location.TYPE_KEY, TYPE);
-    }
-
-    /**
      * Declare an AccumulatorLocation with an iteration
      * @param iteration The iteration of the accumulator
      */
     public AccumulatorLocation(int iteration) {
-        this();
+        super();
+        tags.put(Location.TYPE_KEY, TYPE);
         tags.put("iteration", iteration);
     }
 

@@ -21,5 +21,5 @@ public abstract class AttributeTest {
      * @param itemEntry ItemEntry to test
      * @return If itemEntry passed the test
      */
-    public abstract boolean TestDataEntry(ItemEntry itemEntry);
+    public abstract boolean testDataEntry(ItemEntry itemEntry);
 }

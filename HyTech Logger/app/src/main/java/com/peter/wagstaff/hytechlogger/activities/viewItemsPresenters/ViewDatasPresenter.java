@@ -2,6 +2,7 @@ package com.peter.wagstaff.hytechlogger.activities.viewItemsPresenters;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.LinearLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
@@ -18,6 +19,9 @@ import com.peter.wagstaff.hytechlogger.itemEntry.tests.LocationTest;
 import com.peter.wagstaff.hytechlogger.itemEntry.tests.QueryTest;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
+import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
+import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
 
 import java.util.ArrayList;
@@ -37,7 +41,6 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
     List<QueryHolder> queryCriteria = new LinkedList();
 
     DataTableLayout dataTable;
-    private final ItemEntry entryOfType = getEntry();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +83,7 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
         dataTable.setListnerAction(new ListnerAction<ItemEntry>() {
             @Override
             public void doAction(ItemEntry entry) {
-                GlobalVariables.currentEntryCode = entry.getData(ItemEntry.CODE.KEY);
+                GlobalVariables.currentEntryCode = entry.getData(Attributes.CODE.KEY);
                 startActivity(getSelectIntent());
             }
         });
@@ -89,7 +92,7 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
     }
 
     private void getAllDatas() {
-        FirebaseExchange.onUpdate(entryOfType.getBranch(), new DataUpdateAction() {
+        FirebaseExchange.onUpdate(getType().BRANCH, new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -97,7 +100,7 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
 
                     for(DataSnapshot child: snapshot.getChildren()) {
                         if(child.child("LOGS").child("LAST").exists()) {
-                            allDatas.add(FirebaseExchange.entryFromSnapshot(entryOfType.getBranch(), child.child("LOGS").child("LAST")));
+                            allDatas.add(FirebaseExchange.entryFromSnapshot(getType().BRANCH, child.child("LOGS").child("LAST")));
                         }
                     }
                     filterDatas();
@@ -108,7 +111,7 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
 
     private void filterDatas() {
         ItemEntryFilter filter = new ItemEntryFilter();
-        filter.addTest(new LocationTest(ItemEntry.LOCATION.KEY, validLocationConfigs));
+        filter.addTest(new LocationTest(Attributes.LOCATION.KEY, validLocationConfigs));
 
         for(MinMaxHolder minMaxHolder: minMaxCriteria) {
             filter.addTest(new DecimalRangeTest(minMaxHolder.getAttributeID(), minMaxHolder.getMin(), minMaxHolder.getMax()));
@@ -126,13 +129,30 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
         }
     }
 
-    abstract void setLocationToggleBoxes();
+    void setLocationToggleBoxes() {
+        locationCheckBoxes.clear();
+        for(LocationConfiguration config: getType().LOCATION_CONFIGS) {
+            locationCheckBoxes.add(new LocationCheckBox(this, config.NAME, config));
+        }
+    }
 
-    abstract void setMinMaxHolders();
+    void setMinMaxHolders() {
+        minMaxCriteria.clear();
+        for(Attribute attribute: getType().TEST_ATTRIBUTES) {
+            if(attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_SIGNED || attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_DECIMAL )
+                minMaxCriteria.add(new MinMaxHolder(this, attribute));
+        }
+    }
 
-    abstract void setQueryHolders();
+    void setQueryHolders() {
+        queryCriteria.clear();
+        for(Attribute attribute: getType().TEST_ATTRIBUTES) {
+            if(attribute.INPUT_TYPE == InputType.TYPE_CLASS_TEXT)
+                queryCriteria.add(new QueryHolder(this, attribute));
+        }
+    }
 
-    abstract ItemEntry getEntry();
+    abstract ItemType getType();
 
     abstract Intent getSelectIntent();
 }

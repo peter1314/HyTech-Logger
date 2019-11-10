@@ -6,14 +6,16 @@ public class LocationConfiguration extends HashMap<String, Object> {
 
     //Name of the LocationConfiguration
     public final String NAME;
+    public final Location ASSOCIATED_LOCATION;
 
     /**
      * Declare LocationConfiguration
      * @param name Name of LocationConfiguration
      */
-    private LocationConfiguration(String name) {
+    private LocationConfiguration(String name, Location associatedLocation) {
         super();
         NAME = name;
+        ASSOCIATED_LOCATION = associatedLocation;
     }
 
     /**
@@ -42,12 +44,12 @@ public class LocationConfiguration extends HashMap<String, Object> {
      * @param values Array of corresponding values, each tag must have a value
      * @return A Map of tags and values which represents a location config
      */
-    public static LocationConfiguration buildLocationConfig(String name, String[] tags, Object[] values) {
+    public static LocationConfiguration buildLocationConfig(String name, Location associatedLocation, String[] tags, Object[] values) {
         //Check that tags are paired with values
         if(tags.length != values.length) return null;
 
         //Tags and values are linked in a map
-        LocationConfiguration validConfig = new LocationConfiguration(name);
+        LocationConfiguration validConfig = new LocationConfiguration(name, associatedLocation);
 
         //Add all other tags and values
         for(int i = 0; i < tags.length; i++) {

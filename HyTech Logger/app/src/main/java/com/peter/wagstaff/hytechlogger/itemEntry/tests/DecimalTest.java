@@ -19,7 +19,7 @@ public class DecimalTest extends AttributeTest {
     }
 
     @Override
-    public boolean TestDataEntry(ItemEntry itemEntry) {
+    public boolean testDataEntry(ItemEntry itemEntry) {
         Double value = Double.parseDouble(itemEntry.getData(KEY));
         return value == VALUE;
     }

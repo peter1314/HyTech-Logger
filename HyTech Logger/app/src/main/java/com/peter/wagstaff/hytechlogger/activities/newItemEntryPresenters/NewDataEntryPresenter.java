@@ -21,7 +21,11 @@ import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntryBuilder;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
+import com.peter.wagstaff.hytechlogger.itemEntry.tests.LocationTest;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
+import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.location.Location;
+import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,20 +41,20 @@ public abstract class NewDataEntryPresenter extends AppCompatActivity {
     private TextView entryCodeText;
     private List<EditText> inputEditTexts = new LinkedList();
     private RadioGroup locationButtonGroup;
-    List<LocationRadioButton> locationRadioButtions = new LinkedList<>();
+    List<LocationRadioButton> locationRadioButtons = new LinkedList<>();
     LocationSpinner locationSpinner;
     private Button enterButton;
 
-    private final ItemEntry NEW_ENTRY = getEntry();
+    private final ItemType ENTRY_TYPE = getType();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(getContentView());
+        setContentView(R.layout.activity_new_data_entry);
 
         entryCodeText = findViewById(R.id.cell_code_textView);
-        entryCodeText.setText(NEW_ENTRY.getType() + " " + GlobalVariables.currentEntryCode);
+        entryCodeText.setText(ENTRY_TYPE.NAME + " " + GlobalVariables.currentEntryCode);
         inputTable = findViewById(R.id.table_layout);
         inputTable.setTools(getLayoutInflater(), R.layout.fragment_input_text);
         locationButtonGroup = findViewById(R.id.location_radioGroup);
@@ -58,13 +62,13 @@ public abstract class NewDataEntryPresenter extends AppCompatActivity {
         locationSpinner = findViewById(R.id.spinner);
         enterButton = findViewById(R.id.enter_button);
 
-        cellRowAttributes = NEW_ENTRY.getRowAttributes();
+        cellRowAttributes = ENTRY_TYPE.ROW_ATTRIBUTES;
         for(Attribute attribute: cellRowAttributes) {
             inputEditTexts.add(inputTable.addRow(attribute.DISPLAY, attribute.DEFAULT, attribute.INPUT_TYPE));
         }
 
         setLocationButtons();
-        for(final LocationRadioButton locationButton: locationRadioButtions) {
+        for(final LocationRadioButton locationButton: locationRadioButtons) {
             locationButtonGroup.addView((locationButton));
             locationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,7 +79,7 @@ public abstract class NewDataEntryPresenter extends AppCompatActivity {
 
         }
 
-        branch = NEW_ENTRY.getBranch();
+        branch = ENTRY_TYPE.BRANCH;
         FirebaseExchange.onGrab(branch + "/" + GlobalVariables.currentEntryCode + "/LOGS/LAST", new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
@@ -107,22 +111,22 @@ public abstract class NewDataEntryPresenter extends AppCompatActivity {
     }
 
     void populateFieldsFromEntry(ItemEntry entry) {
-        for(int i = 0; i < entry.getRowAttributes().length; i++) {
-            inputEditTexts.get(i).setText(entry.getData(entry.getRowAttributes()[i].KEY));
+        for(int i = 0; i < ENTRY_TYPE.ROW_ATTRIBUTES.length; i++) {
+            inputEditTexts.get(i).setText(entry.getData(ENTRY_TYPE.ROW_ATTRIBUTES[i].KEY));
         }
 
-        Location location = Location.buildLocation(entry.getData(ItemEntry.LOCATION.KEY));
+        Location location = Location.buildLocation(entry.getData(Attributes.LOCATION.KEY));
         updateLocationButtons(location);
         locationSpinner.populate(location.getOptions());
         locationSpinner.setSelection(location.getCurrentOption());
     }
 
     private ItemEntry buildEntryFromInputs() {
-        ItemEntryBuilder itemEntryBuilder = new ItemEntryBuilder(getEntry());
+        ItemEntryBuilder itemEntryBuilder = new ItemEntryBuilder(getType());
 
-        itemEntryBuilder.setString(ItemEntry.CODE.KEY, GlobalVariables.currentEntryCode);
-        itemEntryBuilder.setString(ItemEntry.ENTRY_DATE.KEY, InputFormatting.READ_DATE_FORMAT.format(Calendar.getInstance().getTime()));
-        itemEntryBuilder.setString(ItemEntry.AUTHOR.KEY, FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        itemEntryBuilder.setString(Attributes.CODE.KEY, GlobalVariables.currentEntryCode);
+        itemEntryBuilder.setString(Attributes.ENTRY_DATE.KEY, InputFormatting.READ_DATE_FORMAT.format(Calendar.getInstance().getTime()));
+        itemEntryBuilder.setString(Attributes.AUTHOR.KEY, FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         for(int i = 0; i < cellRowAttributes.length; i++) {
             if(!itemEntryBuilder.setAttribute(cellRowAttributes[i], String.valueOf(inputEditTexts.get(i).getText()))) {
@@ -138,20 +142,43 @@ public abstract class NewDataEntryPresenter extends AppCompatActivity {
         }
 
         entryLocation.addSpinnerInput(locationSpinner.getSelectedItem().toString());
-        itemEntryBuilder.setJSONObject(ItemEntry.LOCATION.KEY, entryLocation.toDict());
+        itemEntryBuilder.setJSONObject(Attributes.LOCATION.KEY, entryLocation.toDict());
 
         return itemEntryBuilder.getEntry();
     }
 
-    abstract int getContentView();
+    private void setLocationButtons() {
+        locationRadioButtons.clear();
+        for(LocationConfiguration currentConfig: getType().LOCATION_CONFIGS) {
+            locationRadioButtons.add(new LocationRadioButton(this, currentConfig));
+        }
+    }
 
-    abstract ItemEntry getEntry();
+    private void updateLocationButtons(Location location) {
+
+        for(LocationRadioButton currentButton: locationRadioButtons) {
+            LocationTest buttonTest = new LocationTest(Attributes.LOCATION.KEY, currentButton.ASSOCIATED_CONFIG);
+            if(buttonTest.testLocation(location)) {
+                currentButton.setChecked(true);
+            }
+        }
+    }
+
+    private Location buildLocation() {
+        Location itemLocation = null;
+
+        for(LocationRadioButton currentButton: locationRadioButtons) {
+            if(currentButton.isChecked()) {
+                itemLocation = currentButton.ASSOCIATED_CONFIG.ASSOCIATED_LOCATION;
+            }
+        }
+        if(itemLocation == null) return null;
+
+        itemLocation.addSpinnerInput(locationSpinner.getSelectedItem().toString());
+        return itemLocation;
+    }
+
+    abstract ItemType getType();
 
     abstract Intent nextIntent();
-
-    abstract Location buildLocation();
-
-    abstract void setLocationButtons();
-
-    abstract void updateLocationButtons(Location location);
 }
