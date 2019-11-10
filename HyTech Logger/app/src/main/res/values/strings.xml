@@ -2,10 +2,10 @@
 
     <string name="app_name">HyTech Logger</string>
 
-    <string name="scan_cell">Scan Cells</string>
-    <string name="scan_stock">Scan Stock</string>
-    <string name="view_cells">View Cells</string>
-    <string name="view_stocks">View Stock</string>
+    <string name="scan_item">Scan Item</string>
+    <string name="view_items">View Items</string>
+
+    <string name="select_type">Select Item Type</string>
 
     <string name="enter_code">Enter Code Manually</string>
 

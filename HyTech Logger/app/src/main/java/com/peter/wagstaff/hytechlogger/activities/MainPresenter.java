@@ -11,10 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.activities.scanItemPresenters.ScanCellPresenter;
-import com.peter.wagstaff.hytechlogger.activities.scanItemPresenters.ScanStockPresenter;
-import com.peter.wagstaff.hytechlogger.activities.viewItemsPresenters.ViewCellsPresenter;
-import com.peter.wagstaff.hytechlogger.activities.viewItemsPresenters.ViewStocksPresenter;
 
 public class MainPresenter extends AppCompatActivity {
 
@@ -23,46 +19,39 @@ public class MainPresenter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button scanCellButton = findViewById(R.id.scan_cell_button);
-        final Button scanStockButton = findViewById(R.id.scan_stock_button);
-        final Button viewCellButton = findViewById(R.id.view_cells_button);
-        final Button viewStockButton = findViewById(R.id.view_stocks_button);
+        final Button scanItemButton = findViewById(R.id.scan_item_button);
+        final Button viewItemsButton = findViewById(R.id.view_items_button);
         final ImageButton profileButton = findViewById(R.id.profile_imageButton);
 
-        scanCellButton.setOnClickListener(new View.OnClickListener() {
+        scanItemButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainPresenter.this, ScanCellPresenter.class));
+                startScanItemActivity();
             }
         });
 
-        scanStockButton.setOnClickListener(new View.OnClickListener() {
+        viewItemsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainPresenter.this, ScanStockPresenter.class));
-            }
-        });
-
-        viewCellButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainPresenter.this, ViewCellsPresenter.class));
-            }
-        });
-
-        viewStockButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                System.out.println("Moving");
-                startActivity(new Intent(MainPresenter.this, ViewStocksPresenter.class));
+                startViewItemsActivity();
             }
         });
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainPresenter.this, ProfileActivity.class));
+                startActivity(new Intent(MainPresenter.this, ProfilePresenter.class));
             }
         });
 
         if (ContextCompat.checkSelfPermission(MainPresenter.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainPresenter.this, new String[]{Manifest.permission.CAMERA}, 1);
         }
+    }
+
+    private void startScanItemActivity() {
+        startActivity(new Intent(MainPresenter.this, SelectTypeScanPresenter.class));
+    }
+
+    private void startViewItemsActivity() {
+        startActivity(new Intent(MainPresenter.this, SelectTypeViewPresenter.class));
     }
 
     @Override

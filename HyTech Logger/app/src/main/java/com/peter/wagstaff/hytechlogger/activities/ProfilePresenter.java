@@ -19,7 +19,7 @@ import com.peter.wagstaff.hytechlogger.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfilePresenter extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         userId.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
-        final InputBox usernameInputDialog = new InputBox(ProfileActivity.this, "Enter New Username", "", "") {
+        final InputBox usernameInputDialog = new InputBox(ProfilePresenter.this, "Enter New Username", "", "") {
             @Override
             public boolean onPositiveClicked(String userInput) {
                 if(!InputVerification.verifyUserName(userInput, getApplicationContext())) {return false;}
@@ -53,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        final PasswordInputBox passwordInputDialog = new PasswordInputBox(ProfileActivity.this, "Enter New Password", "", "") {
+        final PasswordInputBox passwordInputDialog = new PasswordInputBox(ProfilePresenter.this, "Enter New Password", "", "") {
             @Override
             public boolean onPositiveClicked(String userInput) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -63,9 +63,9 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ProfileActivity.this, "Password is updated!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfilePresenter.this, "Password is updated!", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(ProfileActivity.this, "Failed to update password, try signing out and back in", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfilePresenter.this, "Failed to update password, try signing out and back in", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -91,12 +91,12 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ProfileActivity.this, "Your profile is deleted", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfilePresenter.this, "Your profile is deleted", Toast.LENGTH_SHORT).show();
                                         GlobalVariables.justLoggedOut = true;
-                                        startActivity(new Intent(ProfileActivity.this, LoginPresenter.class));
+                                        startActivity(new Intent(ProfilePresenter.this, LoginPresenter.class));
                                         finish();
                                     } else {
-                                        Toast.makeText(ProfileActivity.this, "Failed to delete your account, try signing out and back in", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfilePresenter.this, "Failed to delete your account, try signing out and back in", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -109,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 GlobalVariables.justLoggedOut = true;
-                startActivity(new Intent(ProfileActivity.this, LoginPresenter.class));
+                startActivity(new Intent(ProfilePresenter.this, LoginPresenter.class));
                 finish();
             }
         });

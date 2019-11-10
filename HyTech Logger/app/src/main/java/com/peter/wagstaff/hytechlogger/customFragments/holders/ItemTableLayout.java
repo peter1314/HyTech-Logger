@@ -12,18 +12,17 @@ import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
-
 import androidx.core.content.ContextCompat;
 
-public class DataTableLayout extends TableLayout  {
+public class ItemTableLayout extends TableLayout  {
 
     private ListnerAction<ItemEntry> action;
 
-    public DataTableLayout(Context context) {
+    public ItemTableLayout(Context context) {
         super(context);
     }
 
-    public DataTableLayout(Context context, AttributeSet attrs) {
+    public ItemTableLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -36,20 +35,20 @@ public class DataTableLayout extends TableLayout  {
         newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         newRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        Button dataButton = new Button(getContext());
-        dataButton.setText(entry.getData(Attributes.CODE.KEY));
-        dataButton.setWidth(getWidth());
-        dataButton.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight), PorterDuff.Mode.MULTIPLY);
-        dataButton.setTextColor(ContextCompat.getColor(getContext(), R.color.pure_white));
+        Button typeButton = new Button(getContext());
+        typeButton.setText(entry.getType().NAME + " " + entry.getData(Attributes.CODE.KEY));
+        typeButton.setWidth(getWidth());
+        typeButton.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight), PorterDuff.Mode.MULTIPLY);
+        typeButton.setTextColor(ContextCompat.getColor(getContext(), R.color.pure_white));
 
-        dataButton.setOnClickListener(new View.OnClickListener() {
+        typeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 action.doAction(entry);
             }
         });
 
-        newRow.addView(dataButton);
+        newRow.addView(typeButton);
         addView(newRow);
     }
 }

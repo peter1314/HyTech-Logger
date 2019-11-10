@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.viewItemsPresenters.ViewCellsPresenter">
+    tools:context=".activities.SelectTypePresenter">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,22 +15,19 @@
         android:background="@color/colorPrimaryLight">
 
         <LinearLayout
-            android:id="@+id/criteria_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:paddingBottom="10dp"
             android:background="@drawable/rounded_background"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/location_button_layout"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal" />
-
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/select_type"
+                android:textSize="@dimen/text_size_header" />
         </LinearLayout>
 
         <ScrollView
@@ -49,15 +46,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.peter.wagstaff.hytechlogger.customFragments.holders.DataTableLayout
+                <com.peter.wagstaff.hytechlogger.customFragments.holders.TypeTableLayout
                     android:id="@+id/tableLayout"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:padding="10dip"></com.peter.wagstaff.hytechlogger.customFragments.holders.DataTableLayout>
+                    android:padding="10dip"></com.peter.wagstaff.hytechlogger.customFragments.holders.TypeTableLayout>
 
             </LinearLayout>
-
-            ...
 
         </ScrollView>
     </LinearLayout>

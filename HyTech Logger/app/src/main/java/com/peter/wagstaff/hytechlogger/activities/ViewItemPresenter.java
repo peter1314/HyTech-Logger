@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.activities.viewItemPresenters;
+package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 
-public abstract class ViewDataPresenter extends AppCompatActivity {
+public class ViewItemPresenter extends AppCompatActivity {
 
     private String branch;
     private Attribute[] cellRowAttributes;
@@ -40,7 +40,7 @@ public abstract class ViewDataPresenter extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_data);
+        setContentView(R.layout.activity_view_item);
 
         cellCodeText = findViewById(R.id.cell_code_textView);
         cellCodeText.setText(getType().NAME + " " + GlobalVariables.currentEntryCode);
@@ -105,7 +105,7 @@ public abstract class ViewDataPresenter extends AppCompatActivity {
         locationEditText.setText(location.fancyPrint());
     }
 
-    abstract ItemType getType();
+    private ItemType getType() { return GlobalVariables.currentType; }
 
-    abstract Intent nextIntent();
+    private Intent nextIntent() { return new Intent(ViewItemPresenter.this, NewItemEntryPresenter.class); }
 }

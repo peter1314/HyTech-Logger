@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.activities.newItemEntryPresenters;
+package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 
-public abstract class NewDataEntryPresenter extends AppCompatActivity {
+public class NewItemEntryPresenter extends AppCompatActivity {
 
     private boolean isNew = true;
     private String branch;
@@ -51,7 +51,7 @@ public abstract class NewDataEntryPresenter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_data_entry);
+        setContentView(R.layout.activity_new_item_entry);
 
         entryCodeText = findViewById(R.id.cell_code_textView);
         entryCodeText.setText(ENTRY_TYPE.NAME + " " + GlobalVariables.currentEntryCode);
@@ -178,7 +178,7 @@ public abstract class NewDataEntryPresenter extends AppCompatActivity {
         return itemLocation;
     }
 
-    abstract ItemType getType();
+    private ItemType getType() { return GlobalVariables.currentType; }
 
-    abstract Intent nextIntent();
+    private Intent nextIntent() { return new Intent(NewItemEntryPresenter.this, ViewItemPresenter.class); }
 }

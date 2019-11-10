@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.activities.viewItemsPresenters;
+package com.peter.wagstaff.hytechlogger.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
 import com.peter.wagstaff.hytechlogger.customFragments.LocationCheckBox;
-import com.peter.wagstaff.hytechlogger.customFragments.holders.DataTableLayout;
+import com.peter.wagstaff.hytechlogger.customFragments.holders.ItemTableLayout;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.MinMaxHolder;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.QueryHolder;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
@@ -31,28 +31,28 @@ import java.util.List;
 import java.util.Set;
 import androidx.appcompat.app.AppCompatActivity;
 
-public abstract class ViewDatasPresenter extends AppCompatActivity {
+public class ViewItemsPresenter extends AppCompatActivity {
 
-    List<ItemEntry> allDatas = new ArrayList<>();
+    List<ItemEntry> allItems = new ArrayList<>();
     Set<LocationConfiguration> validLocationConfigs = new HashSet<>();
 
     List<LocationCheckBox> locationCheckBoxes = new LinkedList();
     List<MinMaxHolder> minMaxCriteria = new LinkedList();
     List<QueryHolder> queryCriteria = new LinkedList();
 
-    DataTableLayout dataTable;
+    ItemTableLayout itemTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_datas);
+        setContentView(R.layout.activity_view_items);
 
         setLocationToggleBoxes();
         LinearLayout locationButtonLayout = findViewById(R.id.location_button_layout);
         for(LocationCheckBox toggleBox: locationCheckBoxes) {
             toggleBox.setToggle(validLocationConfigs, new ListnerAction() {
                 @Override
-                public void doAction(Object input) { filterDatas(); }
+                public void doAction(Object input) { filterItems(); }
             });
             locationButtonLayout.addView(toggleBox);
         }
@@ -63,7 +63,7 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
             minMaxHolder.setUpdate(new ListnerAction() {
                 @Override
                 public void doAction(Object input) {
-                    filterDatas();
+                    filterItems();
                 }
             });
             criteriaLayout.addView(minMaxHolder);
@@ -73,14 +73,14 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
         for(QueryHolder queryHolder : queryCriteria) {
             queryHolder.setUpdate(new ListnerAction() {
                 @Override
-                public void doAction(Object input) { filterDatas();
+                public void doAction(Object input) { filterItems();
                 }
             });
             criteriaLayout.addView(queryHolder);
         }
 
-        dataTable = findViewById(R.id.tableLayout);
-        dataTable.setListnerAction(new ListnerAction<ItemEntry>() {
+        itemTable = findViewById(R.id.tableLayout);
+        itemTable.setListnerAction(new ListnerAction<ItemEntry>() {
             @Override
             public void doAction(ItemEntry entry) {
                 GlobalVariables.currentEntryCode = entry.getData(Attributes.CODE.KEY);
@@ -88,28 +88,28 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
             }
         });
 
-        getAllDatas();
+        getAllItems();
     }
 
-    private void getAllDatas() {
+    private void getAllItems() {
         FirebaseExchange.onUpdate(getType().BRANCH, new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    allDatas.clear();
+                    allItems.clear();
 
                     for(DataSnapshot child: snapshot.getChildren()) {
                         if(child.child("LOGS").child("LAST").exists()) {
-                            allDatas.add(FirebaseExchange.entryFromSnapshot(getType().BRANCH, child.child("LOGS").child("LAST")));
+                            allItems.add(FirebaseExchange.entryFromSnapshot(getType().BRANCH, child.child("LOGS").child("LAST")));
                         }
                     }
-                    filterDatas();
+                    filterItems();
                 }
             }
         });
     }
 
-    private void filterDatas() {
+    private void filterItems() {
         ItemEntryFilter filter = new ItemEntryFilter();
         filter.addTest(new LocationTest(Attributes.LOCATION.KEY, validLocationConfigs));
 
@@ -119,13 +119,13 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
         for(QueryHolder queryHolder : queryCriteria) {
             filter.addTest((new QueryTest(queryHolder.getAttributeID(), queryHolder.getQuery())));
         }
-        updateTable(filter.filterDataEntries(allDatas));
+        updateTable(filter.filterDataEntries(allItems));
     }
 
     private void updateTable(List<ItemEntry> entries) {
-        dataTable.removeAllViews();
+        itemTable.removeAllViews();
         for(ItemEntry filteredCell: entries) {
-            dataTable.addRow(filteredCell);
+            itemTable.addRow(filteredCell);
         }
     }
 
@@ -152,7 +152,7 @@ public abstract class ViewDatasPresenter extends AppCompatActivity {
         }
     }
 
-    abstract ItemType getType();
+    private ItemType getType() { return GlobalVariables.currentType; }
 
-    abstract Intent getSelectIntent();
+    private Intent getSelectIntent() { return new Intent(ViewItemsPresenter.this, ViewItemPresenter.class); }
 }

@@ -8,11 +8,11 @@
     tools:context=".activities.MainPresenter">
 
     <Button
-        android:id="@+id/scan_cell_button"
+        android:id="@+id/scan_item_button"
         android:layout_width="@dimen/default_button_w"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:text="@string/scan_cell"
+        android:text="@string/scan_item"
         android:textColor="@color/pure_white"
         android:textSize="@dimen/default_button_sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,45 +23,17 @@
         app:layout_constraintVertical_bias="0.45" />
 
     <Button
-        android:id="@+id/scan_stock_button"
-        android:layout_width="@dimen/default_button_w"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/scan_stock"
-        android:textColor="@color/pure_white"
-        android:textSize="@dimen/default_button_sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.696"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scan_cell_button" />
-
-    <Button
-        android:id="@+id/view_cells_button"
+        android:id="@+id/view_items_button"
         android:layout_width="@dimen/default_button_w"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:text="@string/view_cells"
+        android:text="@string/view_items"
         android:textColor="@color/pure_white"
         android:textSize="@dimen/default_button_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/scan_cell_button" />
-
-    <Button
-        android:id="@+id/view_stocks_button"
-        android:layout_width="@dimen/default_button_w"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/view_stocks"
-        android:textColor="@color/pure_white"
-        android:textSize="@dimen/default_button_sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.292"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/view_cells_button" />
+        app:layout_constraintTop_toTopOf="@+id/scan_item_button" />
 
     <ImageButton
         android:id="@+id/profile_imageButton"
