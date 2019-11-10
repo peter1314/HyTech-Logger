@@ -2,8 +2,10 @@
 
     <string name="app_name">HyTech Logger</string>
 
-    <string name="scan">Scan</string>
+    <string name="scan_cell">Scan Cells</string>
+    <string name="scan_stock">Scan Stock</string>
     <string name="view_cells">View Cells</string>
+    <string name="view_stocks">View Stock</string>
 
     <string name="enter_code">Enter Code Manually</string>
 
@@ -14,6 +16,10 @@
     <string name="entry_sig_placeholder">Author: XX/XX/XXXX</string>
     <string name="new_entry">New Entry</string>
 
+    <string name="cell_loc_0">Cabinet</string>
+    <string name="cell_loc_1">HT04</string>
+    <string name="cell_loc_2">HT05</string>
+    <string name="cell_loc_3">Other</string>
     <string name="voltage_bounds">&lt;&#032;&#032;&#032;Voltage&#032;&#032;&#032;&lt;</string>
     <string name="capacity_bounds">&lt;&#032;Discharge Cap&#032;&lt;</string>
     <string name="ir_bounds">&lt;&#032;Int Resistance&#032;&lt;</string>

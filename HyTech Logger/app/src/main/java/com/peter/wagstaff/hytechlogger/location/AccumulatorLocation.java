@@ -12,7 +12,7 @@ public class AccumulatorLocation extends Location {
 
     public AccumulatorLocation() {
         super();
-        tags.put("type", TYPE);
+        tags.put(Location.TYPE_KEY, TYPE);
     }
 
     public AccumulatorLocation(int iteration) {

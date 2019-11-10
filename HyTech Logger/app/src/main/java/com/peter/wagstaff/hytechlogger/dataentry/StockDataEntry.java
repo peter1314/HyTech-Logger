@@ -8,17 +8,19 @@ public class StockDataEntry extends DataEntry {
     public static final String BRANCH = "STOCK";
 
     public static final Attribute
-        CODE = new Attribute("code", "Cell", "#"),
+        CODE = new Attribute("code", "Stock", "#"),
         MATERIAL = new Attribute("material", "Material", "", InputType.TYPE_CLASS_TEXT),
         SHAPE = new Attribute("shape", "Shape", "", InputType.TYPE_CLASS_TEXT),
         OWNER = new Attribute("owner", "Owner", "", InputType.TYPE_CLASS_TEXT),
-        PURPOSE = new Attribute("purpose", "Purpose", "", InputType.TYPE_CLASS_TEXT);
+        PURPOSE = new Attribute("purpose", "Purpose", "", InputType.TYPE_CLASS_TEXT),
+        NOTE = new Attribute("note", "Note", "", InputType.TYPE_CLASS_TEXT);
 
     public static final Attribute[] ROW_ATTRIBUTES = {
             MATERIAL,
             SHAPE,
             OWNER,
-            PURPOSE};
+            PURPOSE,
+            NOTE};
 
     public StockDataEntry() {
         super();
@@ -29,10 +31,13 @@ public class StockDataEntry extends DataEntry {
     }
 
     @Override
+    public String getType() { return CODE.DISPLAY; }
+
+    @Override
     public String getBranch() { return BRANCH; }
 
     @Override
-    public Attribute[] rowAttributes() {
+    public Attribute[] getRowAttributes() {
         return ROW_ATTRIBUTES;
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ViewCellsActivity">
+    tools:context=".activities.ViewDatasActivities.ViewCellsActivity">
 
     <TextView
         android:id="@+id/cell_code_textView"
@@ -51,7 +51,7 @@
                     android:textSize="@dimen/text_size_med" />
             </LinearLayout>
 
-            <com.peter.wagstaff.hytechlogger.activities.rowinjection.EntryTableLayout
+            <com.peter.wagstaff.hytechlogger.customviews.holders.EntryTableLayout
                 android:id="@+id/table_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -65,14 +65,14 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/new_entry_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.peter.wagstaff.hytechlogger.customviews.EntrySpinner
+        <com.peter.wagstaff.hytechlogger.customviews.holders.EntrySpinner
             android:id="@+id/spinner"
             android:layout_width="200sp"
             android:layout_height="wrap_content"

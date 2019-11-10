@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.activities.rowinjection;
+package com.peter.wagstaff.hytechlogger.customviews.holders;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -9,19 +9,20 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import com.peter.wagstaff.hytechlogger.R;
+import com.peter.wagstaff.hytechlogger.customviews.ListnerAction;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import com.peter.wagstaff.hytechlogger.dataentry.DataEntry;
 import androidx.core.content.ContextCompat;
 
-public class CellTableLayout extends TableLayout  {
+public class DataTableLayout extends TableLayout  {
 
     private ListnerAction<DataEntry> action;
 
-    public CellTableLayout(Context context) {
+    public DataTableLayout(Context context) {
         super(context);
     }
 
-    public CellTableLayout(Context context, AttributeSet attrs) {
+    public DataTableLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -34,20 +35,20 @@ public class CellTableLayout extends TableLayout  {
         newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         newRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        Button cellButton = new Button(getContext());
-        cellButton.setText(entry.getData(CellDataEntry.CODE.toString()));
-        cellButton.setWidth(getWidth());
-        cellButton.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight), PorterDuff.Mode.MULTIPLY);
-        cellButton.setTextColor(ContextCompat.getColor(getContext(), R.color.pure_white));
+        Button dataButton = new Button(getContext());
+        dataButton.setText(entry.getData(CellDataEntry.CODE.toString()));
+        dataButton.setWidth(getWidth());
+        dataButton.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight), PorterDuff.Mode.MULTIPLY);
+        dataButton.setTextColor(ContextCompat.getColor(getContext(), R.color.pure_white));
 
-        cellButton.setOnClickListener(new View.OnClickListener() {
+        dataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 action.doAction(entry);
             }
         });
 
-        newRow.addView(cellButton);
+        newRow.addView(dataButton);
         addView(newRow);
     }
 }

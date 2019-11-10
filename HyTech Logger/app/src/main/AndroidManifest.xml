@@ -13,6 +13,7 @@ package="com.peter.wagstaff.hytechlogger">
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
+
     <activity android:name="com.peter.wagstaff.hytechlogger.activities.LoginActivity"
         android:screenOrientation="portrait">
         <intent-filter>
@@ -20,50 +21,82 @@ package="com.peter.wagstaff.hytechlogger">
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+
     <activity
         android:name="com.peter.wagstaff.hytechlogger.activities.MainActivity"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:theme="@style/SecondAppTheme">
     </activity>
+
     <activity
-        android:name=".activities.ScanActivity"
+        android:name=".activities.ScanDataActivities.ScanCellActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
     <activity
-        android:name=".activities.ViewCellsActivity"
+        android:name=".activities.ScanDataActivities.ScanStockActivity"
+        android:screenOrientation="portrait"
+        android:label="@string/app_name">
+    </activity>
+
+    <activity
+        android:name=".activities.NewDataEntryActivities.NewCellEntryActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/SecondAppTheme"
+        android:label="@string/app_name">
+    </activity>
+    <activity
+        android:name=".activities.NewDataEntryActivities.NewStockEntryActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/SecondAppTheme"
+        android:label="@string/app_name">
+    </activity>
+
+    <activity
+        android:name=".activities.ViewDataActivities.ViewCellActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/SecondAppTheme"
+        android:label="@string/app_name">
+    </activity>
+    <activity
+        android:name=".activities.ViewDataActivities.ViewStockActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/SecondAppTheme"
+        android:label="@string/app_name">
+    </activity>
+
+    <activity
+        android:name=".activities.ViewDatasActivities.ViewCellsActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:theme="@style/SecondAppTheme">
     </activity>
     <activity
-        android:name=".activities.ViewCellActivity"
+        android:name=".activities.ViewDatasActivities.ViewStocksActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/SecondAppTheme"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/SecondAppTheme">
     </activity>
-    <activity
-        android:name=".activities.NewCellEntryActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/SecondAppTheme"
-        android:label="@string/app_name">
-    </activity>
+
     <activity
         android:name="com.peter.wagstaff.hytechlogger.activities.SignupActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
+
     <activity
         android:name="com.peter.wagstaff.hytechlogger.activities.ResetPasswordActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
+
     <activity
         android:name="com.peter.wagstaff.hytechlogger.activities.ProfileActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
+
 </application>
 
 </manifest>

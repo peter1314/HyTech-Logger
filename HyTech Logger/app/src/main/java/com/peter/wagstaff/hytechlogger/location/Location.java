@@ -9,6 +9,7 @@ import java.util.Map;
 public abstract class Location {
 
     Map<String, Object> tags;
+    public static final String TYPE_KEY = "type";
 
     public Location() {
         tags = new HashMap();
@@ -29,7 +30,7 @@ public abstract class Location {
 
     public Object getTagValue(String tag) { return tags.get(tag); }
 
-    public String getType() { return tags.get("type").toString(); }
+    public String getType() { return tags.get(TYPE_KEY).toString(); }
 
     public abstract void addSpinnerInput(String input);
 

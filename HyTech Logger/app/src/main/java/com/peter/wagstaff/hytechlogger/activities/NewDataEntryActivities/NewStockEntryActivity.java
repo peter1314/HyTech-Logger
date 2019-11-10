@@ -1,11 +1,11 @@
-package com.peter.wagstaff.hytechlogger.activities;
+package com.peter.wagstaff.hytechlogger.activities.NewDataEntryActivities;
 
 import android.content.Intent;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton;
-import com.peter.wagstaff.hytechlogger.dataentry.Attribute;
+import com.peter.wagstaff.hytechlogger.activities.ViewDataActivities.ViewStockActivity;
+import com.peter.wagstaff.hytechlogger.customviews.LocationRadioButton;
+import com.peter.wagstaff.hytechlogger.dataentry.DataEntry;
 import com.peter.wagstaff.hytechlogger.dataentry.StockDataEntry;
-import com.peter.wagstaff.hytechlogger.location.CabinetLocation;
 import com.peter.wagstaff.hytechlogger.location.Location;
 import com.peter.wagstaff.hytechlogger.location.OtherLocation;
 import com.peter.wagstaff.hytechlogger.location.RackLocation;
@@ -16,21 +16,11 @@ public class NewStockEntryActivity extends NewDataEntryActivity {
 
     @Override
     int getContentView() {
-        return R.layout.activity_new_stock_entry;
+        return R.layout.activity_new_data_entry;
     }
 
     @Override
-    String getType() { return StockDataEntry.CODE.DISPLAY; }
-
-    @Override
-    String getBranch() {
-        return StockDataEntry.BRANCH;
-    }
-
-    @Override
-    Attribute[] getRowAttributes() {
-        return StockDataEntry.ROW_ATTRIBUTES;
-    }
+    DataEntry getEntry() { return new StockDataEntry(); }
 
     @Override
     Intent nextIntent() {
@@ -54,18 +44,21 @@ public class NewStockEntryActivity extends NewDataEntryActivity {
     }
 
     @Override
-    void addLocationButtons() {
-        rackButton = findViewById(R.id.radioButton_0);
-        rackButton.setOptions(CabinetLocation.OPTIONS);
-        locationRadioButtions.add(rackButton);
+    void setLocationButtons() {
+        locationRadioButtions.clear();
+        rackButton = new LocationRadioButton(this, "Rack", RackLocation.OPTIONS);
+        otherButton = new LocationRadioButton(this, "Other", OtherLocation.OPTIONS);
 
-        otherButton = findViewById(R.id.radioButton_3);
-        otherButton.setOptions(OtherLocation.OPTIONS);
+        locationRadioButtions.add(rackButton);
         locationRadioButtions.add(otherButton);
     }
 
     @Override
     void updateLocationButtons(Location location) {
-
+        if(location.getType().equals(RackLocation.TYPE)) {
+            rackButton.setChecked(true);
+        } else if(location.getType().equals(OtherLocation.TYPE)) {
+            otherButton.setChecked(true);
+        }
     }
 }

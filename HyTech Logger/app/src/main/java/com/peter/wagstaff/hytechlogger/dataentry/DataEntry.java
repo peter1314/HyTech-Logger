@@ -34,10 +34,11 @@ public abstract class DataEntry {
         }
     }
 
+    public abstract String getType();
 
     public abstract String getBranch();
 
-    public abstract Attribute[] rowAttributes();
+    public abstract Attribute[] getRowAttributes();
 
     //returns the contents of the data entry as a JSON object
     public JSONObject toDict() throws JSONException {

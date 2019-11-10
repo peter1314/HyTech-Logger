@@ -1,18 +1,14 @@
-package com.peter.wagstaff.hytechlogger.customviews;
+package com.peter.wagstaff.hytechlogger.customviews.holders;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
-
 import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
-
 import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.appcompat.widget.AppCompatSpinner;
 
 public class EntrySpinner extends AppCompatSpinner {

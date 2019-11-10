@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.dialogboxes;
+package com.peter.wagstaff.hytechlogger.customviews.dialogboxes;
 
 import android.content.Context;
 import android.widget.Toast;

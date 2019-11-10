@@ -1,10 +1,11 @@
-package com.peter.wagstaff.hytechlogger.activities;
+package com.peter.wagstaff.hytechlogger.activities.NewDataEntryActivities;
 
 import android.content.Intent;
-import com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton;
-import com.peter.wagstaff.hytechlogger.dataentry.Attribute;
+import com.peter.wagstaff.hytechlogger.activities.ViewDataActivities.ViewCellActivity;
+import com.peter.wagstaff.hytechlogger.customviews.LocationRadioButton;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
+import com.peter.wagstaff.hytechlogger.dataentry.DataEntry;
 import com.peter.wagstaff.hytechlogger.location.AccumulatorLocation;
 import com.peter.wagstaff.hytechlogger.location.CabinetLocation;
 import com.peter.wagstaff.hytechlogger.location.Location;
@@ -20,13 +21,7 @@ public class NewCellEntryActivity extends NewDataEntryActivity {
     }
 
     @Override
-    String getType() { return CellDataEntry.CODE.DISPLAY; }
-
-    @Override
-    String getBranch() { return CellDataEntry.BRANCH; }
-
-    @Override
-    Attribute[] getRowAttributes() { return CellDataEntry.ROW_ATTRIBUTES; }
+    DataEntry getEntry() { return new CellDataEntry(); }
 
     @Override
     Intent nextIntent() { return new Intent(NewCellEntryActivity.this, ViewCellActivity.class); }
@@ -52,35 +47,30 @@ public class NewCellEntryActivity extends NewDataEntryActivity {
     }
 
     @Override
-    void addLocationButtons() {
-        cabinetButton = findViewById(R.id.radioButton_0);
-        cabinetButton.setOptions(CabinetLocation.OPTIONS);
+    void setLocationButtons() {
+        locationRadioButtions.clear();
+        cabinetButton = new LocationRadioButton(this, "Cabinet", CabinetLocation.OPTIONS);
+        ht04Button = new LocationRadioButton(this, "HT04", AccumulatorLocation.OPTIONS);
+        ht05Button = new LocationRadioButton(this, "HT05", AccumulatorLocation.OPTIONS);
+        otherButton = new LocationRadioButton(this, "Other", OtherLocation.OPTIONS);
+
         locationRadioButtions.add(cabinetButton);
-
-        ht04Button = findViewById(R.id.radioButton_1);
-        ht04Button.setOptions(AccumulatorLocation.OPTIONS);
         locationRadioButtions.add(ht04Button);
-
-        ht05Button = findViewById(R.id.radioButton_2);
-        ht05Button.setOptions(AccumulatorLocation.OPTIONS);
         locationRadioButtions.add(ht05Button);
-
-        otherButton = findViewById(R.id.radioButton_3);
-        otherButton.setOptions(OtherLocation.OPTIONS);
         locationRadioButtions.add(otherButton);
     }
 
     @Override
     void updateLocationButtons(Location location) {
-        if(location.getType().equals("cabinet")) {
+        if(location.getType().equals(CabinetLocation.TYPE)) {
             cabinetButton.setChecked(true);
-        } else if(location.getType().equals("accumulator")) {
+        } else if(location.getType().equals(AccumulatorLocation.TYPE)) {
             if(((AccumulatorLocation) location).getIteration() == 4) {
                 ht04Button.setChecked(true);
             } else if(((AccumulatorLocation) location).getIteration() == 5) {
                 ht05Button.setChecked(true);
             }
-        } else if(location.getType().equals("other")) {
+        } else if(location.getType().equals(OtherLocation.TYPE)) {
             otherButton.setChecked(true);
         }
     }

@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.peter.wagstaff.hytechlogger.R;
+import com.peter.wagstaff.hytechlogger.activities.ScanDataActivities.ScanCellActivity;
+import com.peter.wagstaff.hytechlogger.activities.ScanDataActivities.ScanStockActivity;
+import com.peter.wagstaff.hytechlogger.activities.ViewDatasActivities.ViewCellsActivity;
+import com.peter.wagstaff.hytechlogger.activities.ViewDatasActivities.ViewStocksActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,19 +23,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button scanButton = findViewById(R.id.scan_button);
-        final Button viewButton = findViewById(R.id.view_button);
+        final Button scanCellButton = findViewById(R.id.scan_cell_button);
+        final Button scanStockButton = findViewById(R.id.scan_stock_button);
+        final Button viewCellButton = findViewById(R.id.view_cells_button);
+        final Button viewStockButton = findViewById(R.id.view_stocks_button);
         final ImageButton profileButton = findViewById(R.id.profile_imageButton);
 
-        scanButton.setOnClickListener(new View.OnClickListener() {
+        scanCellButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ScanActivity.class));
+                startActivity(new Intent(MainActivity.this, ScanCellActivity.class));
             }
         });
 
-        viewButton.setOnClickListener(new View.OnClickListener() {
+        scanStockButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ScanStockActivity.class));
+            }
+        });
+
+        viewCellButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ViewCellsActivity.class));
+            }
+        });
+
+        viewStockButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                System.out.println("Moving");
+                startActivity(new Intent(MainActivity.this, ViewStocksActivity.class));
             }
         });
 

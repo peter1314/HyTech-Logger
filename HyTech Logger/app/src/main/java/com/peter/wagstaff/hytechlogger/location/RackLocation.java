@@ -9,7 +9,7 @@ public class RackLocation extends Location {
 
     public RackLocation() {
         super();
-        tags.put("type", TYPE);
+        tags.put(Location.TYPE_KEY, TYPE);
     }
 
     public RackLocation(String locationAsJSONString) throws JSONException {
@@ -41,7 +41,7 @@ public class RackLocation extends Location {
     }
 
     private static String[] getStaticOptions() {
-        String[] optionArray  = {"Rack Top", "Rack Bottom", "Rack Side"};
+        String[] optionArray  = {"Rack Top", "Rack Bottom", "Rack Side", "Rack Other"};
         return optionArray;
     }
 }

@@ -1,22 +1,22 @@
-package com.peter.wagstaff.hytechlogger.activities;
+package com.peter.wagstaff.hytechlogger.activities.ScanDataActivities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
-import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
-import com.peter.wagstaff.hytechlogger.dialogboxes.CodeInputDialog;
 import com.google.zxing.Result;
-import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
-import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
-import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
+import com.peter.wagstaff.hytechlogger.activities.MainActivity;
+import com.peter.wagstaff.hytechlogger.customviews.dialogboxes.CodeInputDialog;
+import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
+import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
+import androidx.appcompat.app.AppCompatActivity;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScanActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public abstract class ScanDataActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView mScannerView;
     private ZXingScannerView.ResultHandler thisHandler;
@@ -31,7 +31,7 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
         mScannerView.startCamera();
         thisHandler = this;
 
-        final CodeInputDialog joinLineDialog = new CodeInputDialog(ScanActivity.this, "Enter Code", "", "") {
+        final CodeInputDialog joinLineDialog = new CodeInputDialog(ScanDataActivity.this, "Enter Code", "", "") {
 
             @Override
             public void customNegative() {
@@ -43,25 +43,12 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
             public boolean onPositiveClicked(final String userInput) {
                 if(InputVerification.verifyCode(userInput)) {
                     GlobalVariables.currentEntryCode = userInput;
-
-                    FirebaseExchange.onGrab(FirebaseExchange.TREE + "/" + CellDataEntry.BRANCH, new DataUpdateAction() {
-                        @Override
-                        public void doAction(DataSnapshot snapshot) {
-                            if(snapshot.hasChild(userInput)) {
-                                Intent intent = new Intent(ScanActivity.this, ViewCellActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            } else {
-                                startActivity(new Intent(ScanActivity.this, NewCellEntryActivity.class));
-                            }
-                        }
-                    });
+                    openDataEntry(userInput);
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Invalid Code", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-
                 return true;
             }
         };
@@ -80,19 +67,7 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
 
         if(InputVerification.verifyCode(readCode)) {
             GlobalVariables.currentEntryCode = readCode;
-
-            FirebaseExchange.onGrab(FirebaseExchange.TREE, new DataUpdateAction() {
-                @Override
-                public void doAction(DataSnapshot snapshot) {
-                    if(snapshot.hasChild(readCode)) {
-                        Intent intent = new Intent(ScanActivity.this, ViewCellActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    } else {
-                        startActivity(new Intent(ScanActivity.this, NewCellEntryActivity.class));
-                    }
-                }
-            });
+            openDataEntry(readCode);
         }
         else {
             Toast.makeText(getApplicationContext(), "Invalid Code", Toast.LENGTH_SHORT).show();
@@ -117,7 +92,28 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void openDataEntry(final String code) {
+        FirebaseExchange.onGrab(FirebaseExchange.TREE + "/" + getBranch(), new DataUpdateAction() {
+            @Override
+            public void doAction(DataSnapshot snapshot) {
+                if(snapshot.hasChild(code)) {
+                    Intent intent = getDataExistsIntent();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(getDataNewIntent()));
+                }
+            }
+        });
+    }
+
+    public abstract String getBranch();
+
+    public abstract Intent getDataExistsIntent();
+
+    public abstract Intent getDataNewIntent();
 }

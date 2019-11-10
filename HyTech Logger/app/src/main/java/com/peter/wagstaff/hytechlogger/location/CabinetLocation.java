@@ -11,7 +11,7 @@ public class CabinetLocation extends Location {
 
     public CabinetLocation() {
         super();
-        tags.put("type", TYPE);
+        tags.put(Location.TYPE_KEY, TYPE);
     }
 
     public CabinetLocation(String locationAsJSONString) throws JSONException {

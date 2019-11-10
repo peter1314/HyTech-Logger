@@ -1,6 +1,7 @@
-package com.peter.wagstaff.hytechlogger.activities.rowinjection;
+package com.peter.wagstaff.hytechlogger.customviews.holders;
 
 import android.content.Context;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -27,22 +28,6 @@ public class EntryTableLayout<InputText extends EditText> extends TableLayout  {
         this.ref = ref;
     }
 
-    public InputText addRow(String name) {
-        TableRow newRow = new TableRow(getContext());
-        newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-        TextView label = (TextView) inflater.inflate(R.layout.input_label, null);
-        label.setText(name);
-        newRow.addView(label);
-
-        InputText inputText = (InputText) inflater.inflate(ref, null);
-        inputText.setText("");
-        newRow.addView(inputText);
-
-        addView(newRow);
-        return inputText;
-    }
-
     public InputText addRow(String name, String value, int type) {
         TableRow newRow = new TableRow(getContext());
         newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -58,5 +43,9 @@ public class EntryTableLayout<InputText extends EditText> extends TableLayout  {
 
         addView(newRow);
         return inputText;
+    }
+
+    public InputText addRow(String name) {
+        return addRow(name, "", InputType.TYPE_CLASS_TEXT);
     }
 }

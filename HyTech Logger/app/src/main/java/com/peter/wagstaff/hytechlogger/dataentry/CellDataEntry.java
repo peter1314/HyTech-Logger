@@ -35,12 +35,15 @@ public class CellDataEntry extends DataEntry {
     }
 
     @Override
+    public String getType() { return CODE.DISPLAY; }
+
+    @Override
     public String getBranch() {
         return BRANCH;
     }
 
     @Override
-    public Attribute[] rowAttributes() {
+    public Attribute[] getRowAttributes() {
         return ROW_ATTRIBUTES;
     }
 }

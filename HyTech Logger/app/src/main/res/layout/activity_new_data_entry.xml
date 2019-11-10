@@ -36,55 +36,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.peter.wagstaff.hytechlogger.activities.rowinjection.EntryTableLayout
+            <com.peter.wagstaff.hytechlogger.customviews.holders.EntryTableLayout
                 android:id="@+id/table_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <RadioGroup
+            <com.peter.wagstaff.hytechlogger.customviews.holders.MyRadioGroup
+                android:id="@+id/location_radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
-                    android:id="@+id/radioButton_0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:text="@string/loc_button_placeholder"
-                    android:textColor="#666666" />
-
-                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
-                    android:id="@+id/radioButton_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:text="@string/loc_button_placeholder"
-                    android:textColor="#666666" />
-
-                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
-                    android:id="@+id/radioButton_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:text="@string/loc_button_placeholder"
-                    android:textColor="#666666" />
-
-                <com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton
-                    android:id="@+id/radioButton_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4sp"
-                    android:layout_marginRight="4sp"
-                    android:text="@string/loc_button_placeholder"
-                    android:textColor="#666666" />
-
-            </RadioGroup>
+            </com.peter.wagstaff.hytechlogger.customviews.holders.MyRadioGroup>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,7 +58,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <com.peter.wagstaff.hytechlogger.customviews.LocationSpinner
+                <com.peter.wagstaff.hytechlogger.customviews.holders.LocationSpinner
                     android:id="@+id/spinner"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"

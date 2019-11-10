@@ -8,7 +8,8 @@ import androidx.appcompat.widget.AppCompatEditText;
 public class LockedEditText extends AppCompatEditText {
     public LockedEditText(Context context) {
         super(context);
-        initialize();
+        setEnabled(false);
+        setTextColor(Color.BLACK);
     }
 
     public LockedEditText(Context context, AttributeSet attrs) {

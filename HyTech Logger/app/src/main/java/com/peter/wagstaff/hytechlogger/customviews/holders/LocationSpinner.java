@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.customviews;
+package com.peter.wagstaff.hytechlogger.customviews.holders;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,14 +13,8 @@ public class LocationSpinner extends AppCompatSpinner {
     public LocationSpinner(Context context) {
         super(context);
     }
-
-    public LocationSpinner(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public LocationSpinner(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+    public LocationSpinner(Context context, AttributeSet attrs) { super(context, attrs); }
+    public LocationSpinner(Context context, AttributeSet attrs, int defStyle) { super(context, attrs, defStyle); }
 
     public void populate(String[] spinnerArray) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getContext(), R.layout.spinner_item, spinnerArray);

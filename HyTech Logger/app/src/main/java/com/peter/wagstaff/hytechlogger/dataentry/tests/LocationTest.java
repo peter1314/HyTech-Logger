@@ -30,12 +30,14 @@ public class LocationTest extends DataEntryTest {
     private boolean checkCompliance(Location location, Map<String, Object> validConfig) {
 
         for(String requiredTag: validConfig.keySet()) {
-            //check if the required tag is in the location
-            if(!location.hasTag(requiredTag)) { return false; }
+            if(!requiredTag.equals("config_name")) {
+                //check if the required tag is in the location
+                if(!location.hasTag(requiredTag)) { return false; }
 
-            //check if the tag has a required value
-            if(validConfig.get(requiredTag) != null) {
-                if(!location.getTagValue(requiredTag).equals(validConfig.get(requiredTag))) { return false; }
+                //check if the tag has a required value
+                if(validConfig.get(requiredTag) != null) {
+                    if(!location.getTagValue(requiredTag).equals(validConfig.get(requiredTag))) { return false; }
+                }
             }
         }
         return true;

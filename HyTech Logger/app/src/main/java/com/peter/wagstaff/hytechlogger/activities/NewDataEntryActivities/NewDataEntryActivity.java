@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.activities;
+package com.peter.wagstaff.hytechlogger.activities.NewDataEntryActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.activities.rowinjection.EntryTableLayout;
-import com.peter.wagstaff.hytechlogger.activities.rowinjection.LocationRadioButton;
-import com.peter.wagstaff.hytechlogger.customviews.LocationSpinner;
+import com.peter.wagstaff.hytechlogger.customviews.holders.EntryTableLayout;
+import com.peter.wagstaff.hytechlogger.customviews.LocationRadioButton;
+import com.peter.wagstaff.hytechlogger.customviews.holders.MyRadioGroup;
+import com.peter.wagstaff.hytechlogger.customviews.holders.LocationSpinner;
 import com.peter.wagstaff.hytechlogger.dataentry.Attribute;
-import com.peter.wagstaff.hytechlogger.dataentry.CellDataEntry;
 import com.peter.wagstaff.hytechlogger.dataentry.DataEntry;
 import com.peter.wagstaff.hytechlogger.dataentry.DataEntryBuilder;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
@@ -37,9 +37,12 @@ public abstract class NewDataEntryActivity extends AppCompatActivity {
     private EntryTableLayout<EditText> inputTable;
     private TextView entryCodeText;
     private List<EditText> inputEditTexts = new LinkedList();
+    private MyRadioGroup locationButtonGroup;
     List<LocationRadioButton> locationRadioButtions = new LinkedList<>();
     LocationSpinner locationSpinner;
     private Button enterButton;
+
+    private final DataEntry NEW_ENTRY = getEntry();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +51,32 @@ public abstract class NewDataEntryActivity extends AppCompatActivity {
         setContentView(getContentView());
 
         entryCodeText = findViewById(R.id.cell_code_textView);
-        entryCodeText.setText(getType() + " " + GlobalVariables.currentEntryCode);
+        entryCodeText.setText(NEW_ENTRY.getType() + " " + GlobalVariables.currentEntryCode);
         inputTable = findViewById(R.id.table_layout);
         inputTable.setTools(getLayoutInflater(), R.layout.input_text);
+        locationButtonGroup = findViewById(R.id.location_radioGroup);
+
         locationSpinner = findViewById(R.id.spinner);
         enterButton = findViewById(R.id.enter_button);
 
-        cellRowAttributes = getRowAttributes();
+        cellRowAttributes = NEW_ENTRY.getRowAttributes();
         for(Attribute attribute: cellRowAttributes) {
             inputEditTexts.add(inputTable.addRow(attribute.DISPLAY, attribute.DEFAULT, attribute.INPUT_TYPE));
         }
 
-        branch = getBranch();
+        setLocationButtons();
+        for(final LocationRadioButton locationButton: locationRadioButtions) {
+            locationButtonGroup.addRadioButton((locationButton));
+            locationButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    locationSpinner.populate(locationButton.getOptions());
+                }
+            });
+
+        }
+
+        branch = NEW_ENTRY.getBranch();
         FirebaseExchange.onGrab(FirebaseExchange.TREE + "/" + branch + "/" + GlobalVariables.currentEntryCode + "/LOGS/LAST", new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
@@ -69,16 +86,6 @@ public abstract class NewDataEntryActivity extends AppCompatActivity {
                 }
             }
         });
-
-        addLocationButtons();
-        for(final LocationRadioButton locationButton: locationRadioButtions) {
-            locationButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    locationSpinner.populate(locationButton.getOptions());
-                }
-            });
-        }
 
         enterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -101,8 +108,8 @@ public abstract class NewDataEntryActivity extends AppCompatActivity {
     }
 
     void populateFieldsFromEntry(DataEntry entry) {
-        for(int i=0; i < entry.rowAttributes().length; i++) {
-            inputEditTexts.get(i).setText(entry.getData(entry.rowAttributes()[i].ID));
+        for(int i = 0; i < entry.getRowAttributes().length; i++) {
+            inputEditTexts.get(i).setText(entry.getData(entry.getRowAttributes()[i].ID));
         }
 
         Location location = LocationBuilder.buildLocation(entry.getData(DataEntry.LOCATION.toString()));
@@ -112,14 +119,14 @@ public abstract class NewDataEntryActivity extends AppCompatActivity {
     }
 
     private DataEntry buildEntryFromInputs() {
-        DataEntryBuilder<DataEntry> cellEntryBuilder = new DataEntryBuilder();
+        DataEntryBuilder dataEntryBuilder = new DataEntryBuilder(getEntry());
 
-        cellEntryBuilder.addString(DataEntry.CODE.ID, GlobalVariables.currentEntryCode);
-        cellEntryBuilder.addString(DataEntry.ENTRY_DATE.toString(), InputFormating.READ_DATE_FORMAT.format(Calendar.getInstance().getTime()));
-        cellEntryBuilder.addString(DataEntry.AUTHOR.toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        dataEntryBuilder.addString(DataEntry.CODE.ID, GlobalVariables.currentEntryCode);
+        dataEntryBuilder.addString(DataEntry.ENTRY_DATE.toString(), InputFormating.READ_DATE_FORMAT.format(Calendar.getInstance().getTime()));
+        dataEntryBuilder.addString(DataEntry.AUTHOR.toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         for(int i = 0; i < cellRowAttributes.length; i++) {
-            if(!cellEntryBuilder.addAttribute(cellRowAttributes[i], String.valueOf(inputEditTexts.get(i).getText()))) {
+            if(!dataEntryBuilder.addAttribute(cellRowAttributes[i], String.valueOf(inputEditTexts.get(i).getText()))) {
                 Toast.makeText(getApplicationContext(), "Invalid " + cellRowAttributes[i].NAME, Toast.LENGTH_SHORT).show();
                 return null;
             }
@@ -132,24 +139,20 @@ public abstract class NewDataEntryActivity extends AppCompatActivity {
         }
 
         entryLocation.addSpinnerInput(locationSpinner.getSelectedItem().toString());
-        cellEntryBuilder.addJSONObject(DataEntry.LOCATION.ID, entryLocation.toDict());
+        dataEntryBuilder.addJSONObject(DataEntry.LOCATION.ID, entryLocation.toDict());
 
-        return cellEntryBuilder.buildEntry();
+        return dataEntryBuilder.buildEntry();
     }
 
     abstract int getContentView();
 
-    abstract String getType();
-
-    abstract String getBranch();
-
-    abstract Attribute[] getRowAttributes();
+    abstract DataEntry getEntry();
 
     abstract Intent nextIntent();
 
     abstract Location buildLocation();
 
-    abstract void addLocationButtons();
+    abstract void setLocationButtons();
 
     abstract void updateLocationButtons(Location location);
 }

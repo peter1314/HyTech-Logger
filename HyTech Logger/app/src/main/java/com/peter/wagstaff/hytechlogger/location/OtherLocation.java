@@ -9,7 +9,7 @@ public class OtherLocation extends Location {
 
     public OtherLocation() {
         super();
-        tags.put("type", TYPE);
+        tags.put(Location.TYPE_KEY, TYPE);
     }
 
     public OtherLocation(String locationAsJSONString) throws JSONException {

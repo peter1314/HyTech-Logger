@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.activities;
+package com.peter.wagstaff.hytechlogger.activities.ViewDataActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.activities.rowinjection.EntryTableLayout;
-import com.peter.wagstaff.hytechlogger.customviews.EntrySpinner;
+import com.peter.wagstaff.hytechlogger.customviews.holders.EntryTableLayout;
+import com.peter.wagstaff.hytechlogger.customviews.holders.EntrySpinner;
 import com.peter.wagstaff.hytechlogger.customviews.LockedEditText;
 import com.peter.wagstaff.hytechlogger.dataentry.Attribute;
 import com.peter.wagstaff.hytechlogger.dataentry.DataEntry;
@@ -96,8 +96,8 @@ public abstract class ViewDataActivity extends AppCompatActivity {
 
     private void populateFieldsFromEntry(DataEntry entry) {
         entryText.setText(entry.getData(DataEntry.AUTHOR.ID) + ": " + entry.getData(DataEntry.ENTRY_DATE.ID));
-        for(int i =0; i < entry.rowAttributes().length; i++) {
-            rowEditTexts.get(i).setText(entry.getData(entry.rowAttributes()[i].ID));
+        for(int i = 0; i < entry.getRowAttributes().length; i++) {
+            rowEditTexts.get(i).setText(entry.getData(entry.getRowAttributes()[i].ID));
         }
         Location location = LocationBuilder.buildLocation(entry.getData(DataEntry.LOCATION.ID));
         locationEditText.setText(location.fancyPrint());

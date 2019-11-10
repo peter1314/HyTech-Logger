@@ -1,7 +1,8 @@
-package com.peter.wagstaff.hytechlogger.activities;
+package com.peter.wagstaff.hytechlogger.activities.ViewDataActivities;
 
 import android.content.Intent;
 import com.peter.wagstaff.hytechlogger.R;
+import com.peter.wagstaff.hytechlogger.activities.NewDataEntryActivities.NewStockEntryActivity;
 import com.peter.wagstaff.hytechlogger.dataentry.Attribute;
 import com.peter.wagstaff.hytechlogger.dataentry.StockDataEntry;
 

@@ -1,18 +1,16 @@
 package com.peter.wagstaff.hytechlogger.dataentry;
 
 import android.text.InputType;
-import android.widget.Toast;
-
 import com.peter.wagstaff.hytechlogger.inputs.InputFormating;
 import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import org.json.JSONObject;
 
-public class DataEntryBuilder<Type extends DataEntry> {
+public class DataEntryBuilder {
 
     DataEntry dataEntry;
 
-    public DataEntryBuilder() {
-        dataEntry = new CellDataEntry();
+    public DataEntryBuilder(DataEntry dataEntry) {
+        this.dataEntry = dataEntry;
     }
 
     public boolean addAttribute(Attribute attribute, String value) {
@@ -56,7 +54,7 @@ public class DataEntryBuilder<Type extends DataEntry> {
         return true;
     }
 
-    public Type buildEntry() {
-        return (Type) dataEntry;
+    public DataEntry buildEntry() {
+        return dataEntry;
     }
 }
