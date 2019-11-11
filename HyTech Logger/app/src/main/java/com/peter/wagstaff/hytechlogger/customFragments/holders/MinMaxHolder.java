@@ -13,9 +13,9 @@ import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
 public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
 
     //ID of the attribute to search for
-    private String attributeID;
+    public final String ATTRIBUTE_ID;
     //Associated MinMaxEditTexts
-    private MinMaxEditText min, max;
+    private final MinMaxEditText MIN_TEXT, MAX_TEXT;
 
     /**
      * Declares MinMaxHolder given a Context and Attribute
@@ -27,9 +27,9 @@ public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
         setGravity(Gravity.CENTER);
 
         //Creates its MinMaxEditTexts
-        this.attributeID = attribute.KEY;
-        min = new MinMaxEditText(getContext());
-        max = new MinMaxEditText(getContext());
+        this.ATTRIBUTE_ID = attribute.KEY;
+        MIN_TEXT = new MinMaxEditText(getContext());
+        MAX_TEXT = new MinMaxEditText(getContext());
 
         //Create TextView to display the Attribute being tested
         TextView textView = new TextView(getContext());
@@ -38,9 +38,9 @@ public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
         textView.setTextSize(15);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        addView(min);
+        addView(MIN_TEXT);
         addView(textView);
-        addView(max);
+        addView(MAX_TEXT);
     }
 
     /**
@@ -48,25 +48,19 @@ public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
      * @param action ListenerAction to perform action on change
      */
     public void setUpdate(ListnerAction action) {
-        min.setUpdate(action);
-        max.setUpdate(action);
+        MIN_TEXT.setUpdate(action);
+        MAX_TEXT.setUpdate(action);
     }
-
-    /**
-     * Returns the ID of the Attribute being tested
-     * @return
-     */
-    public String getAttributeID() { return attributeID; }
 
     /**
      * Retruns the value of the min MinMaxEditText
      * @return
      */
-    public double getMin() { return min.getValue(); }
+    public double getMin() { return MIN_TEXT.getValue(); }
 
     /**
      * Retruns the value of the max MinMaxEditText
      * @return
      */
-    public double getMax() { return max.getValue(); }
+    public double getMax() { return MAX_TEXT.getValue(); }
 }

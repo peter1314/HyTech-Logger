@@ -13,7 +13,7 @@ package="com.peter.wagstaff.hytechlogger">
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
-    <activity android:name="com.peter.wagstaff.hytechlogger.activities.LoginPresenter"
+    <activity android:name="com.peter.wagstaff.hytechlogger.activities.acountActivities.LoginActivity"
         android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -21,59 +21,59 @@ package="com.peter.wagstaff.hytechlogger">
         </intent-filter>
     </activity>
 
-    <activity android:name="com.peter.wagstaff.hytechlogger.activities.MainPresenter"
+    <activity android:name="com.peter.wagstaff.hytechlogger.activities.MainActivity"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:theme="@style/SecondAppTheme">
     </activity>
 
-    <activity android:name=".activities.SelectTypeScanPresenter"
+    <activity android:name=".activities.SelectTypeScanActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:theme="@style/SecondAppTheme">
     </activity>
 
-    <activity android:name=".activities.SelectTypeViewPresenter"
+    <activity android:name=".activities.SelectTypeViewActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:theme="@style/SecondAppTheme">
     </activity>
 
-    <activity android:name=".activities.ScanItemPresenter"
+    <activity android:name=".activities.ScanItemActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
 
-    <activity android:name=".activities.ViewItemsPresenter"
+    <activity android:name=".activities.ViewItemsActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:theme="@style/SecondAppTheme">
     </activity>
 
-    <activity android:name=".activities.ViewItemPresenter"
+    <activity android:name=".activities.ViewItemActivity"
         android:screenOrientation="portrait"
         android:theme="@style/SecondAppTheme"
         android:label="@string/app_name">
     </activity>
 
     <activity
-        android:name=".activities.NewItemEntryPresenter"
+        android:name=".activities.ItemEntryActivity"
         android:screenOrientation="portrait"
         android:theme="@style/SecondAppTheme"
         android:label="@string/app_name">
     </activity>
 
-    <activity android:name="com.peter.wagstaff.hytechlogger.activities.SignupPresenter"
+    <activity android:name="com.peter.wagstaff.hytechlogger.activities.acountActivities.SignupActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
 
-    <activity android:name="com.peter.wagstaff.hytechlogger.activities.ResetPasswordPresenter"
+    <activity android:name="com.peter.wagstaff.hytechlogger.activities.acountActivities.ResetPasswordActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>
 
-    <activity android:name="com.peter.wagstaff.hytechlogger.activities.ProfilePresenter"
+    <activity android:name="com.peter.wagstaff.hytechlogger.activities.acountActivities.ProfileActivity"
         android:screenOrientation="portrait"
         android:label="@string/app_name">
     </activity>

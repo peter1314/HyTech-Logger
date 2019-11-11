@@ -14,9 +14,9 @@ import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
 public class QueryHolder extends LinearLayout implements SelfConfiguring {
 
     //ID of the attribute to search for
-    private String attributeID;
+    public final String ATTRIBUTE_ID;
     //Edit text to pass the query through
-    private EditText queryText;
+    private final EditText QUERY_TEXT;
 
     /**
      * Declare QueryHolder given a Context and Attribute
@@ -26,7 +26,7 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
     public QueryHolder(Context context, Attribute attribute) {
         super(context);
 
-        this.attributeID = attribute.KEY;
+        this.ATTRIBUTE_ID = attribute.KEY;
 
         //Create and stylize the TextView and EditText
         TextView textView = new TextView(getContext());
@@ -35,13 +35,13 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
         textView.setText(attribute.DISPLAY + ": ");
         textView.setTextSize(15);
 
-        queryText = new EditText(getContext());
-        queryText.setLayoutParams(getStretchParams(0,0,10, 0));
-        queryText.setTextSize(15);
-        queryText.setSingleLine();
+        QUERY_TEXT = new EditText(getContext());
+        QUERY_TEXT.setLayoutParams(getStretchParams(0,0,10, 0));
+        QUERY_TEXT.setTextSize(15);
+        QUERY_TEXT.setSingleLine();
 
         addView(textView);
-        addView(queryText);
+        addView(QUERY_TEXT);
     }
 
     /**
@@ -49,7 +49,7 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
      * @param action ListenerAction to perform action on change
      */
     public void setUpdate(ListnerAction action) {
-        queryText.addTextChangedListener(new TextWatcher() {
+        QUERY_TEXT.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -57,19 +57,13 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
-            public void afterTextChanged(Editable s) {action.doAction(null);}
+            public void afterTextChanged(Editable s) { action.doAction(null);}
         });
     }
-
-    /**
-     * Returns the ID of the Attribute to be queried
-     * @return
-     */
-    public String getAttributeID() { return attributeID; }
 
     /**
      * Returns the current query
      * @return
      */
-    public String getQuery() { return queryText.getText().toString(); }
+    public String getQuery() { return QUERY_TEXT.getText().toString(); }
 }

@@ -66,8 +66,8 @@ public class FirebaseExchange {
      * @param entry ItemEntry to set as node value
      */
     public static void addDataEntry(String timeStamp, ItemEntry entry) {
-        setData(entry.getType().BRANCH + "/" +GlobalVariables.currentEntryCode + "/LOGS/LAST", entry.toString());
-        setData(entry.getType().BRANCH + "/" + GlobalVariables.currentEntryCode + "/LOGS/" + timeStamp, entry.toString());
+        setData(entry.getType().BRANCH + "/" +GlobalVariables.currentItemEntryCode + "/LOGS/LAST", entry.toString());
+        setData(entry.getType().BRANCH + "/" + GlobalVariables.currentItemEntryCode + "/LOGS/" + timeStamp, entry.toString());
     }
 
     /**

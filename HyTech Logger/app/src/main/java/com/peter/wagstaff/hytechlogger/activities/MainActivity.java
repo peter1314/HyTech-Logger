@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.peter.wagstaff.hytechlogger.R;
+import com.peter.wagstaff.hytechlogger.activities.acountActivities.ProfileActivity;
 
-public class MainPresenter extends AppCompatActivity {
+//Presenter for the main application page
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,39 +25,36 @@ public class MainPresenter extends AppCompatActivity {
         final Button viewItemsButton = findViewById(R.id.view_items_button);
         final ImageButton profileButton = findViewById(R.id.profile_imageButton);
 
+        //Set action for the scanItemButton
         scanItemButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startScanItemActivity();
+                startActivity(new Intent(MainActivity.this, SelectTypeScanActivity.class));
             }
         });
 
+        //Set action for the viewItemsButton
         viewItemsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startViewItemsActivity();
+                startActivity(new Intent(MainActivity.this, SelectTypeViewActivity.class));
             }
         });
 
+        //Set action for the profileButton
         profileButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainPresenter.this, ProfilePresenter.class));
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
             }
         });
 
-        if (ContextCompat.checkSelfPermission(MainPresenter.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainPresenter.this, new String[]{Manifest.permission.CAMERA}, 1);
+        //Check if the user has given camera permission, ask for it if needed
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
         }
-    }
-
-    private void startScanItemActivity() {
-        startActivity(new Intent(MainPresenter.this, SelectTypeScanPresenter.class));
-    }
-
-    private void startViewItemsActivity() {
-        startActivity(new Intent(MainPresenter.this, SelectTypeViewPresenter.class));
     }
 
     @Override
     public void onBackPressed() {
+        //Back press from the main page should leave the app
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -16,11 +16,15 @@ public class QueryTest extends AttributeTest {
     public QueryTest(String key, String query) {
         super(key);
         QUERY = query.trim().toLowerCase();
+
+        System.out.println("KEY: " + key);
+        System.out.println("QUERY: " + QUERY);
     }
 
     @Override
     public boolean testDataEntry(ItemEntry itemEntry) {
-        if(QUERY.equals("")) return true;
+        System.out.println("VALUE: " + itemEntry.getData(KEY));
+        if(QUERY == null || QUERY.equals("")) return true;
         return itemEntry.getData(KEY).trim().toLowerCase().contains(QUERY);
     }
 }

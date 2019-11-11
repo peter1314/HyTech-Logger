@@ -6,7 +6,7 @@ import android.text.InputFilter;
 
 //A version of InputBox that makes the input a valid QR Code used to identify items
 //Also allows for a custom negative
-public abstract class CodeInputDialog extends InputBox {
+public abstract class CodeInputBox extends InputBox {
 
     /**
      * Declares an CodeInputBox given a Context, title, message, and error message
@@ -15,7 +15,7 @@ public abstract class CodeInputDialog extends InputBox {
      * @param message
      * @param errorMessage
      */
-    public CodeInputDialog(Context context, String title, String message, String errorMessage) {
+    public CodeInputBox(Context context, String title, String message, String errorMessage) {
 
         super(context, title, message, errorMessage);
         input.setFilters(new InputFilter[]{new InputFilter.AllCaps()});

@@ -12,10 +12,10 @@ public class GlobalVariables {
     public static final String APP_ROOT = "HYTECH_MAIN";
 
     //Stores the code of the currently ItemEntry
-    public static String currentEntryCode;
+    public static String currentItemEntryCode;
 
     //Stores the ItemType the application is currently operating with
-    public static ItemType currentType;
+    public static ItemType currentItemType;
 
     //Stores the ItemTypes the application currently has available
     //ADD AND REMOVE ITEMTYPES HERE

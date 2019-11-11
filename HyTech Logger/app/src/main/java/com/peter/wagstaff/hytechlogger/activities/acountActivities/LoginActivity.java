@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.activities;
+package com.peter.wagstaff.hytechlogger.activities.acountActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,51 +13,55 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
+import com.peter.wagstaff.hytechlogger.activities.MainActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginPresenter extends AppCompatActivity {
+//Presenter for logging in
+public class LoginActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
-    private FirebaseAuth auth;
-    private ProgressBar progressBar;
+    private EditText inputEmail, inputPassword; //Fields needed to login
+    private FirebaseAuth auth;  //Firebase authentication
+    private ProgressBar progressBar;    //I forgot the exact purpose of this
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        auth = FirebaseAuth.getInstance();
 
-        if (auth.getCurrentUser() != null && !GlobalVariables.justLoggedOut) {
-            startActivity(new Intent(LoginPresenter.this, MainPresenter.class));
-            finish();
-        }
-        GlobalVariables.justLoggedOut = false;
+        //If the user is already logged in and has not just logged out, go to the main activity
+        checkLoggedIn();
+
         setContentView(R.layout.activity_login);
 
         inputEmail = findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
         progressBar = findViewById(R.id.progressBar);
 
+        //Set action for signup button
         findViewById(R.id.btn_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginPresenter.this, SignupPresenter.class));
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
 
+        //Set action for reset button
         findViewById(R.id.btn_reset_password).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginPresenter.this, ResetPasswordPresenter.class));
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
             }
         });
 
+        //Set action for login button
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Get supplied account information
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
+                //Make sure the fields are not empty, display error if necessary
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
                     return;
@@ -67,29 +71,39 @@ public class LoginPresenter extends AppCompatActivity {
                     return;
                 }
 
-                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);    //I forgot what this does
 
+                //Try to sign in with credentials
                 auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginPresenter.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 progressBar.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
-                                    if (password.length() < 6) {
-                                        inputPassword.setError(getString(R.string.minimum_password));
-                                    } else {
-                                        Toast.makeText(LoginPresenter.this, "Login failed, check username and password", Toast.LENGTH_LONG).show();
-                                    }
+                                    //Display error if not successful
+                                    Toast.makeText(LoginActivity.this, "Login failed, check username and password", Toast.LENGTH_LONG).show();
                                 } else {
-                                    Intent intent = new Intent(LoginPresenter.this, MainPresenter.class);
-                                    startActivity(intent);
+                                    //Move to main activity if successful
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
                                 }
                             }
                         });
             }
         });
+    }
+
+    /**
+     * Check if the user is logged, skip to main activity if they are
+     */
+    private void checkLoggedIn() {
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null && !GlobalVariables.justLoggedOut) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+        GlobalVariables.justLoggedOut = false;
     }
 
     @Override
