@@ -147,7 +147,10 @@ public class ViewItemsActivity extends AppCompatActivity {
     void createMinMaxHolders() {
         minMaxCriteria.clear();
         for(Attribute attribute: getItemType().TEST_ATTRIBUTES) {
-            if(attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_SIGNED || attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_DECIMAL ) {
+            //Check for various number type inputs
+            if(attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_SIGNED
+                    || attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_DECIMAL
+                    || attribute.INPUT_TYPE == InputType.TYPE_CLASS_NUMBER) {
                 MinMaxHolder minMaxHolder = new MinMaxHolder(this, attribute);
                 minMaxHolder.setUpdate(new ListnerAction() {
                     @Override

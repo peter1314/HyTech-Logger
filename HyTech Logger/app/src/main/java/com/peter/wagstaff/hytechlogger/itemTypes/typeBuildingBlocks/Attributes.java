@@ -1,6 +1,8 @@
 package com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks;
 
 import android.text.InputType;
+import android.view.inputmethod.EditorInfo;
+
 import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
 
 //Class for storing various Attributes which are used by different ItemTypes
@@ -15,10 +17,10 @@ public class Attributes {
         LOCATION = new Attribute("location", "Location", "None"),
 
         //Other optional Attributes
-        VOLTAGE = new Attribute("voltage", "Voltage", "0", InputType.TYPE_NUMBER_FLAG_DECIMAL),
+        VOLTAGE = new Attribute("voltage", "Voltage", "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL),
         VOLTAGE_DATE = new Attribute("voltage_date", "Recorded", "00/00/0000", InputType.TYPE_CLASS_DATETIME),
-        DISCHARGE_CAP = new Attribute("discharge_cap", "Discharge Capacity","Discharge Cap", "0", InputType.TYPE_NUMBER_FLAG_DECIMAL),
-        INTERNAL_RES = new Attribute("internal_resistance", "Internal Resistance", "Internal Res", "0", InputType.TYPE_NUMBER_FLAG_DECIMAL),
+        DISCHARGE_CAP = new Attribute("discharge_cap", "Discharge Capacity","Discharge Cap", "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL),
+        INTERNAL_RES = new Attribute("internal_resistance", "Internal Resistance", "Internal Res", "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL),
         CAPACITY_DATE = new Attribute("capacity_date", "Recorded", "00/00/0000", InputType.TYPE_CLASS_DATETIME),
         CHARGE_DATE = new Attribute("charge_date", "Last Charged", "00/00/0000", InputType.TYPE_CLASS_DATETIME),
         MATERIAL = new Attribute("material", "Material", "", InputType.TYPE_CLASS_TEXT),
@@ -26,7 +28,7 @@ public class Attributes {
         OWNER = new Attribute("owner", "Owner", "", InputType.TYPE_CLASS_TEXT),
         PURPOSE = new Attribute("purpose", "Purpose", "", InputType.TYPE_CLASS_TEXT),
         NAME = new Attribute("name", "Name","", InputType.TYPE_CLASS_TEXT),
-        COUNT = new Attribute("count", "Count", "1", InputType.TYPE_NUMBER_FLAG_SIGNED),
+        COUNT = new Attribute("count", "Count", "1", EditorInfo.TYPE_CLASS_NUMBER),
         NOTE = new Attribute("note", "Note", "", InputType.TYPE_CLASS_TEXT);
 
         //Declare new Attributes here as needed

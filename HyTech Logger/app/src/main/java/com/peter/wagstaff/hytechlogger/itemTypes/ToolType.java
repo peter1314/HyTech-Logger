@@ -28,6 +28,8 @@ public class ToolType extends  ItemType{
 
     //LocationConfigurations used to create and search Locations of this ItemType, add or remove as needed
     private static final LocationConfiguration[] MY_LOCATION_CONFIGS = {
+            LocationConfigurations.ORANGE_CABINET,
+            LocationConfigurations.BLACK_CABINET,
             LocationConfigurations.OTHER};
 
     /**

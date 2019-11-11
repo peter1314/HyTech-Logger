@@ -3,11 +3,11 @@ package com.peter.wagstaff.hytechlogger.location;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import org.json.JSONException;
 
-//Represents a location within the cabinet, this is a specific cabinet which has 9 shelves
-public class CabinetLocation extends Location {
+//Represents a location within the cell cabinet, this is a specific cabinet which has 9 shelves
+public class CellCabinetLocation extends Location {
 
-    //Value of the special type tag for an CabinetLocation
-    public static final String TYPE = "cabinet";
+    //Value of the special type tag for an CellCabinetLocation
+    public static final String TYPE = "cell_cabinet";
 
     //Number of cabinets in the shelf
     public static final int SHELF_COUNT = 9;
@@ -16,20 +16,20 @@ public class CabinetLocation extends Location {
     public static final String[] OPTIONS = getStaticOptions();
 
     /**
-     * Declares a CabinetLocation
+     * Declares a CellCabinetLocation
      */
-    public CabinetLocation() {
+    public CellCabinetLocation() {
         super();
         tags.put(Location.TYPE_KEY, TYPE);
     }
 
     /**
-     * Create a new CabinetLocation from a Location as a JSON String
-     * The JSON String should represent a CabinetLocation
+     * Create a new CellCabinetLocation from a Location as a JSON String
+     * The JSON String should represent a CellCabinetLocation
      * @param locationAsJSONString A Location represented by a JSON String
      * @throws JSONException
      */
-    public CabinetLocation(String locationAsJSONString) throws JSONException {
+    public CellCabinetLocation(String locationAsJSONString) throws JSONException {
         super(locationAsJSONString);
     }
 
@@ -56,8 +56,8 @@ public class CabinetLocation extends Location {
     }
 
     /**
-     * Used to initialize the options of a CabinetLocation, based on the number of shelves
-     * @return The options of a CabinetLocation
+     * Used to initialize the options of a CellCabinetLocation, based on the number of shelves
+     * @return The options of a CellCabinetLocation
      */
     private static String[] getStaticOptions() {
         String[] optionArray  = new String[SHELF_COUNT];

@@ -1,5 +1,7 @@
 package com.peter.wagstaff.hytechlogger.location;
 
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.LocationConfigurations;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -28,6 +30,23 @@ public abstract class Location {
      */
     public Location(String locationAsJSONString) throws JSONException {
         this();
+        //Creates a JSONObject which represents the Location
+        JSONObject locationAsJSON = new JSONObject(locationAsJSONString);
+        //Add each element of the JSONObject as a tag in the String
+        Iterator<String> jsonKeys = locationAsJSON.keys();
+        while(jsonKeys.hasNext()) {
+            String key = jsonKeys.next();
+            tags.put(key, locationAsJSON.get(key));
+        }
+    }
+
+
+    /**
+     * Initializes and existing Location from a Location as a JSON String
+     * @param locationAsJSONString A Location represented by a JSON String
+     * @throws JSONException
+     */
+    public void initializeFromJSON(String locationAsJSONString) throws JSONException {
         //Creates a JSONObject which represents the Location
         JSONObject locationAsJSON = new JSONObject(locationAsJSONString);
         //Add each element of the JSONObject as a tag in the String
@@ -123,19 +142,16 @@ public abstract class Location {
             //Stores the value of the special type key of the Location being created
             String type = locationAsJSON.getString(Location.TYPE_KEY);
 
-            //Return a new Location of with the tags from the JSONObject
-            //Dynamic type set by the type value
-            if(type.equals(CabinetLocation.TYPE)) {
-                return new CabinetLocation(locationAsJSONString);
-            } else if(type.equals(AccumulatorLocation.TYPE)) {
-                return new AccumulatorLocation(locationAsJSONString);
-            } else if(type.equals(OtherLocation.TYPE)) {
-                return new OtherLocation(locationAsJSONString);
-            } else if(type.equals(RackLocation.TYPE)) {
-                return new RackLocation(locationAsJSONString);
+            //Go through all LocationConfigurations
+            for(LocationConfiguration configuration: LocationConfigurations.LOCATION_CONFIGURATIONS) {
+                if(type.equals(configuration.ASSOCIATED_LOCATION.getType())) {
+                    //Initialize its associated location with the JSONObject
+                    configuration.ASSOCIATED_LOCATION.initializeFromJSON(locationAsJSONString);
+                    return configuration.ASSOCIATED_LOCATION;
+                }
             }
-            //ADD NEW ELSE IF HERE IS A NEW LOCATION CLASS IS ADDED
             return null;
+
         } catch (JSONException e) {
             return null;
         }

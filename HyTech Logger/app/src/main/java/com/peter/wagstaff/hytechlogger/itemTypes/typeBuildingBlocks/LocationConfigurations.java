@@ -1,9 +1,11 @@
 package com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks;
 
 import com.peter.wagstaff.hytechlogger.location.AccumulatorLocation;
-import com.peter.wagstaff.hytechlogger.location.CabinetLocation;
+import com.peter.wagstaff.hytechlogger.location.BlackCabinetLocation;
+import com.peter.wagstaff.hytechlogger.location.CellCabinetLocation;
 import com.peter.wagstaff.hytechlogger.location.Location;
 import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.location.OrangeCabinetLocation;
 import com.peter.wagstaff.hytechlogger.location.OtherLocation;
 import com.peter.wagstaff.hytechlogger.location.RackLocation;
 
@@ -11,14 +13,23 @@ import com.peter.wagstaff.hytechlogger.location.RackLocation;
 public class LocationConfigurations {
 
     public static final LocationConfiguration
-            //LocationConfigurations currently used by CellType ItemEntries
-            CELL_CABINET = LocationConfiguration.buildLocationConfig("Cabinet", new CabinetLocation(), new String[]{Location.TYPE_KEY}, new Object[]{CabinetLocation.TYPE}),
+            CELL_CABINET = LocationConfiguration.buildLocationConfig("Cabinet", new CellCabinetLocation(), new String[]{Location.TYPE_KEY}, new Object[]{CellCabinetLocation.TYPE}),
             HT04 = LocationConfiguration.buildLocationConfig("HT04", new AccumulatorLocation(4), new String[]{Location.TYPE_KEY, "iteration"}, new Object[]{AccumulatorLocation.TYPE, 4}),
             HT05 = LocationConfiguration.buildLocationConfig("HT05", new AccumulatorLocation(5), new String[]{Location.TYPE_KEY, "iteration"}, new Object[]{AccumulatorLocation.TYPE, 5}),
-
-            //LocationConfigurations currently used by StockType ItemEntries
             RACK = LocationConfiguration.buildLocationConfig("Rack", new RackLocation(), new String[]{Location.TYPE_KEY}, new Object[]{RackLocation.TYPE}),
+            OTHER = LocationConfiguration.buildLocationConfig("Other", new OtherLocation(), new String[]{Location.TYPE_KEY}, new Object[]{OtherLocation.TYPE}),
+            BLACK_CABINET = LocationConfiguration.buildLocationConfig("Black Cab", new BlackCabinetLocation(), new String[]{Location.TYPE_KEY}, new Object[]{BlackCabinetLocation.TYPE}),
+            ORANGE_CABINET = LocationConfiguration.buildLocationConfig("Orange Cab", new OrangeCabinetLocation(), new String[]{Location.TYPE_KEY}, new Object[]{OrangeCabinetLocation.TYPE});
+            //Declare new location configurations here
 
-            //Currently used by both CellType, StockType, and OtherType ItemEntries
-            OTHER = LocationConfiguration.buildLocationConfig("Other", new OtherLocation(), new String[]{Location.TYPE_KEY}, new Object[]{OtherLocation.TYPE});
+    //Be sure to also have all LocationConfigurations in this list
+    public static final LocationConfiguration[] LOCATION_CONFIGURATIONS = {
+            CELL_CABINET,
+            HT04,
+            HT05,
+            RACK,
+            OTHER,
+            BLACK_CABINET,
+            ORANGE_CABINET
+    };
 }
