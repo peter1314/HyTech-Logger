@@ -19,6 +19,6 @@ public class LocationConfigurations {
             //LocationConfigurations currently used by StockType ItemEntries
             RACK = LocationConfiguration.buildLocationConfig("Rack", new RackLocation(), new String[]{Location.TYPE_KEY}, new Object[]{RackLocation.TYPE}),
 
-            //Currently used by both CellType and StockType ItemEntries
+            //Currently used by both CellType, StockType, and OtherType ItemEntries
             OTHER = LocationConfiguration.buildLocationConfig("Other", new OtherLocation(), new String[]{Location.TYPE_KEY}, new Object[]{OtherLocation.TYPE});
 }

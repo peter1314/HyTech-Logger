@@ -28,7 +28,10 @@ public class Attributes {
             OWNER = new Attribute("owner", "Owner", "", InputType.TYPE_CLASS_TEXT),
             PURPOSE = new Attribute("purpose", "Purpose", "", InputType.TYPE_CLASS_TEXT),
 
-            //Currently used by both CellType and StockType ItemEntries
+            //Currently used by the OtherType
+            NAME = new Attribute("name", "Name","", InputType.TYPE_CLASS_TEXT),
+
+            //Currently used by both CellType StockType and OtherType ItemEntries
             NOTE = new Attribute("note", "Note", "", InputType.TYPE_CLASS_TEXT);
 
             //Declare new Attributes here as needed

@@ -2,6 +2,7 @@ package com.peter.wagstaff.hytechlogger;
 
 import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
+import com.peter.wagstaff.hytechlogger.itemTypes.OtherType;
 import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
 
 //Class for storing global variables
@@ -21,7 +22,8 @@ public class GlobalVariables {
     //ADD AND REMOVE ITEMTYPES HERE
     public static final ItemType[] ACTIVE_ITEM_TYPES = {
             CellType.getInstance(),
-            StockType.getInstance()
+            StockType.getInstance(),
+            OtherType.getInstance()
     } ;
 
     //Stores if the user just logged out
