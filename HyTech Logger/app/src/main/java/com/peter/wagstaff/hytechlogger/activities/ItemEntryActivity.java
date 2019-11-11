@@ -35,7 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ItemEntryActivity extends AppCompatActivity {
 
     private boolean isNew = true;   //Stores if this is an entry on a new item
-    private ItemType ENTRY_TYPE = getType(); //The current Global ItemType and of the current ItemEntry
+    private ItemType ENTRY_TYPE = getItemType(); //The current Global ItemType and of the current ItemEntry
     private TextView headerText; //Header text displaying the current ItemType and code
     private AttributeTable<EditText> inputTable;    //Table to display and enter Attributes
     private Attribute[] RowAttributes;  //Attributes to be displayed and entered as rows on the inputTable
@@ -110,7 +110,7 @@ public class ItemEntryActivity extends AppCompatActivity {
      */
     private void populateLocationButtons() {
         locationRadioButtons.clear();
-        for(LocationConfiguration currentConfig: getType().LOCATION_CONFIGS) {
+        for(LocationConfiguration currentConfig: getItemType().LOCATION_CONFIGS) {
             LocationRadioButton currentButton = new LocationRadioButton(this, currentConfig);
             currentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,7 +132,7 @@ public class ItemEntryActivity extends AppCompatActivity {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    initializeFieldsFromEntry(FirebaseExchange.entryFromSnapshot(ENTRY_TYPE.BRANCH, snapshot));
+                    initializeFieldsFromEntry(FirebaseExchange.entryFromSnapshot(ENTRY_TYPE, snapshot));
                     //Remember if the item is not new
                     isNew = false;
                 }
@@ -173,7 +173,7 @@ public class ItemEntryActivity extends AppCompatActivity {
      * @return The finished ItemEntry or null if it failed
      */
     private ItemEntry buildEntryFromInputs() {
-        ItemEntryBuilder itemEntryBuilder = new ItemEntryBuilder(getType());
+        ItemEntryBuilder itemEntryBuilder = new ItemEntryBuilder(getItemType());
 
         //Set generic Attributes
         itemEntryBuilder.setString(Attributes.CODE.KEY, GlobalVariables.currentItemEntryCode);
@@ -201,7 +201,7 @@ public class ItemEntryActivity extends AppCompatActivity {
         itemEntryBuilder.setJSONObject(Attributes.LOCATION.KEY, entryLocation.toDict());
 
         //Return the finished ItemEntry
-        return itemEntryBuilder.getEntry();
+        return itemEntryBuilder.getItemEntry();
     }
 
     /**
@@ -226,7 +226,7 @@ public class ItemEntryActivity extends AppCompatActivity {
      * Get the current ItemType, contained in method in case of future change or overriding
      * @return Global currentItemType
      */
-    private ItemType getType() { return GlobalVariables.currentItemType; }
+    private ItemType getItemType() { return GlobalVariables.currentItemType; }
 
     /**
      * Get the next Intent when an item is selected, contained in method in case of future change or overriding

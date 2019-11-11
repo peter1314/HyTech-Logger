@@ -2,6 +2,7 @@ package com.peter.wagstaff.hytechlogger.customFragments;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import androidx.appcompat.widget.AppCompatEditText;

@@ -6,10 +6,6 @@ import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
 //Represents a type of item that can be logged in the application
 public abstract class ItemType {
 
-    //Abstract Singletons are not possible
-    //Each concrete subclass of ItemType should have a getInstance() method and be a Singleton
-    private static ItemType instance;
-
     //Used to dynamically retrieve ItemType's information
     public final String NAME;
     public final String BRANCH;

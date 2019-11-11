@@ -1,6 +1,7 @@
 package com.peter.wagstaff.hytechlogger.customFragments.holders;
 
 import android.content.Context;
+import android.text.InputType;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +38,11 @@ public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
         textView.setText("< " + attribute.DISPLAY + " <");
         textView.setTextSize(15);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        //Sets InputType of the MinMaxEditTexts
+        //For some reason this isn't working
+        MIN_TEXT.setInputType(attribute.INPUT_TYPE);
+        MAX_TEXT.setInputType(attribute.INPUT_TYPE);
 
         addView(MIN_TEXT);
         addView(textView);

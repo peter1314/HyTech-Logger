@@ -8,10 +8,6 @@ import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
 //Represents an undefined item
 public class OtherType extends  ItemType{
 
-    //Abstract Singletons are not possible
-    //Each concrete subclass of ItemType should have a getInstance() method and be a Singleton
-    private static OtherType instance;
-
     //Static information associated with the OtherType, changing them will change its behavior
     private static final String MY_NAME = "OTHER";
     private static final String MY_BRANCH = "OTHERS";
@@ -34,25 +30,9 @@ public class OtherType extends  ItemType{
             LocationConfigurations.OTHER};
 
     /**
-     * Declares OtherType, should be private as ItemTypes should be Singletons
+     * Declares OtherType
      */
-    private OtherType() {
+    public OtherType() {
         super(MY_NAME, MY_BRANCH, MY_ROW_ATTRIBUTES, MY_TEST_ATTRIBUTES, MY_LOCATION_CONFIGS);
-    }
-
-    /**
-     * Retrieves the single, static instance of OtherType
-     * @return The single instance of OtherType
-     */
-    public synchronized static OtherType getInstance() {
-        if(instance == null) {
-            instance = new OtherType();
-        }
-        return instance;
-    }
-
-    @Override
-    public String toString() {
-        return NAME;
     }
 }

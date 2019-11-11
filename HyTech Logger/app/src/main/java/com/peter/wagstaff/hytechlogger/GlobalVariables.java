@@ -4,6 +4,7 @@ import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.itemTypes.OtherType;
 import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
+import com.peter.wagstaff.hytechlogger.itemTypes.ToolType;
 
 //Class for storing global variables
 public class GlobalVariables {
@@ -21,9 +22,10 @@ public class GlobalVariables {
     //Stores the ItemTypes the application currently has available
     //ADD AND REMOVE ITEMTYPES HERE
     public static final ItemType[] ACTIVE_ITEM_TYPES = {
-            CellType.getInstance(),
-            StockType.getInstance(),
-            OtherType.getInstance()
+            new CellType(),
+            new StockType(),
+            new ToolType(),
+            new OtherType()
     } ;
 
     //Stores if the user just logged out

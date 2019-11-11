@@ -7,6 +7,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
+import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.itemTypes.OtherType;
 import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
 import androidx.annotation.NonNull;
@@ -73,18 +74,11 @@ public class FirebaseExchange {
 
     /**
      * Static method to generate a ItemEntry from a DataSnapshot
-     * @param branch Branch of the database the snapshot is from, determines dynamic type of return
+     * @param itemType ItemType of the item in the database snapshot
      * @param snapshot DataSnapshot to generate ItemEntry from
      * @return ItemEntry initialized from snapshot
      */
-    public static ItemEntry entryFromSnapshot(String branch, DataSnapshot snapshot) {
-        if(branch.equals(CellType.getInstance().BRANCH)) {
-            return new ItemEntry(CellType.getInstance(), snapshot.getValue().toString());
-        } else if(branch.equals(StockType.getInstance().BRANCH)) {
-            return new ItemEntry(StockType.getInstance(), snapshot.getValue().toString());
-        } else if(branch.equals(OtherType.getInstance().BRANCH)) {
-            return new ItemEntry(OtherType.getInstance(), snapshot.getValue().toString());
-        }
-        return null;
+    public static ItemEntry entryFromSnapshot(ItemType itemType, DataSnapshot snapshot) {
+        return new ItemEntry(itemType, snapshot.getValue().toString());
     }
 }

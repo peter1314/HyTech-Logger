@@ -23,6 +23,18 @@ public class InputVerification {
     }
 
     /**
+     * Verifies that a String contains a valid integer
+     * @param integer String of possible integer
+     * @return If the String is a valid integer
+     */
+    public static boolean verifyInteger(String integer) {
+        if(integer == null || integer.length() == 0) { return false; }
+        if(integer.length() - integer.replace(".", "").length() > 0) { return  false; }
+        if(integer.length() - integer.replaceAll("[^\\d.]", "").length() != 0) { return false; }
+        return true;
+    }
+
+    /**
      * Verifies that a String contains a valid decimal
      * @param decimal String of possible decimal
      * @return If the String is a valid decimal

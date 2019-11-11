@@ -30,6 +30,8 @@ public class ItemEntryBuilder {
         //Check the InputType of the Attribute to decide how to verify and add the value
         if(attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_DECIMAL) {
             if (!setDecimal(attribute.KEY, value)) { return false; }
+        } else if(attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_SIGNED) {
+            if (!setInteger(attribute.KEY, value)) {return false; }
         } else if(attribute.INPUT_TYPE == InputType.TYPE_CLASS_DATETIME) {
             if (!setDate(attribute.KEY, value)) { return false; }
         } else { setString(attribute.KEY, value); }
@@ -45,6 +47,20 @@ public class ItemEntryBuilder {
     public boolean setString(String key, String value) {
         itemEntry.setData(key, value);
         return true;
+    }
+
+    /**
+     * Verifies and sets the value of a Integer Attribute in the ItemEntry
+     * @param key Key of the Attribute
+     * @param value Value of the Attribute
+     * @return If the decimal String was added
+     */
+    public boolean setInteger(String key, String value) {
+        if(InputVerification.verifyInteger(value)) {
+            itemEntry.setData(key, value);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -90,7 +106,7 @@ public class ItemEntryBuilder {
      * Gets the ItemEntry that the ItemEntryBuilder has built
      * @return The ItemEntry of the ItemEntryBuilder
      */
-    public ItemEntry getEntry() {
+    public ItemEntry getItemEntry() {
         return itemEntry;
     }
 }

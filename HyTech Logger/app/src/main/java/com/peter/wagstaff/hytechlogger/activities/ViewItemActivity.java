@@ -49,10 +49,10 @@ public class ViewItemActivity extends AppCompatActivity {
         newEntryButton = findViewById(R.id.new_entry_button);
 
         //Set item code to ITEM.NAME CODE
-        itemCodeText.setText(getType().NAME + " " + GlobalVariables.currentItemEntryCode);
+        itemCodeText.setText(getItemType().NAME + " " + GlobalVariables.currentItemEntryCode);
 
         //Add all the row Attributes of the item's ItemType to rowEditTexts
-        for(Attribute attribute: getType().ROW_ATTRIBUTES) {
+        for(Attribute attribute: getItemType().ROW_ATTRIBUTES) {
             rowEditTexts.add(displayTable.addRow(attribute.DISPLAY));
         }
 
@@ -71,7 +71,7 @@ public class ViewItemActivity extends AppCompatActivity {
      * Creates a Firebase update that gets all entries under an Item and puts them in the ItemSpinner
      */
     private void setEntrySpinnerUpdate() {
-        branch = getType().BRANCH;
+        branch = getItemType().BRANCH;
 
         //Create a Firebase update to get all entries for an item
         FirebaseExchange.onUpdate( branch + "/" + GlobalVariables.currentItemEntryCode + "/LOGS", new DataUpdateAction() {
@@ -79,7 +79,7 @@ public class ViewItemActivity extends AppCompatActivity {
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     //Populate the fields with the item's last entry
-                    populateFieldsFromEntry(FirebaseExchange.entryFromSnapshot(branch, snapshot.child("LAST")));
+                    populateFieldsFromEntry(FirebaseExchange.entryFromSnapshot(getItemType(), snapshot.child("LAST")));
                     //Populate the entry fields using all of the item's entries
                     entrySpinner.populate(snapshot);
                 }
@@ -104,7 +104,7 @@ public class ViewItemActivity extends AppCompatActivity {
                     @Override
                     public void doAction(DataSnapshot snapshot) {
                         if(snapshot.exists()) {
-                            populateFieldsFromEntry(FirebaseExchange.entryFromSnapshot(branch, snapshot));
+                            populateFieldsFromEntry(FirebaseExchange.entryFromSnapshot(getItemType(), snapshot));
                         }
                     }
                 });
@@ -131,7 +131,7 @@ public class ViewItemActivity extends AppCompatActivity {
      * Get the current ItemType, contained in method in case of future change or overriding
      * @return Global currentItemType
      */
-    private ItemType getType() { return GlobalVariables.currentItemType; }
+    private ItemType getItemType() { return GlobalVariables.currentItemType; }
 
     /**
      * Get the next Intent when an item is selected, contained in method in case of future change or overriding

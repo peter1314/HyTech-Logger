@@ -58,7 +58,7 @@ public class OtherLocation extends Location {
      * @return The options of an OtherLocation
      */
     private static String[] getStaticOptions() {
-        String[] optionArray  = {"Shop Space", "Lost", "Other"};
+        String[] optionArray  = {"Shop Space", "Lost", "None", "Other"};
         return optionArray;
     }
 }

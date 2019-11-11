@@ -84,7 +84,7 @@ public class ViewItemsActivity extends AppCompatActivity {
                     for(DataSnapshot child: snapshot.getChildren()) {
                         //Add the last entry of the item to allItems
                         if(child.child("LOGS").child("LAST").exists()) {
-                            allItems.add(FirebaseExchange.entryFromSnapshot(getItemType().BRANCH, child.child("LOGS").child("LAST")));
+                            allItems.add(FirebaseExchange.entryFromSnapshot(getItemType(), child.child("LOGS").child("LAST")));
                         }
                     }
                     //Refilter items after update
