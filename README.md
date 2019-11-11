@@ -19,3 +19,5 @@ This will automatically add it to the app.
 Additionally, you can easily modify existing ItemTypes, Attributes, LocationConfigurations and Locations and the app will update.
 
 The application is currently set to use a demo branch of the database, so you can use it freely without risk of contaminating the team's data
+
+If you have any intrest in what the app used to be like, that is stored in the old branch.
