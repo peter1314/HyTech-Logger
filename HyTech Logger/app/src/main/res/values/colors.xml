@@ -6,6 +6,7 @@
     <color name="colorAccent">#b3a369</color>
     <color name="pure_white">#ffffff</color>
     <color name="soft_grey">#eeeeee</color>
+    <color name="dark_grey">#666666</color>
 
     <color name="bg_register">#2e3237</color>
     <color name="input_login">#222222</color>

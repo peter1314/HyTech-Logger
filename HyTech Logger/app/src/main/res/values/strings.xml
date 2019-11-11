@@ -1,5 +1,29 @@
 <resources>
+
     <string name="app_name">HyTech Logger</string>
+
+    <string name="scan_item">Scan Item</string>
+    <string name="view_items">View Items</string>
+
+    <string name="select_type">Select Item Type</string>
+
+    <string name="enter_code">Enter Code Manually</string>
+
+    <string name="data_code_placeholder">Data Code</string>
+    <string name="loc_button_placeholder">Location</string>
+    <string name="enter">Enter</string>
+
+    <string name="entry_sig_placeholder">Author: XX/XX/XXXX</string>
+    <string name="new_entry">New Entry</string>
+
+    <string name="cell_loc_0">Cabinet</string>
+    <string name="cell_loc_1">HT04</string>
+    <string name="cell_loc_2">HT05</string>
+    <string name="cell_loc_3">Other</string>
+    <string name="voltage_bounds">&lt;&#032;&#032;&#032;Voltage&#032;&#032;&#032;&lt;</string>
+    <string name="capacity_bounds">&lt;&#032;Discharge Cap&#032;&lt;</string>
+    <string name="ir_bounds">&lt;&#032;Int Resistance&#032;&lt;</string>
+
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
@@ -9,7 +33,6 @@
     <string name="send_password_reset_email">Send Password reset email</string>
     <string name="remove_user">Remove user</string>
     <string name="new_pass">New Password</string>
-    <string name="title_activity_profile">Firebase</string>
     <string name="title_activity_login">Sign in</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
@@ -17,7 +40,6 @@
     <string name="btn_login">LOGIN</string>
     <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
-    <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back">Back</string>
@@ -28,7 +50,5 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
-    <string name="voltage_bounds">&lt;&#032;&#032;&#032;Voltage&#032;&#032;&#032;&lt;</string>
-    <string name="capacity_bounds">&lt;&#032;Discharge Cap&#032;&lt;</string>
-    <string name="ir_bounds">&lt;&#032;Int Resistance&#032;&lt;</string>
+
 </resources>
