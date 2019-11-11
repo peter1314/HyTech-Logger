@@ -75,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 //Display if task succeeded
-                                Toast.makeText(SignupActivity.this, "Account Created: " + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Account Created: " + (task.isSuccessful() + "").toUpperCase(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
 
                                 if (!task.isSuccessful()) {
