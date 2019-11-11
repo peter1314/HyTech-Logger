@@ -57,7 +57,7 @@ public class AttributeTable<InputText extends EditText> extends TableLayout  {
         newRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
         TextView label = (TextView) inflater.inflate(R.layout.fragment_input_label, null);
-        label.setText(attribute.DISPLAY);
+        label.setText(attribute.NICK_NAME);
         newRow.addView(label);
 
         InputText inputText = (InputText) inflater.inflate(ref, null);

@@ -9,10 +9,10 @@ public class DecimalAttribute extends Attribute {
      * Declare Attribute and finalize its fields
      * @param key Key of the Attribute
      * @param name Name of the Attribute
-     * @param display Shortened name for display purposes
+     * @param nickName Shortened name for nickName purposes
      */
-    public DecimalAttribute(String key, String name, String display) {
-        super(key, name, display, "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
+    public DecimalAttribute(String key, String name, String nickName) {
+        super(key, name, nickName, "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
     }
 
     /**

@@ -32,7 +32,7 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
         TextView textView = new TextView(getContext());
         textView.setMinWidth(dpToPixels(80));
         textView.setPadding(dpToPixels(10), 0, dpToPixels(10), 0);
-        textView.setText(attribute.DISPLAY + ": ");
+        textView.setText(attribute.NICK_NAME + ": ");
         textView.setTextSize(15);
 
         QUERY_TEXT = new EditText(getContext());

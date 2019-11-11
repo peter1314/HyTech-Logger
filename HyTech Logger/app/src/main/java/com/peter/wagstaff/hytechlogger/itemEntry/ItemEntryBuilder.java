@@ -33,8 +33,7 @@ public class ItemEntryBuilder {
         //Check the InputType of the Attribute to decide how to verify and add the value
         if(attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_DECIMAL) {
             if (!setDecimal(attribute.KEY, value)) { return false; }
-        } else if(attribute.INPUT_TYPE == InputType.TYPE_NUMBER_FLAG_SIGNED
-            || attribute.INPUT_TYPE == InputType.TYPE_CLASS_NUMBER) {
+        } else if(attribute.INPUT_TYPE == InputType.TYPE_CLASS_NUMBER) {
             if (!setInteger(attribute.KEY, value)) {return false; }
         } else if(attribute.INPUT_TYPE == InputType.TYPE_CLASS_DATETIME) {
             if (!setDate(attribute.KEY, value)) { return false; }

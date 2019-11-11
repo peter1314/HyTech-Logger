@@ -34,7 +34,7 @@ public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
         //Create TextView to display the Attribute being tested
         TextView textView = new TextView(getContext());
         textView.setWidth(dpToPixels(130));
-        textView.setText("< " + attribute.DISPLAY + " <");
+        textView.setText("< " + attribute.NICK_NAME + " <");
         textView.setTextSize(15);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
 

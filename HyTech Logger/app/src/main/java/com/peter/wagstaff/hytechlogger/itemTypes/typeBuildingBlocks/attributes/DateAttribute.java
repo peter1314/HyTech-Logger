@@ -9,10 +9,10 @@ public class DateAttribute extends Attribute {
      * Declare Attribute and finalize its fields
      * @param key Key of the Attribute
      * @param name Name of the Attribute
-     * @param display Shortened name for display purposes
+     * @param nickName Shortened name for nickName purposes
      */
-    public DateAttribute(String key, String name, String display) {
-        super(key, name, display, "00/00/0000", InputType.TYPE_CLASS_DATETIME);
+    public DateAttribute(String key, String name, String nickName) {
+        super(key, name, nickName, "00/00/0000", InputType.TYPE_CLASS_DATETIME);
     }
 
     /**
