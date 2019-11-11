@@ -15,7 +15,7 @@ import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.AttributeTable;
 import com.peter.wagstaff.hytechlogger.customFragments.LocationRadioButton;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.LocationSpinner;
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntryBuilder;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;

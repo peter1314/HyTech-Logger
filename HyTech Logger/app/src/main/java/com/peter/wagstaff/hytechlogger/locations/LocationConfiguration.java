@@ -42,7 +42,7 @@ public class LocationConfiguration extends HashMap<String, Object> {
     /**
      * Creates a location config, which consists of tags and values
      * Location configs are used to test and filter locations
-     * @param name Name of the config, stored in the config map but ignored in testing
+     * @param name Name of the config
      * @param associatedLocation Location object associated with this LocationConfiguration
      * @param tags Array of tags
      * @param values Array of corresponding values, each tag must have a value
@@ -55,10 +55,23 @@ public class LocationConfiguration extends HashMap<String, Object> {
         //Tags and values are linked in a map
         LocationConfiguration validConfig = new LocationConfiguration(name, associatedLocation);
 
+        //Add special type tag
+        validConfig.put(Location.TYPE_KEY, associatedLocation.getType());
+
         //Add all other tags and values
         for(int i = 0; i < tags.length; i++) {
             validConfig.put(tags[i], values[i]);
         }
         return  validConfig;
+    }
+
+    /**
+     * Creates a location config with no tags other than the type tag
+     * @param name Name of the config
+     * @param associatedLocation Location object associated with this LocationConfiguration
+     * @return A Map of tags and values which represents a location config
+     */
+    public static LocationConfiguration buildLocationConfig(String name, Location associatedLocation) {
+        return buildLocationConfig(name, associatedLocation, new String[]{}, new Object[]{});
     }
 }

@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.itemEntry;
+package com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes;
 
 import android.text.InputType;
 
@@ -38,7 +38,7 @@ public class Attribute {
     }
 
     /**
-     * Declare Attribute and finalize its fields
+     * Declare Attribute and finalize its fields, defaults input to text
      * @param key Key of the Attribute
      * @param name Name of the Attribute
      * @param defaultValue Default value of the Attribute

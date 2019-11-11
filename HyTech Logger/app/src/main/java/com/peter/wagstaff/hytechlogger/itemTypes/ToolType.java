@@ -1,6 +1,6 @@
 package com.peter.wagstaff.hytechlogger.itemTypes;
 
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.LocationConfigurations;
 import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;

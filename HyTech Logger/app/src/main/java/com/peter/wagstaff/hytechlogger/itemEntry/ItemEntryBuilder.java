@@ -1,11 +1,12 @@
 package com.peter.wagstaff.hytechlogger.itemEntry;
 
 import android.text.InputType;
-import android.view.inputmethod.EditorInfo;
 
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
+
 import org.json.JSONObject;
 
 //Class used to build ItemEntries

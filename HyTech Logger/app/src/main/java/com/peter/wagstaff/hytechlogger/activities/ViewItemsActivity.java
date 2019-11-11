@@ -19,7 +19,7 @@ import com.peter.wagstaff.hytechlogger.itemEntry.tests.LocationTest;
 import com.peter.wagstaff.hytechlogger.itemEntry.tests.QueryTest;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
