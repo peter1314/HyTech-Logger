@@ -1,7 +1,7 @@
 package com.peter.wagstaff.hytechlogger.itemTypes;
 
 import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
-import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
 
 //Represents a type of item that can be logged in the application
 public abstract class ItemType {

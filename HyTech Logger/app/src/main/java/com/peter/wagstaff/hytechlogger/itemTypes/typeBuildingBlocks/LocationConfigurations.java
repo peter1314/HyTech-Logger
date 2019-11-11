@@ -1,13 +1,13 @@
 package com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks;
 
-import com.peter.wagstaff.hytechlogger.location.AccumulatorLocation;
-import com.peter.wagstaff.hytechlogger.location.BlackCabinetLocation;
-import com.peter.wagstaff.hytechlogger.location.CellCabinetLocation;
-import com.peter.wagstaff.hytechlogger.location.Location;
-import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
-import com.peter.wagstaff.hytechlogger.location.OrangeCabinetLocation;
-import com.peter.wagstaff.hytechlogger.location.OtherLocation;
-import com.peter.wagstaff.hytechlogger.location.RackLocation;
+import com.peter.wagstaff.hytechlogger.locations.AccumulatorLocation;
+import com.peter.wagstaff.hytechlogger.locations.BlackCabinetLocation;
+import com.peter.wagstaff.hytechlogger.locations.CellCabinetLocation;
+import com.peter.wagstaff.hytechlogger.locations.Location;
+import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.locations.OrangeCabinetLocation;
+import com.peter.wagstaff.hytechlogger.locations.OtherLocation;
+import com.peter.wagstaff.hytechlogger.locations.RackLocation;
 
 //Class for storing various LocationConfigurations which are used by different ItemTypes
 public class LocationConfigurations {

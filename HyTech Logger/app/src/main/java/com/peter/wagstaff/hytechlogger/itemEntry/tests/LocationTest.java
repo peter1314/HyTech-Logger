@@ -3,8 +3,8 @@ package com.peter.wagstaff.hytechlogger.itemEntry.tests;
 import java.util.HashSet;
 import java.util.Set;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
-import com.peter.wagstaff.hytechlogger.location.Location;
-import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.locations.Location;
+import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
 
 //AttributeTest for testing if a Location Attribute of an ItemEntry is compliant with a Set of location configurations
 public class LocationTest extends AttributeTest {

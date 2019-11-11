@@ -22,7 +22,7 @@ import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
-import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;

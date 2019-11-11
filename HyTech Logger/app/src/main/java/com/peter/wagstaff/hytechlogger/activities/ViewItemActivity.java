@@ -19,7 +19,7 @@ import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
-import com.peter.wagstaff.hytechlogger.location.Location;
+import com.peter.wagstaff.hytechlogger.locations.Location;
 import java.util.LinkedList;
 import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
