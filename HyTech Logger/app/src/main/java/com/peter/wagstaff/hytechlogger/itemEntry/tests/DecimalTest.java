@@ -5,7 +5,7 @@ import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 //AttributeTest for testing if a Double Attribute of an ItemEntry equals a value
 public class DecimalTest extends AttributeTest {
 
-    //value to test against
+    //Value to test against
     private final double VALUE;
 
     /**

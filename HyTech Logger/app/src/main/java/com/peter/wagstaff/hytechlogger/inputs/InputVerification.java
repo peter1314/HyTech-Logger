@@ -43,19 +43,19 @@ public class InputVerification {
 
         if(date == null || date.length() == 0) { return false; }
 
-        //replaces dashes with slashes and remove whitespace
+        //Replaces dashes with slashes and remove whitespace
         date = date.replaceAll("-" , "/");
         date = date.replaceAll("\\s","");
 
-        //check that there are exactly two slashes
+        //Check that there are exactly two slashes
         if(date.length() - date.replace("/", "").length() != 2) {
             return  false;
         }
 
-        //split date into pats
+        //Split date into parts
         String[] parts = date.split("/", 0);
 
-        //check each segments length, allow months and days to be 1 or 2 digits and years 2 or 4
+        //Check each segments length, allow months and days to be 1 or 2 digits and years 2 or 4
         if(parts[0].length() != 1 && parts[0].length() != 2) { return false; }
         if(parts[1].length() != 1 && parts[1].length() != 2) { return false; }
         if(parts[2].length() != 2 && parts[2].length() != 4) { return false; }

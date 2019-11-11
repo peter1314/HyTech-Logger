@@ -10,16 +10,25 @@ import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
 import com.peter.wagstaff.hytechlogger.customFragments.SelfConfiguring;
 import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
 
+//Used to hold a query label and edit text
 public class QueryHolder extends LinearLayout implements SelfConfiguring {
 
+    //ID of the attribute to search for
     private String attributeID;
+    //Edit text to pass the query through
     private EditText queryText;
 
+    /**
+     * Declare QueryHolder given a Context and Attribute
+     * @param context Context to create the QueryHolder
+     * @param attribute Attribute being queried
+     */
     public QueryHolder(Context context, Attribute attribute) {
         super(context);
 
         this.attributeID = attribute.KEY;
 
+        //Create and stylize the TextView and EditText
         TextView textView = new TextView(getContext());
         textView.setMinWidth(dpToPixels(80));
         textView.setPadding(dpToPixels(10), 0, dpToPixels(10), 0);
@@ -35,6 +44,10 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
         addView(queryText);
     }
 
+    /**
+     * Specify the action to be performed when the query is updated
+     * @param action ListenerAction to perform action on change
+     */
     public void setUpdate(ListnerAction action) {
         queryText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -48,7 +61,15 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
         });
     }
 
+    /**
+     * Returns the ID of the Attribute to be queried
+     * @return
+     */
     public String getAttributeID() { return attributeID; }
 
+    /**
+     * Returns the current query
+     * @return
+     */
     public String getQuery() { return queryText.getText().toString(); }
 }

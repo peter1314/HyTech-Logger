@@ -5,7 +5,7 @@ import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 //AttributeTest for testing if an Attribute of an ItemEntry exactly matches a String
 public class ExactValueTest extends AttributeTest {
 
-    //value to test against
+    //Value to test against
     private String value;
 
     /**

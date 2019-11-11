@@ -51,7 +51,7 @@
                     android:textSize="@dimen/text_size_med" />
             </LinearLayout>
 
-            <com.peter.wagstaff.hytechlogger.customFragments.holders.EntryTableLayout
+            <com.peter.wagstaff.hytechlogger.customFragments.holders.AttributeTable
                 android:id="@+id/table_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

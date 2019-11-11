@@ -2,10 +2,9 @@ package com.peter.wagstaff.hytechlogger.customFragments.dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
-
 import androidx.appcompat.app.AlertDialog;
 
-//Displays a popup message and can be dismissed
+//Used to display a popup box that can be dismissed
 public class PopupBox {
 
     AlertDialog dialog;
@@ -14,15 +13,25 @@ public class PopupBox {
     Boolean built;
     Context context;
 
+    /**
+     * Declares a PopupBox given a Context, title and message
+     * @param context
+     * @param title
+     * @param message
+     */
     public PopupBox(Context context, String title, String message) {
         dialogBuilder = new AlertDialog.Builder(context);
         this.title = title;
         this.message = message;
+        //Default's the negative button label to "Cancel"
         this.negativeLabel = "Cancel";
         this.context = context;
         built = false;
     }
 
+    /**
+     * Builds the PopupBox
+     */
     void build() {
         dialogBuilder.setTitle(title);
         dialogBuilder.setMessage(message);
@@ -35,6 +44,9 @@ public class PopupBox {
         built = true;
     }
 
+    /**
+     * Shows the PopupBox
+     */
     public void show() {
         if(!built) {
             build();

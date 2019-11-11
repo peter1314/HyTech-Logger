@@ -7,7 +7,7 @@ import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 //Class used to filter ItemEntries
 public class ItemEntryFilter {
 
-    //list of Attribute tests to filter ItemEntries with
+    //List of Attribute tests to filter ItemEntries with
     private List<AttributeTest> tests;
 
     /**

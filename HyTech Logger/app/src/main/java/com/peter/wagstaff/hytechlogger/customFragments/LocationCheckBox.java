@@ -7,18 +7,32 @@ import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
 import java.util.Set;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
+//A CheckBox that has a LocationConfiguration associated with it
 public class LocationCheckBox extends AppCompatCheckBox implements  SelfConfiguring {
 
+    //Associated Location Configuration
     private final LocationConfiguration CONFIG;
 
-    public LocationCheckBox(Context context, String text, LocationConfiguration config) {
+    /**
+     * Declares a LocationCheckBox given a Context and LocationConfiguration
+     * @param context
+     * @param config
+     */
+    public LocationCheckBox(Context context, LocationConfiguration config) {
         super(context);
+        this.CONFIG = config;
+        //Stylizes the LocationCheckBox
         setLayoutParams(getParams(4,0,4,0));
         setTextColor(getResources().getColor(R.color.dark_grey));
-        setText(text);
-        this.CONFIG = config;
+        setText(CONFIG.NAME);
     }
 
+    /**
+     * Specifies a set of LocationConfigurations to remove or add the LocationCheckBox's LocationConfiguration
+     * Also specify an action that is performed with the LocationCheckBox is changed
+     * @param configs Set of LocationConfigurations
+     * @param action ListenerAction to perform action on change
+     */
     public void setToggle(final Set configs, final ListnerAction action) {
         setChecked(true);
         configs.add(CONFIG);

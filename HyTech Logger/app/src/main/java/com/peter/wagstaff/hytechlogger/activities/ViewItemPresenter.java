@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.customFragments.holders.EntryTableLayout;
+import com.peter.wagstaff.hytechlogger.customFragments.holders.AttributeTable;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.EntrySpinner;
 import com.peter.wagstaff.hytechlogger.customFragments.LockedEditText;
 import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
@@ -31,7 +31,7 @@ public class ViewItemPresenter extends AppCompatActivity {
     private Attribute[] cellRowAttributes;
 
     private TextView cellCodeText, entryText;
-    private EntryTableLayout<LockedEditText> displayTable;
+    private AttributeTable<LockedEditText> displayTable;
     private List<LockedEditText> rowEditTexts = new LinkedList();
     private LockedEditText locationEditText;
     private EntrySpinner entrySpinner;

@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.customFragments.holders.EntryTableLayout;
+import com.peter.wagstaff.hytechlogger.customFragments.holders.AttributeTable;
 import com.peter.wagstaff.hytechlogger.customFragments.LocationRadioButton;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.LocationSpinner;
 import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
@@ -37,7 +37,7 @@ public class NewItemEntryPresenter extends AppCompatActivity {
     private String branch;
     private Attribute[] cellRowAttributes;
 
-    private EntryTableLayout<EditText> inputTable;
+    private AttributeTable<EditText> inputTable;
     private TextView entryCodeText;
     private List<EditText> inputEditTexts = new LinkedList();
     private RadioGroup locationButtonGroup;
@@ -64,7 +64,7 @@ public class NewItemEntryPresenter extends AppCompatActivity {
 
         cellRowAttributes = ENTRY_TYPE.ROW_ATTRIBUTES;
         for(Attribute attribute: cellRowAttributes) {
-            inputEditTexts.add(inputTable.addRow(attribute.DISPLAY, attribute.DEFAULT, attribute.INPUT_TYPE));
+            inputEditTexts.add(inputTable.addRow(attribute));
         }
 
         setLocationButtons();
@@ -157,7 +157,7 @@ public class NewItemEntryPresenter extends AppCompatActivity {
     private void updateLocationButtons(Location location) {
 
         for(LocationRadioButton currentButton: locationRadioButtons) {
-            LocationTest buttonTest = new LocationTest(Attributes.LOCATION.KEY, currentButton.ASSOCIATED_CONFIG);
+            LocationTest buttonTest = new LocationTest(Attributes.LOCATION.KEY, currentButton.CONFIG);
             if(buttonTest.testLocation(location)) {
                 currentButton.setChecked(true);
             }
@@ -169,7 +169,7 @@ public class NewItemEntryPresenter extends AppCompatActivity {
 
         for(LocationRadioButton currentButton: locationRadioButtons) {
             if(currentButton.isChecked()) {
-                itemLocation = currentButton.ASSOCIATED_CONFIG.ASSOCIATED_LOCATION;
+                itemLocation = currentButton.CONFIG.ASSOCIATED_LOCATION;
             }
         }
         if(itemLocation == null) return null;

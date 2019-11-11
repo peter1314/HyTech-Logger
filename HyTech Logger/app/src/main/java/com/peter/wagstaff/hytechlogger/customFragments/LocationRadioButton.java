@@ -5,17 +5,27 @@ import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
+//A RadioButton that has a LocationConfiguration associated with it
 public class LocationRadioButton extends AppCompatRadioButton implements SelfConfiguring {
 
-    public final LocationConfiguration ASSOCIATED_CONFIG;
+    //Associated Location Configuration
+    public final LocationConfiguration CONFIG;
 
+    /**
+     * Declares a LocationRadioButton given a Context and LocationConfiguration
+     * @param context
+     * @param associtatedConfig
+     */
     public LocationRadioButton(Context context, LocationConfiguration associtatedConfig) {
         super(context);
+        CONFIG = associtatedConfig;
         setLayoutParams(getParams(4,0,4,0));
         setTextColor(getResources().getColor(R.color.dark_grey));
-        ASSOCIATED_CONFIG = associtatedConfig;
-        setText(ASSOCIATED_CONFIG.NAME);;
+        setText(CONFIG.NAME);;
     }
 
-    public String[] getOptions() {return ASSOCIATED_CONFIG.ASSOCIATED_LOCATION.getOptions(); }
+    /**
+     * @return The options this LocationRadioButton should provide a LocationSpinner
+     */
+    public String[] getOptions() {return CONFIG.ASSOCIATED_LOCATION.getOptions(); }
 }

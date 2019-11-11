@@ -5,7 +5,7 @@ import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 //AttributeTest for testing if an Attribute of an ItemEntry contains a String query
 public class QueryTest extends AttributeTest {
 
-    //query to look for
+    //Query to look for
     private final String QUERY;
 
     /**

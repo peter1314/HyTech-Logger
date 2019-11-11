@@ -5,15 +5,13 @@ import android.os.Bundle;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
-import com.peter.wagstaff.hytechlogger.customFragments.holders.TypeTableLayout;
-import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
+import com.peter.wagstaff.hytechlogger.customFragments.holders.ButtonTable;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
-import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
 import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class SelectTypePresenter extends AppCompatActivity {
 
-    TypeTableLayout typeTable;
+    ButtonTable<ItemType> typeTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,7 @@ public abstract class SelectTypePresenter extends AppCompatActivity {
         typeTable.removeAllViews();
 
         for(ItemType itemType: GlobalVariables.ACTIVE_ITEM_TYPES) {
-            typeTable.addRow(itemType);
+            typeTable.addRow(itemType.NAME, itemType);
         }
     }
 

@@ -46,11 +46,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.peter.wagstaff.hytechlogger.customFragments.holders.TypeTableLayout
+                <com.peter.wagstaff.hytechlogger.customFragments.holders.ButtonTable
                     android:id="@+id/tableLayout"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:padding="10dip"></com.peter.wagstaff.hytechlogger.customFragments.holders.TypeTableLayout>
+                    android:padding="10dip"></com.peter.wagstaff.hytechlogger.customFragments.holders.ButtonTable>
 
             </LinearLayout>
 

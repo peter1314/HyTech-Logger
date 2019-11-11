@@ -4,18 +4,17 @@ import android.text.InputType;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
-
 import org.json.JSONObject;
 
 //Class used to build ItemEntries
 public class ItemEntryBuilder {
 
-    //private ItemEntry being built
+    //Private ItemEntry being built
     private ItemEntry itemEntry;
 
     /**
      * Declares ItemEntryBuilder with ItemType to build
-     * @param itemType Type of ItemEntry to build
+     * @param itemType ItemType of ItemEntry to build
      */
     public ItemEntryBuilder(ItemType itemType) {
         this.itemEntry = new ItemEntry(itemType);

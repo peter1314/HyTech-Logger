@@ -5,7 +5,7 @@ import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 //Class that is used to apply a specific pass/fail test a ItemEntry using one of its Attributes
 public abstract class AttributeTest {
 
-    //key of Attribute to test
+    //Key of Attribute to test
     final String KEY;
 
     /**

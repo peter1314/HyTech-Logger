@@ -112,6 +112,7 @@ public abstract class Location {
     /**
      * Creates a location from a JSONObject as a String
      * The dynamic type of the location is determined by the special type tag of the location
+     * THIS METHOD MUST BE UPDATED IF A NEW LOCATION CLASS IS ADDED
      * @param locationAsJSONString Location represented as a JSONObject as a String
      * @return A new Location
      */
@@ -133,11 +134,10 @@ public abstract class Location {
             } else if(type.equals(RackLocation.TYPE)) {
                 return new RackLocation(locationAsJSONString);
             }
-            //Add new else if here for a new Location extension
+            //ADD NEW ELSE IF HERE IS A NEW LOCATION CLASS IS ADDED
             return null;
         } catch (JSONException e) {
             return null;
         }
-
     }
 }

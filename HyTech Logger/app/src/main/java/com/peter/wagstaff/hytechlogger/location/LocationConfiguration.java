@@ -2,10 +2,13 @@ package com.peter.wagstaff.hytechlogger.location;
 
 import java.util.HashMap;
 
+//Represents a location configuration, which a Location can be complaint with
 public class LocationConfiguration extends HashMap<String, Object> {
 
     //Name of the LocationConfiguration
     public final String NAME;
+    //Location associated with this Configuration
+    //Each LocationConfiguration is associated with on type of Location but can test any Location
     public final Location ASSOCIATED_LOCATION;
 
     /**
@@ -40,6 +43,7 @@ public class LocationConfiguration extends HashMap<String, Object> {
      * Creates a location config, which consists of tags and values
      * Location configs are used to test and filter locations
      * @param name Name of the config, stored in the config map but ignored in testing
+     * @param associatedLocation Location object associated with this LocationConfiguration
      * @param tags Array of tags
      * @param values Array of corresponding values, each tag must have a value
      * @return A Map of tags and values which represents a location config

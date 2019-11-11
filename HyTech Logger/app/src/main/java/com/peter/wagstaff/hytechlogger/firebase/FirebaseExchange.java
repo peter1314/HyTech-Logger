@@ -8,18 +8,13 @@ import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
 import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
-
 import androidx.annotation.NonNull;
 
 //Class used to communicate with the Firebase database
 public class FirebaseExchange {
 
-    //Tree of the database the app operates under
-    //DO NOT CHANGE OR RISK CONTAMINATING OTHER'S DATA
-    private static final String APP_ROOT = "HYTECH_MAIN";
-
     //Database reference, but limited to the app's root
-    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child(APP_ROOT);
+    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child(GlobalVariables.APP_ROOT);
 
     /**
      * Set node in the database to a specified value

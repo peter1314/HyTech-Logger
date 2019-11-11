@@ -9,7 +9,7 @@ import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
 import com.peter.wagstaff.hytechlogger.customFragments.LocationCheckBox;
-import com.peter.wagstaff.hytechlogger.customFragments.holders.ItemTableLayout;
+import com.peter.wagstaff.hytechlogger.customFragments.holders.ButtonTable;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.MinMaxHolder;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.QueryHolder;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
@@ -23,7 +23,6 @@ import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -40,7 +39,7 @@ public class ViewItemsPresenter extends AppCompatActivity {
     List<MinMaxHolder> minMaxCriteria = new LinkedList();
     List<QueryHolder> queryCriteria = new LinkedList();
 
-    ItemTableLayout itemTable;
+    ButtonTable<ItemEntry> itemTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,17 +121,17 @@ public class ViewItemsPresenter extends AppCompatActivity {
         updateTable(filter.filterDataEntries(allItems));
     }
 
-    private void updateTable(List<ItemEntry> entries) {
+    private void updateTable(List<ItemEntry> filteredItems) {
         itemTable.removeAllViews();
-        for(ItemEntry filteredCell: entries) {
-            itemTable.addRow(filteredCell);
+        for(ItemEntry item: filteredItems) {
+            itemTable.addRow(item.getType().NAME + " " + item.getData(Attributes.CODE.KEY), item);
         }
     }
 
     void setLocationToggleBoxes() {
         locationCheckBoxes.clear();
         for(LocationConfiguration config: getType().LOCATION_CONFIGS) {
-            locationCheckBoxes.add(new LocationCheckBox(this, config.NAME, config));
+            locationCheckBoxes.add(new LocationCheckBox(this, config));
         }
     }
 

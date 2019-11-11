@@ -7,16 +7,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-//Represents an entry on a Item, these items are stores in the Firebase database under the LOGS of the Item
+//Represents an entry on an item, these entries are stores in the Firebase database under the LOGS of the Item
 public class ItemEntry {
 
+    //Type of the ItemEntry
     public final ItemType TYPE;
 
     //Stores the ItemEntry's data in a Map
     private Map<String, Object>  dataMap;
 
     /**
-     * Declare ItemEntry
+     * Declares ItemEntry and finalizes its type
+     * @param type The ItemType of the ItemEntry
      */
     public ItemEntry(ItemType type) {
         TYPE = type;
@@ -25,11 +27,11 @@ public class ItemEntry {
 
     /**
      * Create an ItemEntry from a String representing a JSONObject representing an ItemEntry
+     * @param type The ItemType of the ItemEntry
      * @param entryAsJSONString String representing a JSONObject
      */
     public ItemEntry(ItemType type, String entryAsJSONString) {
         this(type);
-
         try {
             JSONObject entryAsJSON = new JSONObject(entryAsJSONString);
 
@@ -42,33 +44,13 @@ public class ItemEntry {
         } catch(JSONException e) {}
     }
 
+    /**
+     * Gets the ItemType of the ItemEntry
+     * @return The ItemType of the ItemEntry
+     */
     public ItemType getType() {
         return TYPE;
     }
-/*
-    *//**
-     * Returns the type of the ItemEntry
-     * @return the type of the ItemEntry
-     *//*
-    public String getType() { return Type.getInstance().CODE.DISPLAY; }
-
-    *//**
-     * Gets the branch of the Firebase database ItemEntries of this type are stored in
-     * @return The branch of the ItemEntry
-     *//*
-    public String getBranch() {
-        return Type.getInstance().BRANCH;
-    }
-
-    *//**
-     * Returns the row attributes of the ItemEntry, dynamically entered and displayed
-     * @return List of Attributes to be dynamically handled
-     *//*
-    public Attribute[] getRowAttributes() {
-        return Type.getInstance().ROW_ATTRIBUTES;
-    }*/
-
-    //returns the contents of the data entry as a JSON object
 
     /**
      * ItemEntries are stored in the database as JSONObjects
@@ -76,7 +58,7 @@ public class ItemEntry {
      */
     public JSONObject toDict() {
         JSONObject entryAsJSON = new JSONObject();
-
+        //Puts the ItemEntry's data into JSONObject
         for (String line: dataMap.keySet()) {
             try {
                 entryAsJSON.put(line, dataMap.get(line));

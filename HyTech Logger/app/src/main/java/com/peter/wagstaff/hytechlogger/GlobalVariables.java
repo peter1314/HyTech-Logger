@@ -4,18 +4,27 @@ import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
 import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
 
-//class for storing global variables, use only if necessary
+//Class for storing global variables
 public class GlobalVariables {
-    //stores the code of the currently entry, useful for when passing from one activity to another
+
+    //Tree of the database the application operates with
+    //DO NOT CHANGE OR RISK CONTAMINATING OTHER'S DATA
+    public static final String APP_ROOT = "HYTECH_MAIN";
+
+    //Stores the code of the currently ItemEntry
     public static String currentEntryCode;
 
+    //Stores the ItemType the application is currently operating with
     public static ItemType currentType;
 
+    //Stores the ItemTypes the application currently has available
+    //ADD AND REMOVE ITEMTYPES HERE
     public static final ItemType[] ACTIVE_ITEM_TYPES = {
             CellType.getInstance(),
             StockType.getInstance()
     } ;
 
-    //stores if the user just logged out, used to send them to login screen after logout
+    //Stores if the user just logged out
+    //Used to send them to login screen after logout before Firebase removes authentication
     public static boolean justLoggedOut = false;
 }
