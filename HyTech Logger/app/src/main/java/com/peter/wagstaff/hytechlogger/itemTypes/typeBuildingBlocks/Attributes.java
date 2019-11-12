@@ -1,9 +1,10 @@
 package com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks;
 
-import android.text.InputType;
-import android.view.inputmethod.EditorInfo;
-
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.DateAttribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.DecimalAttribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.IntegerAttribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.TextAttribute;
 
 //Class for storing various Attributes which are used by different ItemTypes
 public class Attributes {
@@ -11,25 +12,25 @@ public class Attributes {
     public static final Attribute
         //Generic Attributes which all ItemEntries have
         // They don't need to be added to individual ItemTypes
-        CODE = new Attribute("code", "Code", "#"),
-        ENTRY_DATE = new Attribute("entry_date", "", "00/00/0000"),
-        AUTHOR = new Attribute("author", "By", "Anon"),
+        CODE = new TextAttribute("code", "Code"),
+        ENTRY_DATE = new DateAttribute("entry_date", ""),
+        AUTHOR = new TextAttribute("author", "By"),
         LOCATION = new Attribute("location", "Location", "None"),
 
         //Other optional Attributes
-        VOLTAGE = new Attribute("voltage", "Voltage", "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL),
-        VOLTAGE_DATE = new Attribute("voltage_date", "Recorded", "00/00/0000", InputType.TYPE_CLASS_DATETIME),
-        DISCHARGE_CAP = new Attribute("discharge_cap", "Discharge Capacity","Discharge Cap", "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL),
-        INTERNAL_RES = new Attribute("internal_resistance", "Internal Resistance", "Internal Res", "0", EditorInfo.TYPE_NUMBER_FLAG_DECIMAL),
-        CAPACITY_DATE = new Attribute("capacity_date", "Recorded", "00/00/0000", InputType.TYPE_CLASS_DATETIME),
-        CHARGE_DATE = new Attribute("charge_date", "Last Charged", "00/00/0000", InputType.TYPE_CLASS_DATETIME),
-        MATERIAL = new Attribute("material", "Material", "", InputType.TYPE_CLASS_TEXT),
-        SHAPE = new Attribute("shape", "Shape", "", InputType.TYPE_CLASS_TEXT),
-        OWNER = new Attribute("owner", "Owner", "", InputType.TYPE_CLASS_TEXT),
-        PURPOSE = new Attribute("purpose", "Purpose", "", InputType.TYPE_CLASS_TEXT),
-        NAME = new Attribute("name", "Name","", InputType.TYPE_CLASS_TEXT),
-        COUNT = new Attribute("count", "Count", "1", EditorInfo.TYPE_CLASS_NUMBER),
-        NOTE = new Attribute("note", "Note", "", InputType.TYPE_CLASS_TEXT);
+        VOLTAGE = new DecimalAttribute("voltage", "Voltage"),
+        VOLTAGE_DATE = new DateAttribute("voltage_date", "Recorded"),
+        DISCHARGE_CAP = new DecimalAttribute("discharge_cap", "Discharge Capacity","Discharge Cap"),
+        INTERNAL_RES = new DecimalAttribute("internal_resistance", "Internal Resistance", "Internal Res"),
+        CAPACITY_DATE = new DateAttribute("capacity_date", "Recorded"),
+        CHARGE_DATE = new DateAttribute("charge_date", "Last Charged"),
+        MATERIAL = new TextAttribute("material", "Material"),
+        SHAPE = new TextAttribute("shape", "Shape"),
+        OWNER = new TextAttribute("owner", "Owner"),
+        PURPOSE = new TextAttribute("purpose", "Purpose"),
+        NAME = new TextAttribute("name", "Name"),
+        COUNT = new IntegerAttribute("count", "Count", 1),
+        NOTE = new TextAttribute("note", "Note");
 
         //Declare new Attributes here as needed
 }

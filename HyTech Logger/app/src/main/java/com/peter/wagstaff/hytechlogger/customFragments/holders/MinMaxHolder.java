@@ -1,15 +1,13 @@
 package com.peter.wagstaff.hytechlogger.customFragments.holders;
 
 import android.content.Context;
-import android.text.InputType;
 import android.view.Gravity;
-import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
 import com.peter.wagstaff.hytechlogger.customFragments.MinMaxEditText;
 import com.peter.wagstaff.hytechlogger.customFragments.SelfConfiguring;
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 
 //Used to hold two MinMaxEditTexts and displays a the attribute name
 public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
@@ -36,7 +34,7 @@ public class MinMaxHolder extends LinearLayout implements SelfConfiguring {
         //Create TextView to display the Attribute being tested
         TextView textView = new TextView(getContext());
         textView.setWidth(dpToPixels(130));
-        textView.setText("< " + attribute.DISPLAY + " <");
+        textView.setText("< " + attribute.NICK_NAME + " <");
         textView.setTextSize(15);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
 

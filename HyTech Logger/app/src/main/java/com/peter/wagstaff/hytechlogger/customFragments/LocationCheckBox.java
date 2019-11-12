@@ -3,7 +3,7 @@ package com.peter.wagstaff.hytechlogger.customFragments;
 import android.content.Context;
 import android.view.View;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
 import java.util.Set;
 import androidx.appcompat.widget.AppCompatCheckBox;
 

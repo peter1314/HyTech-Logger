@@ -23,6 +23,22 @@ public class InputVerification {
     }
 
     /**
+     * Verifies that a String is a valid database branch
+     * It is valid if it is within 4 to 8 characters and without whitespace
+     * @param branch String of possible database branch
+     * @return If the branch is valid
+     */
+    public static boolean verifyRoot(String branch) {
+        if(branch.length() < 4 || branch.length() > 20) {
+            return  false;
+        }
+        if(branch.length() - branch.replaceAll("\\s","").length() != 0) {
+            return  false;
+        }
+        return true;
+    }
+
+    /**
      * Verifies that a String contains a valid integer
      * @param integer String of possible integer
      * @return If the String is a valid integer

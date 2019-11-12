@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.itemEntry;
+package com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes;
 
 import android.text.InputType;
 
@@ -6,7 +6,7 @@ import android.text.InputType;
 public class Attribute {
 
     //Strings that defaultValueine the behavior of the Attribute
-    public final String KEY, NAME, DISPLAY, DEFAULT;
+    public final String KEY, NAME, NICK_NAME, DEFAULT;
     //Defines the InputType of an Attribute, corresponds to the InputType Class, no just an int
     public final int INPUT_TYPE;
 
@@ -14,14 +14,14 @@ public class Attribute {
      * Declare Attribute and finalize its fields
      * @param key Key of the Attribute
      * @param name Name of the Attribute
-     * @param display Shortened name for display purposes
+     * @param nickName Shortened name for nickName purposes
      * @param defaultValue Default value of the Attribute
      * @param inputType InputType of the Attribute
      */
-    public Attribute(String key, String name, String display, String defaultValue, int inputType) {
+    public Attribute(String key, String name, String nickName, String defaultValue, int inputType) {
         KEY = key;
         NAME = name;
-        DISPLAY = display;
+        NICK_NAME = nickName;
         DEFAULT = defaultValue;
         INPUT_TYPE = inputType;
     }
@@ -38,7 +38,7 @@ public class Attribute {
     }
 
     /**
-     * Declare Attribute and finalize its fields
+     * Declare Attribute and finalize its fields, defaults input to text
      * @param key Key of the Attribute
      * @param name Name of the Attribute
      * @param defaultValue Default value of the Attribute
@@ -53,6 +53,6 @@ public class Attribute {
      */
     @Override
     public String toString() {
-        return "ATTRIBUTE: " + KEY + ", " + NAME + ", " + DISPLAY + ", " + DEFAULT + ", " + INPUT_TYPE;
+        return "ATTRIBUTE: " + KEY + ", " + NAME + ", " + NICK_NAME + ", " + DEFAULT + ", " + INPUT_TYPE;
     }
 }

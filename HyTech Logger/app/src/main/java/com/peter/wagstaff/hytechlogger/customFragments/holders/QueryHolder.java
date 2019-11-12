@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.peter.wagstaff.hytechlogger.customFragments.ListnerAction;
 import com.peter.wagstaff.hytechlogger.customFragments.SelfConfiguring;
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 
 //Used to hold a query label and edit text
 public class QueryHolder extends LinearLayout implements SelfConfiguring {
@@ -32,7 +32,7 @@ public class QueryHolder extends LinearLayout implements SelfConfiguring {
         TextView textView = new TextView(getContext());
         textView.setMinWidth(dpToPixels(80));
         textView.setPadding(dpToPixels(10), 0, dpToPixels(10), 0);
-        textView.setText(attribute.DISPLAY + ": ");
+        textView.setText(attribute.NICK_NAME + ": ");
         textView.setTextSize(15);
 
         QUERY_TEXT = new EditText(getContext());

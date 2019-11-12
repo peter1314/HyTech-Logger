@@ -1,9 +1,9 @@
 package com.peter.wagstaff.hytechlogger.itemTypes;
 
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.LocationConfigurations;
-import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
 
 //Represents a cell pouch for the accumulator
 public class CellType extends  ItemType{
@@ -23,6 +23,7 @@ public class CellType extends  ItemType{
             Attributes.NOTE};
 
     //Attributes by which this ItemType can be filtered, add or remove as needed
+    //Test attributes should also be in row attributes
     private static final Attribute[] MY_TEST_ATTRIBUTES = {
             Attributes.VOLTAGE,
             Attributes.DISCHARGE_CAP,

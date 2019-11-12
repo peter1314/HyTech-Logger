@@ -1,7 +1,9 @@
 package com.peter.wagstaff.hytechlogger.activities.acountActivities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         userId = findViewById(R.id.username_textView);
         Button changeUsernameButton = findViewById(R.id.change_username_button);
         Button changePasswordButton = findViewById(R.id.change_password_button);
+        Button changeBranchButton = findViewById(R.id.change_branch_button);
         Button deleteUserButton = findViewById(R.id.delete_user_button);
         Button signOutButton = findViewById(R.id.sign_out_button);
 
@@ -41,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Finalize dialog boxes
         final InputBox usernameInputDialog =  getUsernameInputDialog();
         final PasswordInputBox passwordInputDialog = getPasswordInputDialog();
+        final InputBox rootInputDialog = getBranchInputDialog();
 
         //Set action for changeUsernameButton
         changeUsernameButton.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +59,14 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 passwordInputDialog.show();
+            }
+        });
+
+        //Set action for changeBranchButton
+        changeBranchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootInputDialog.show();
             }
         });
 
@@ -118,6 +130,34 @@ public class ProfileActivity extends AppCompatActivity {
                 return true;
             }
         };
+    }
+
+    /**
+     * Returns a properly configured InputBox
+     * @return InputBox capable of changing the database branch
+     */
+    private InputBox getBranchInputDialog() {
+        InputBox branchInput = new InputBox(ProfileActivity.this, "Enter New Database Branch", "Current Branch: " + GlobalVariables.databaseBranch, "") {
+            @Override
+            public boolean onPositiveClicked(String userInput) {
+                if(!InputVerification.verifyRoot(userInput)) {
+                    Toast.makeText(ProfileActivity.this, "Invalid Branch", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                //Store the new root for this instance of the app
+                GlobalVariables.databaseBranch = userInput.trim();
+
+                //Store the new root for future instances of the app
+                SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("HYTECH_LOGGER_PREFS", 0).edit();
+                editor.putString("databaseBranch", GlobalVariables.databaseBranch);
+                editor.apply();
+
+                Toast.makeText(ProfileActivity.this, "Branch set to " + GlobalVariables.databaseBranch, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        };
+        branchInput.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        return branchInput;
     }
 
     /**

@@ -12,14 +12,14 @@ import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.AttributeTable;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.EntrySpinner;
 import com.peter.wagstaff.hytechlogger.customFragments.LockedEditText;
-import com.peter.wagstaff.hytechlogger.itemEntry.Attribute;
+import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
 import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
-import com.peter.wagstaff.hytechlogger.location.Location;
+import com.peter.wagstaff.hytechlogger.locations.Location;
 import java.util.LinkedList;
 import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,10 +53,10 @@ public class ViewItemActivity extends AppCompatActivity {
 
         //Add all the row Attributes of the item's ItemType to rowEditTexts
         for(Attribute attribute: getItemType().ROW_ATTRIBUTES) {
-            rowEditTexts.add(displayTable.addRow(attribute.DISPLAY));
+            rowEditTexts.add(displayTable.addRow(attribute.NICK_NAME));
         }
 
-        locationEditText = displayTable.addRow(Attributes.LOCATION.DISPLAY);    //Add location as well
+        locationEditText = displayTable.addRow(Attributes.LOCATION.NICK_NAME);    //Add location as well
 
         setEntrySpinnerUpdate();    //Set entrySpinner using Firebase update
         setEntrySpinnerAction();    //Set the behavior when a spinner entry is selected

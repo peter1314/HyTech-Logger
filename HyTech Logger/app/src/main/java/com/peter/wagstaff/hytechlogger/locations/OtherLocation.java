@@ -1,4 +1,4 @@
-package com.peter.wagstaff.hytechlogger.location;
+package com.peter.wagstaff.hytechlogger.locations;
 
 import org.json.JSONException;
 

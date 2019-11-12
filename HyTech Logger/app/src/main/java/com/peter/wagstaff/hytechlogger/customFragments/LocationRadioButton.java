@@ -2,7 +2,7 @@ package com.peter.wagstaff.hytechlogger.customFragments;
 
 import android.content.Context;
 import com.peter.wagstaff.hytechlogger.R;
-import com.peter.wagstaff.hytechlogger.location.LocationConfiguration;
+import com.peter.wagstaff.hytechlogger.locations.LocationConfiguration;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
 //A RadioButton that has a LocationConfiguration associated with it

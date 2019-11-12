@@ -2,6 +2,7 @@ package com.peter.wagstaff.hytechlogger.customFragments.dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -58,6 +59,14 @@ public abstract class InputBox extends PopupBox{
                 }
             }
         });
+    }
+
+    /**
+     * Used to set input filters
+     * @param filters Filter array to apply to input box
+     */
+    public void setFilters(InputFilter[] filters) {
+        input.setFilters(filters);
     }
 
     /**
