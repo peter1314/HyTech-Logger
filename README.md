@@ -1,6 +1,6 @@
 # HyTech-Logger - 11/11/2019
 
-This application was written in Andriod Studio for Java.
+This application was written in Andriod Studio for Java and published on the Google Play Store on 11/11/2019
 The application was created for logging Georgia Tech HyTech Racing cells intially.
 The HyTech Logger has been expanded to log anything the team needs.
 
@@ -18,6 +18,6 @@ Once you have created your new ItemType, add it to ACTIVE_ITEMTYPES in GlobalVar
 This will automatically add it to the app.
 Additionally, you can easily modify existing ItemTypes, Attributes, LocationConfigurations and Locations and the app will update.
 
-The application is currently set to use a demo branch of the database, so you can use it freely without risk of contaminating the team's data
+The application is currently set to use a default branch of the database, so you can use it freely without risk of contaminating the team's data, or you can change your database branch from the profile view, which can be reached by clicking the profile image button on the main view. If your branch to WUNDERMAN_DEMO you can see some example entries I have created.
 
-If you have any intrest in what the app used to be like, that is stored in the old branch.
+If you have any intrest in what the app used to be like, that is stored in the old branch of the repository.
