@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 public class FirebaseExchange {
 
     //Database reference, but limited to the app's root
-    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child(GlobalVariables.databaseRoot);
+    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child(GlobalVariables.databaseBranch);
 
     /**
      * Set node in the database to a specified value

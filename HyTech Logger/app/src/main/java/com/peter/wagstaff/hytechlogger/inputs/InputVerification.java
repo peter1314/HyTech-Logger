@@ -23,16 +23,16 @@ public class InputVerification {
     }
 
     /**
-     * Verifies that a String is a database root
+     * Verifies that a String is a valid database branch
      * It is valid if it is within 4 to 8 characters and without whitespace
-     * @param root String of possible database root
-     * @return If the root is valid
+     * @param branch String of possible database branch
+     * @return If the branch is valid
      */
-    public static boolean verifyRoot(String root) {
-        if(root.length() < 4 || root.length() > 20) {
+    public static boolean verifyRoot(String branch) {
+        if(branch.length() < 4 || branch.length() > 20) {
             return  false;
         }
-        if(root.length() - root.replaceAll("\\s","").length() != 0) {
+        if(branch.length() - branch.replaceAll("\\s","").length() != 0) {
             return  false;
         }
         return true;

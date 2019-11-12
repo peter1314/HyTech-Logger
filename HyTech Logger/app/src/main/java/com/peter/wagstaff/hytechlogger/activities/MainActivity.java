@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the database root to the locally stored preference
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("HYTECH_LOGGER_PREFS", 0);
-        GlobalVariables.databaseRoot = appPreferences.getString("databaseRoot", GlobalVariables.databaseRoot);
+        GlobalVariables.databaseBranch = appPreferences.getString("databaseBranch", GlobalVariables.databaseBranch);
 
         final Button scanItemButton = findViewById(R.id.scan_item_button);
         final Button viewItemsButton = findViewById(R.id.view_items_button);

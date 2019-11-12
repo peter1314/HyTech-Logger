@@ -10,8 +10,8 @@ import com.peter.wagstaff.hytechlogger.itemTypes.ToolType;
 public class GlobalVariables {
 
     //Tree of the database the application operates with
-    //Default is "DEFAULT_ROOT" but it is stored and updated using app preferences
-    public static String databaseRoot = "DEFAULT_ROOT";
+    //Default is "DEFAULT_BRANCH" but it is stored and updated using app preferences
+    public static String databaseBranch = "DEFAULT_BRANCH";
 
     //Stores the code of the currently ItemEntry
     public static String currentItemEntryCode;

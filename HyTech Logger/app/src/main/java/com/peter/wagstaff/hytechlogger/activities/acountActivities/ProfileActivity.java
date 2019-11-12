@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         userId = findViewById(R.id.username_textView);
         Button changeUsernameButton = findViewById(R.id.change_username_button);
         Button changePasswordButton = findViewById(R.id.change_password_button);
-        Button changeRootButton = findViewById(R.id.change_root_button);
+        Button changeBranchButton = findViewById(R.id.change_branch_button);
         Button deleteUserButton = findViewById(R.id.delete_user_button);
         Button signOutButton = findViewById(R.id.sign_out_button);
 
@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Finalize dialog boxes
         final InputBox usernameInputDialog =  getUsernameInputDialog();
         final PasswordInputBox passwordInputDialog = getPasswordInputDialog();
-        final InputBox rootInputDialog = getRootInputDialog();
+        final InputBox rootInputDialog = getBranchInputDialog();
 
         //Set action for changeUsernameButton
         changeUsernameButton.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        //Set action for changeRootButton
-        changeRootButton.setOnClickListener(new View.OnClickListener() {
+        //Set action for changeBranchButton
+        changeBranchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rootInputDialog.show();
@@ -134,30 +134,30 @@ public class ProfileActivity extends AppCompatActivity {
 
     /**
      * Returns a properly configured InputBox
-     * @return InputBox capable of changing the database root
+     * @return InputBox capable of changing the database branch
      */
-    private InputBox getRootInputDialog() {
-        InputBox rootInput = new InputBox(ProfileActivity.this, "Enter New Database Root", "Current Root: " + GlobalVariables.databaseRoot, "") {
+    private InputBox getBranchInputDialog() {
+        InputBox branchInput = new InputBox(ProfileActivity.this, "Enter New Database Branch", "Current Branch: " + GlobalVariables.databaseBranch, "") {
             @Override
             public boolean onPositiveClicked(String userInput) {
                 if(!InputVerification.verifyRoot(userInput)) {
-                    Toast.makeText(ProfileActivity.this, "Invalid Root", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "Invalid Branch", Toast.LENGTH_SHORT).show();
                     return false;
                 }
                 //Store the new root for this instance of the app
-                GlobalVariables.databaseRoot = userInput.trim();
+                GlobalVariables.databaseBranch = userInput.trim();
 
                 //Store the new root for future instances of the app
                 SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("HYTECH_LOGGER_PREFS", 0).edit();
-                editor.putString("databaseRoot", GlobalVariables.databaseRoot);
+                editor.putString("databaseBranch", GlobalVariables.databaseBranch);
                 editor.apply();
 
-                Toast.makeText(ProfileActivity.this, "Root set to " + GlobalVariables.databaseRoot, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Branch set to " + GlobalVariables.databaseBranch, Toast.LENGTH_SHORT).show();
                 return true;
             }
         };
-        rootInput.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
-        return rootInput;
+        branchInput.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        return branchInput;
     }
 
     /**
