@@ -1,6 +1,6 @@
 # HyTech-Logger - 11/11/2019
 
-This application was written in Andriod Studio for Java.
+This application was written in Andriod Studio for Java and published on the Google Play Store on 11/11/2019
 The application was created for logging Georgia Tech HyTech Racing cells intially.
 The HyTech Logger has been expanded to log anything the team needs.
 
