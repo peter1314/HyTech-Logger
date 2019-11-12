@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 //Class used to communicate with the Firebase database
 public class FirebaseExchange {
 
-    //Database reference, but limited to the app's root
-    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child(GlobalVariables.databaseBranch);
+    //Database reference
+    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
 
     /**
      * Set node in the database to a specified value
@@ -22,7 +22,7 @@ public class FirebaseExchange {
      * @param data Data to put in node
      */
     private static void setData(String path, String data) {
-        ROOT_REF.child(path).setValue(data);
+        ROOT_REF.child(GlobalVariables.databaseBranch).child(path).setValue(data);
     }
 
     /**
@@ -31,7 +31,7 @@ public class FirebaseExchange {
      * @param action DataUpdateAction to perform on grab
      */
     public static void onGrab(String path, final DataUpdateAction action) {
-        ROOT_REF.child(path).addListenerForSingleValueEvent(new ValueEventListener() {
+        ROOT_REF.child(GlobalVariables.databaseBranch).child(path).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 action.doAction(dataSnapshot);
@@ -48,7 +48,7 @@ public class FirebaseExchange {
      * @param action DataUpdateAction to perform on update
      */
     public static void onUpdate(String path, final DataUpdateAction action) {
-        ROOT_REF.child(path).addValueEventListener(new ValueEventListener() {
+        ROOT_REF.child(GlobalVariables.databaseBranch).child(path).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 action.doAction(dataSnapshot);
