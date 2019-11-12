@@ -5,11 +5,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.activities.acountActivities.ProfileActivity;
 
@@ -20,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Set the database root to the locally stored preference
+        SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("HYTECH_LOGGER_PREFS", 0);
+        GlobalVariables.databaseRoot = appPreferences.getString("databaseRoot", GlobalVariables.databaseRoot);
 
         final Button scanItemButton = findViewById(R.id.scan_item_button);
         final Button viewItemsButton = findViewById(R.id.view_items_button);

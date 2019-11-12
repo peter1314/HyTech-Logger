@@ -54,6 +54,18 @@
             tools:layout_editor_absoluteY="202sp" />
 
         <Button
+            android:id="@+id/change_root_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:text="Change Database Root"
+            android:textColor="@color/pure_white"
+            android:textSize="@dimen/default_button_sp"
+            tools:layout_editor_absoluteX="0sp"
+            tools:layout_editor_absoluteY="202sp" />
+
+        <Button
             android:id="@+id/delete_user_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

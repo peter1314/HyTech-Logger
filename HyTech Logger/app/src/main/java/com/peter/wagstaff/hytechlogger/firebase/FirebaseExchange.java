@@ -6,17 +6,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
-import com.peter.wagstaff.hytechlogger.itemTypes.CellType;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
-import com.peter.wagstaff.hytechlogger.itemTypes.OtherType;
-import com.peter.wagstaff.hytechlogger.itemTypes.StockType;
+
 import androidx.annotation.NonNull;
 
 //Class used to communicate with the Firebase database
 public class FirebaseExchange {
 
     //Database reference, but limited to the app's root
-    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child(GlobalVariables.APP_ROOT);
+    private static final DatabaseReference ROOT_REF = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child(GlobalVariables.databaseRoot);
 
     /**
      * Set node in the database to a specified value

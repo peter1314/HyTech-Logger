@@ -75,7 +75,8 @@ package="com.peter.wagstaff.hytechlogger">
 
     <activity android:name="com.peter.wagstaff.hytechlogger.activities.acountActivities.ProfileActivity"
         android:screenOrientation="portrait"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/SecondAppTheme">
     </activity>
 
 </application>

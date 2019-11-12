@@ -23,6 +23,22 @@ public class InputVerification {
     }
 
     /**
+     * Verifies that a String is a database root
+     * It is valid if it is within 4 to 8 characters and without whitespace
+     * @param root String of possible database root
+     * @return If the root is valid
+     */
+    public static boolean verifyRoot(String root) {
+        if(root.length() < 4 || root.length() > 20) {
+            return  false;
+        }
+        if(root.length() - root.replaceAll("\\s","").length() != 0) {
+            return  false;
+        }
+        return true;
+    }
+
+    /**
      * Verifies that a String contains a valid integer
      * @param integer String of possible integer
      * @return If the String is a valid integer
