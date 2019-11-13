@@ -6,6 +6,8 @@ import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.D
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.IntegerAttribute;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.TextAttribute;
 
+import org.w3c.dom.Text;
+
 //Class for storing various Attributes which are used by different ItemTypes
 public class Attributes {
 
@@ -29,6 +31,12 @@ public class Attributes {
         OWNER = new TextAttribute("owner", "Owner"),
         PURPOSE = new TextAttribute("purpose", "Purpose"),
         NAME = new TextAttribute("name", "Name"),
+        COMPANY = new TextAttribute("company", "Company"),
+        TYPE = new TextAttribute("tool_type", "Type"),
+        FLUTES = new IntegerAttribute("flutes", "Flutes"),
+        SIZE = new TextAttribute("size", "Size"),
+        STEEL_FEEDS = new TextAttribute("steel_feeds", "Steel Feeds", "Stl Fds"),
+        ALUMINUM_FEEDS = new TextAttribute("aluminum_feeds", "Aluminum Feeds", "Almn Fds"),
         COUNT = new IntegerAttribute("count", "Count", 1),
         NOTE = new TextAttribute("note", "Note");
 
