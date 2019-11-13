@@ -8,7 +8,7 @@ android {
         applicationId "com.peter.wagstaff.hytechlogger"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 2
+        versionCode 3
         versionName "Intial Store Release"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
