@@ -100,7 +100,7 @@ public abstract class Location {
      * Locations are stored in the database as JSONObjects
      * @return A JSONObject representing this Location
      */
-    public JSONObject toDict() {
+    public JSONObject toJSON() {
         JSONObject locationAsJSON = new JSONObject();
         //Add each tag and its value in the location to the JSONObject
         for (String line: tags.keySet()) {
@@ -152,6 +152,23 @@ public abstract class Location {
             }
             return null;
 
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public static Location LocationFromJSON(String locationAsJSONString) {
+        try {
+            JSONObject locationASJSON = new JSONObject(locationAsJSONString);
+            String type = locationASJSON.getString(TYPE_KEY);
+
+            for(LocationConfiguration configuration: LocationConfigurations.LOCATION_CONFIGURATIONS) {
+                if(type.equals(configuration.ASSOCIATED_LOCATION.getType())) {
+                    configuration.ASSOCIATED_LOCATION.initializeFromJSON(locationAsJSONString);
+                }
+                return configuration.ASSOCIATED_LOCATION;
+            }
+            return null;
         } catch (JSONException e) {
             return null;
         }

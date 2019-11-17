@@ -11,7 +11,7 @@ import com.peter.wagstaff.hytechlogger.GlobalVariables;
 import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.dialogs.CodeInputBox;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
-import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseAdapter;
 import com.peter.wagstaff.hytechlogger.inputs.InputVerification;
 import androidx.appcompat.app.AppCompatActivity;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -118,7 +118,7 @@ public class ScanItemActivity extends AppCompatActivity implements ZXingScannerV
      * @param code Code of item to open
      */
     public void openItem(final String code) {
-        FirebaseExchange.onGrab(getBranch(), new DataUpdateAction() {
+        FirebaseAdapter.onGrab(getBranch(), new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.hasChild(code)) {

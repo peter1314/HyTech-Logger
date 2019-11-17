@@ -19,7 +19,7 @@ import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.A
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntryBuilder;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
-import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseAdapter;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import com.peter.wagstaff.hytechlogger.itemEntry.tests.LocationTest;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
@@ -81,7 +81,7 @@ public class ItemEntryActivity extends AppCompatActivity {
                 //Get the current date in YYYYMMDD format
                 String timeStamp = InputFormatting.ORDER_DATE_FORMAT.format(Calendar.getInstance().getTime());
                 //Put the new entry in the Firebase database at its timestamp
-                FirebaseExchange.addDataEntry(timeStamp, newEntry);
+                FirebaseAdapter.addDataEntry(timeStamp, newEntry);
 
                 //Goes to a new Intent or back depending on if the ItemEntry was on a new item
                 if(isNew){
@@ -128,11 +128,11 @@ public class ItemEntryActivity extends AppCompatActivity {
      * Creates a Firebase listener to grab the last ItemEntry for this item and initializes fields with it
      */
     private void setEntryUpdate() {
-        FirebaseExchange.onGrab(ENTRY_TYPE.BRANCH + "/" + GlobalVariables.currentItemEntryCode + "/LOGS/LAST", new DataUpdateAction() {
+        FirebaseAdapter.onGrab(ENTRY_TYPE.BRANCH + "/" + GlobalVariables.currentItemEntryCode + "/LOGS/LAST", new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
-                    initializeFieldsFromEntry(FirebaseExchange.entryFromSnapshot(ENTRY_TYPE, snapshot));
+                    initializeFieldsFromEntry(FirebaseAdapter.entryFromSnapshot(ENTRY_TYPE, snapshot));
                     //Remember if the item is not new
                     isNew = false;
                 }
@@ -198,7 +198,7 @@ public class ItemEntryActivity extends AppCompatActivity {
         }
 
         //Set the location
-        itemEntryBuilder.setJSONObject(Attributes.LOCATION.KEY, entryLocation.toDict());
+        itemEntryBuilder.setJSONObject(Attributes.LOCATION.KEY, entryLocation.toJSON());
 
         //Return the finished ItemEntry
         return itemEntryBuilder.getItemEntry();

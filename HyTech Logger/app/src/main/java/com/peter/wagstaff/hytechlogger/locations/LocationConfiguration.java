@@ -1,6 +1,11 @@
 package com.peter.wagstaff.hytechlogger.locations;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 //Represents a location configuration, which a Location can be complaint with
 public class LocationConfiguration extends HashMap<String, Object> {
@@ -21,6 +26,61 @@ public class LocationConfiguration extends HashMap<String, Object> {
         ASSOCIATED_LOCATION = associatedLocation;
     }
 
+    public LocationConfiguration(String configAsJSONString) {
+        //These values must serve as a go between because the finals can only be set once
+        //Which is not compatible with the try catch structure
+        String name = "NA";
+        Location associatedLocation = new OtherLocation();
+
+        try {
+            JSONObject configAsJSON = new JSONObject(configAsJSONString);
+
+            Iterator<String> jsonKeys = configAsJSON.keys();
+            while(jsonKeys.hasNext()) {
+                String key = jsonKeys.next();
+                if(key.equals("config_name")) {
+                    name = configAsJSON.getString(key);
+                } else if(key.equals("associated_location")) {
+                    associatedLocation = Location.LocationFromJSON(configAsJSON.getString(key));
+                } else {
+                    put(key, configAsJSON.get(key));
+                }
+            }
+        } catch(JSONException e) {}
+
+        NAME = name;
+        ASSOCIATED_LOCATION = associatedLocation;
+    }
+
+    public JSONObject toJSON() {
+        JSONObject configAsJSON = new JSONObject();
+
+        try {
+            configAsJSON.put("config_name", NAME);
+            configAsJSON.put("associated_location", ASSOCIATED_LOCATION.toJSON());
+
+            for (String line: keySet()) {
+                configAsJSON.put(line, get(line));
+            }
+        } catch(JSONException e) {}
+
+        return configAsJSON;
+    }
+
+    public static JSONObject collectionToJSON(LocationConfiguration[] configs) {
+        JSONObject attributesAsJSON = new JSONObject();
+        try {
+            int counter = 0;
+            for(LocationConfiguration config: configs) {
+                attributesAsJSON.put("location_config" + counter++, config.toJSON());
+            }
+        } catch (JSONException e) {}
+        return  attributesAsJSON;
+    }
+
+    public static JSONObject collectionToJSON(Collection<LocationConfiguration> configs) {
+        return collectionToJSON((LocationConfiguration[]) configs.toArray());
+    }
     /**
      * Checks if a Location is complaint with this LocationConfiguration
      * @param location Location to check

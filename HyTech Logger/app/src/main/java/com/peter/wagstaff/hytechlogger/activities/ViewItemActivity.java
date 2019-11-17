@@ -12,10 +12,10 @@ import com.peter.wagstaff.hytechlogger.R;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.AttributeTable;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.EntrySpinner;
 import com.peter.wagstaff.hytechlogger.customFragments.LockedEditText;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseAdapter;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
-import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.inputs.InputFormatting;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
@@ -74,12 +74,12 @@ public class ViewItemActivity extends AppCompatActivity {
         branch = getItemType().BRANCH;
 
         //Create a Firebase update to get all entries for an item
-        FirebaseExchange.onUpdate( branch + "/" + GlobalVariables.currentItemEntryCode + "/LOGS", new DataUpdateAction() {
+        FirebaseAdapter.onUpdate( branch + "/" + GlobalVariables.currentItemEntryCode + "/LOGS", new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     //Populate the fields with the item's last entry
-                    populateFieldsFromEntry(FirebaseExchange.entryFromSnapshot(getItemType(), snapshot.child("LAST")));
+                    populateFieldsFromEntry(FirebaseAdapter.entryFromSnapshot(getItemType(), snapshot.child("LAST")));
                     //Populate the entry fields using all of the item's entries
                     entrySpinner.populate(snapshot);
                 }
@@ -100,11 +100,11 @@ public class ViewItemActivity extends AppCompatActivity {
                 String orderedDate = InputFormatting.orderedDate(date);
 
                 //Grabs associated ItemEntry from the database and populates the fields using it
-                FirebaseExchange.onGrab(branch + "/" + GlobalVariables.currentItemEntryCode + "/LOGS/" + orderedDate, new DataUpdateAction() {
+                FirebaseAdapter.onGrab(branch + "/" + GlobalVariables.currentItemEntryCode + "/LOGS/" + orderedDate, new DataUpdateAction() {
                     @Override
                     public void doAction(DataSnapshot snapshot) {
                         if(snapshot.exists()) {
-                            populateFieldsFromEntry(FirebaseExchange.entryFromSnapshot(getItemType(), snapshot));
+                            populateFieldsFromEntry(FirebaseAdapter.entryFromSnapshot(getItemType(), snapshot));
                         }
                     }
                 });

@@ -12,13 +12,13 @@ import com.peter.wagstaff.hytechlogger.customFragments.LocationCheckBox;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.ButtonTable;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.MinMaxHolder;
 import com.peter.wagstaff.hytechlogger.customFragments.holders.QueryHolder;
+import com.peter.wagstaff.hytechlogger.firebase.FirebaseAdapter;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 import com.peter.wagstaff.hytechlogger.itemEntry.tests.ItemEntryFilter;
 import com.peter.wagstaff.hytechlogger.itemEntry.tests.DecimalRangeTest;
 import com.peter.wagstaff.hytechlogger.itemEntry.tests.LocationTest;
 import com.peter.wagstaff.hytechlogger.itemEntry.tests.QueryTest;
 import com.peter.wagstaff.hytechlogger.firebase.DataUpdateAction;
-import com.peter.wagstaff.hytechlogger.firebase.FirebaseExchange;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes.Attribute;
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.Attributes;
 import com.peter.wagstaff.hytechlogger.itemTypes.ItemType;
@@ -74,7 +74,7 @@ public class ViewItemsActivity extends AppCompatActivity {
      * Creates a Firebase update that gets all items under a branch
      */
     private void setItemUpdate() {
-        FirebaseExchange.onUpdate(getItemType().BRANCH, new DataUpdateAction() {
+        FirebaseAdapter.onUpdate(getItemType().BRANCH, new DataUpdateAction() {
             @Override
             public void doAction(DataSnapshot snapshot) {
                 if(snapshot.exists()) {
@@ -84,7 +84,7 @@ public class ViewItemsActivity extends AppCompatActivity {
                     for(DataSnapshot child: snapshot.getChildren()) {
                         //Add the last entry of the item to allItems
                         if(child.child("LOGS").child("LAST").exists()) {
-                            allItems.add(FirebaseExchange.entryFromSnapshot(getItemType(), child.child("LOGS").child("LAST")));
+                            allItems.add(FirebaseAdapter.entryFromSnapshot(getItemType(), child.child("LOGS").child("LAST")));
                         }
                     }
                     //Refilter items after update

@@ -15,6 +15,7 @@ public class StockType extends  ItemType{
     //Optional Attributes of the StockType, add or remove as needed
     private static final Attribute[] MY_ROW_ATTRIBUTES = {
             Attributes.MATERIAL,
+            Attributes.ALLOY,
             Attributes.SHAPE,
             Attributes.OWNER,
             Attributes.PURPOSE,
@@ -24,6 +25,7 @@ public class StockType extends  ItemType{
     //Test attributes should also be in row attributes
     private static final Attribute[] MY_TEST_ATTRIBUTES = {
             Attributes.MATERIAL,
+            Attributes.ALLOY,
             Attributes.SHAPE,
             Attributes.OWNER};
 

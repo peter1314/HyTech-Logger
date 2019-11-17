@@ -38,7 +38,8 @@ public class Attributes {
         STEEL_FEEDS = new TextAttribute("steel_feeds", "Steel Feeds", "Stl Fds"),
         ALUMINUM_FEEDS = new TextAttribute("aluminum_feeds", "Aluminum Feeds", "Almn Fds"),
         COUNT = new IntegerAttribute("count", "Count", 1),
-        NOTE = new TextAttribute("note", "Note");
+        NOTE = new TextAttribute("note", "Note"),
+        ALLOY = new TextAttribute("alloy", "Alloy");
 
         //Declare new Attributes here as needed
 }

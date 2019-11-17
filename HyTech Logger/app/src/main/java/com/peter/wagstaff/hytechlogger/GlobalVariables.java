@@ -21,7 +21,7 @@ public class GlobalVariables {
 
     //Stores the ItemTypes the application currently has available
     //ADD AND REMOVE ITEMTYPES HERE
-    public static final ItemType[] ACTIVE_ITEM_TYPES = {
+    public static ItemType[] ACTIVE_ITEM_TYPES = {
             new CellType(),
             new StockType(),
             new ToolType(),

@@ -1,6 +1,10 @@
 package com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.attributes;
 
 import android.text.InputType;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collection;
 
 //Represents an attribute of an Item to be logged
 public class Attribute {
@@ -45,6 +49,65 @@ public class Attribute {
      */
     public Attribute(String key, String name, String defaultValue) {
         this(key, name, defaultValue, InputType.TYPE_CLASS_TEXT);
+    }
+
+    /**
+     * Create an Attribute from a String representing a JSONObject representing an Attribute
+     * @param attributeAsJSONString String representing a JSONObject
+     */
+    public Attribute(String attributeAsJSONString) {
+        //These values must serve as a go between because the finals can only be set once
+        //Which is not compatible with the try catch structure
+        String key, name, nickName, defualtValue;
+        key = name = nickName = defualtValue = "NA";
+        int inputType = InputType.TYPE_CLASS_TEXT;
+
+        try {
+            JSONObject attributeAsJSON = new JSONObject(attributeAsJSONString);
+            key = attributeAsJSON.getString("key");
+            name = attributeAsJSON.getString("name");
+            nickName = attributeAsJSON.getString("nickname");
+            defualtValue = attributeAsJSON.getString("default");
+            inputType = attributeAsJSON.getInt("input_type");
+        } catch(JSONException e) {}
+
+        KEY = key;
+        NAME = name;
+        NICK_NAME = nickName;
+        DEFAULT = defualtValue;
+        INPUT_TYPE = inputType;
+    }
+
+    /**
+     * Creates a JSONObject with the Attribute's data
+     * @return The Attribute as a JSONObject
+     */
+    public JSONObject toJSON() {
+        JSONObject attributeAsJSON = new JSONObject();
+        //Puts the Attribute's data into JSONObject
+        try {
+            attributeAsJSON.put("key", KEY);
+            attributeAsJSON.put("name", NAME);
+            attributeAsJSON.put("nickname", NICK_NAME);
+            attributeAsJSON.put("default", DEFAULT);
+            attributeAsJSON.put("input_type", INPUT_TYPE);
+        } catch (JSONException e) {}
+        return attributeAsJSON;
+    }
+
+    public static JSONObject collectionToJSON(Attribute[] attributes) {
+        JSONObject attributesAsJSON = new JSONObject();
+        try {
+            int counter = 0;
+            for(Attribute attribute: attributes) {
+                attributesAsJSON.put("row_attribute" + counter++, attribute.toJSON());
+            }
+        } catch (JSONException e) {}
+        return  attributesAsJSON;
+    }
+
+    public static JSONObject collectionToJSON(Collection<Attribute> attributes) {
+        return collectionToJSON((Attribute[]) attributes.toArray());
     }
 
     /**

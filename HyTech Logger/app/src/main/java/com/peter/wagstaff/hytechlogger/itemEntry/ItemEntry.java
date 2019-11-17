@@ -56,7 +56,7 @@ public class ItemEntry {
      * ItemEntries are stored in the database as JSONObjects
      * @return A JSONObject representing this ItemEntry
      */
-    public JSONObject toDict() {
+    public JSONObject toJSON() {
         JSONObject entryAsJSON = new JSONObject();
         //Puts the ItemEntry's data into JSONObject
         for (String line: dataMap.keySet()) {
@@ -73,7 +73,7 @@ public class ItemEntry {
      */
     @Override
     public String toString() {
-        return toDict().toString();
+        return toJSON().toString();
     }
 
     /**

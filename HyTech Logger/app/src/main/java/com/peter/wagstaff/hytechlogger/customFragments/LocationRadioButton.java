@@ -21,7 +21,7 @@ public class LocationRadioButton extends AppCompatRadioButton implements SelfCon
         CONFIG = associtatedConfig;
         setLayoutParams(getParams(4,0,4,0));
         setTextColor(getResources().getColor(R.color.dark_grey));
-        setText(CONFIG.NAME);;
+        setText(CONFIG.NAME);
     }
 
     /**
