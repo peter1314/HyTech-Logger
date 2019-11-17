@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences appPreferences = getApplicationContext().getSharedPreferences("HYTECH_LOGGER_PREFS", 0);
         GlobalVariables.databaseBranch = appPreferences.getString("databaseBranch", GlobalVariables.databaseBranch);
 
-        //FirebaseAdapter.pushItemTypes();
-
         final Button scanItemButton = findViewById(R.id.scan_item_button);
         final Button viewItemsButton = findViewById(R.id.view_items_button);
         final ImageButton profileButton = findViewById(R.id.profile_imageButton);

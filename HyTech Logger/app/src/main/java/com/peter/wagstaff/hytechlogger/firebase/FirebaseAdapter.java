@@ -79,31 +79,4 @@ public class FirebaseAdapter {
     public static ItemEntry entryFromSnapshot(ItemType itemType, DataSnapshot snapshot) {
         return new ItemEntry(itemType, snapshot.getValue().toString());
     }
-
-    public static void pushItemTypes() {
-        int count = 0;
-        for(ItemType itemType: GlobalVariables.ACTIVE_ITEM_TYPES) {
-            //addItemType("ITEM" + count++, itemType);
-        }
-        onGrab("ITEMTYPES", new DataUpdateAction() {
-            @Override
-            public void doAction(DataSnapshot snapshot) {
-                int count = 0;
-                for(DataSnapshot typeSnapshot: snapshot.getChildren()) {
-                    GlobalVariables.ACTIVE_ITEM_TYPES[count++] = getItemTypeFromSnapshot(snapshot);
-                }
-            }
-        });
-
-
-
-    }
-
-    public static void addItemType(String name, ItemType itemType) {
-        setData("ITEMTYPES/" + name, itemType.toJSON().toString());
-    }
-
-    public static  ItemType getItemTypeFromSnapshot(DataSnapshot snapshot) {
-        return new ItemType(snapshot.getValue().toString());
-    }
 }
