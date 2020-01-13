@@ -19,7 +19,9 @@ public abstract class AttributeTest {
     /**
      * Test an ItemEntry
      * @param itemEntry ItemEntry to test
-     * @return If itemEntry passed the test
+     * @return A number that represents the test outcome
+     * Greater than 0 means pass, less means fail, can indicate how much it passed or failed by
+     * Used as ordering number for entries
      */
-    public abstract boolean testDataEntry(ItemEntry itemEntry);
+    public abstract double testDataEntry(ItemEntry itemEntry);
 }

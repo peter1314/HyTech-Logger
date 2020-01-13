@@ -1,6 +1,8 @@
 package com.peter.wagstaff.hytechlogger.itemEntry.tests;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import com.peter.wagstaff.hytechlogger.itemEntry.ItemEntry;
 
@@ -45,13 +47,26 @@ public class ItemEntryFilter {
             boolean passed = true;
 
             for (AttributeTest currentTest: tests) {
-                if(!currentTest.testDataEntry(currentEntry)) {
+                //Sets the ordering number based on how much it passed the test by, only relevant for some tests
+                currentEntry.setOrderingNumber(currentTest.testDataEntry(currentEntry));
+                if(currentEntry.getOrderingNumber() < 0) {
                     passed = false;
                 }
             }
             //Add ItemEntry to filteredEntries if it passed all tests
             if(passed) { filteredEntries.add(currentEntry); }
         }
+
+        //Sorts entries based on their ordering number
+        Collections.sort(filteredEntries, new Comparator<ItemEntry>() {
+            @Override
+            public int compare(ItemEntry o1, ItemEntry o2) {
+                double diff = o1.getOrderingNumber() - o2.getOrderingNumber();
+                if(diff > 0) { return (int) Math.ceil(diff);
+                } else { return (int) Math.floor(diff);}
+            }
+        });
+
         return filteredEntries;
     }
 }

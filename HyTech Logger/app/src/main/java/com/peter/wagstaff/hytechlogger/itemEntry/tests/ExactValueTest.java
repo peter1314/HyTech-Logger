@@ -19,8 +19,9 @@ public class ExactValueTest extends AttributeTest {
     }
 
     @Override
-    public boolean testDataEntry(ItemEntry itemEntry) {
+    public double testDataEntry(ItemEntry itemEntry) {
         String entryValue = itemEntry.getData(KEY).trim().toLowerCase();
-        return value.equals(entryValue);
+        if(value.equals(entryValue)) return 1;
+        return -1;
     }
 }

@@ -23,6 +23,7 @@ public class Attributes {
         VOLTAGE = new DecimalAttribute("voltage", "Voltage"),
         VOLTAGE_DATE = new DateAttribute("voltage_date", "Recorded"),
         DISCHARGE_CAP = new DecimalAttribute("discharge_cap", "Discharge Capacity","Discharge Cap"),
+        STARTING_VOLTAGE = new DecimalAttribute("starting_voltage", "Starting Voltage","Starting Volts"),
         INTERNAL_RES = new DecimalAttribute("internal_resistance", "Internal Resistance", "Internal Res"),
         CAPACITY_DATE = new DateAttribute("capacity_date", "Recorded"),
         CHARGE_DATE = new DateAttribute("charge_date", "Last Charged"),

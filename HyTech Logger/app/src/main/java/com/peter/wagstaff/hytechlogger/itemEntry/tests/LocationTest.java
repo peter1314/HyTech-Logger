@@ -46,8 +46,9 @@ public class LocationTest extends AttributeTest {
     }
 
     @Override
-    public boolean testDataEntry(ItemEntry itemEntry) {
-        return testLocation(Location.buildLocation(itemEntry.getData(KEY)));
+    public double testDataEntry(ItemEntry itemEntry) {
+        if(testLocation(Location.buildLocation(itemEntry.getData(KEY)))) return 1;
+        return -1;
 
     }
 }

@@ -2,6 +2,7 @@ package com.peter.wagstaff.hytechlogger.customFragments.holders;
 
 import android.content.Context;
 import android.text.InputType;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -61,8 +62,9 @@ public class AttributeTable<InputText extends EditText> extends TableLayout  {
         newRow.addView(label);
 
         InputText inputText = (InputText) inflater.inflate(ref, null);
-        inputText.setInputType(attribute.INPUT_TYPE);
+        if(inputText.getInputType() != InputType.TYPE_NULL) inputText.setInputType(attribute.INPUT_TYPE);
         inputText.setText(attribute.DEFAULT);
+        inputText.setMovementMethod(LinkMovementMethod.getInstance());
         newRow.addView(inputText);
 
         addView(newRow);

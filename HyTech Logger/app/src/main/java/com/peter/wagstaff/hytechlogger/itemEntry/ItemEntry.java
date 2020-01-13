@@ -13,6 +13,9 @@ public class ItemEntry {
     //Type of the ItemEntry
     public final ItemType TYPE;
 
+    //Number used to order entries in a search
+    private double orderingNumber = 0;
+
     //Stores the ItemEntry's data in a Map
     private Map<String, Object>  dataMap;
 
@@ -133,5 +136,20 @@ public class ItemEntry {
      */
     public void clear() {
         dataMap.clear();
+    }
+
+    /**
+     * Sets the ordering number
+     * @param newOrderingNumber
+     */
+    public void setOrderingNumber(Double newOrderingNumber) {
+        orderingNumber = newOrderingNumber;
+    }
+
+    /**
+     * @return The ordering number
+     */
+    public double getOrderingNumber() {
+        return  orderingNumber;
     }
 }

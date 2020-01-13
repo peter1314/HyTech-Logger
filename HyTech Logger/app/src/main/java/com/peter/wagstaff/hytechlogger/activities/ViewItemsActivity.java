@@ -104,9 +104,11 @@ public class ViewItemsActivity extends AppCompatActivity {
 
         //Add the default LocationTest
         filter.addTest(new LocationTest(Attributes.LOCATION.KEY, validLocationConfigs));
-        //Add all DecimalRangeTests
+        //Add all DecimalRangeTests that have non zero values
         for(MinMaxHolder minMaxHolder: minMaxCriteria) {
-            filter.addTest(new DecimalRangeTest(minMaxHolder.ATTRIBUTE_ID, minMaxHolder.getMin(), minMaxHolder.getMax()));
+            if(minMaxHolder.getMin() != 0 || minMaxHolder.getMax() != 0) {
+                filter.addTest(new DecimalRangeTest(minMaxHolder.ATTRIBUTE_ID, minMaxHolder.getMin(), minMaxHolder.getMax()));
+            }
         }
         //Add all QueryTests
         for(QueryHolder queryHolder : queryCriteria) {

@@ -2,7 +2,11 @@ package com.peter.wagstaff.hytechlogger.customFragments;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.InputType;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.view.View;
+
 import androidx.appcompat.widget.AppCompatEditText;
 
 //An EditText that cannot be Edited
@@ -39,10 +43,12 @@ public class LockedEditText extends AppCompatEditText {
     }
 
     /**
-     * Initializes the LockedEditText as uneditable
+     * Initializes the LockedEditText as uneditable, but selectable
      */
     private void initialize() {
-        setEnabled(false);
+        setInputType(InputType.TYPE_NULL);
+        setTextIsSelectable(true);
+        setKeyListener(null);
         setTextColor(Color.BLACK);
     }
 }

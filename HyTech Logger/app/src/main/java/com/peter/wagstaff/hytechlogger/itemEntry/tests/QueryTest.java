@@ -22,9 +22,10 @@ public class QueryTest extends AttributeTest {
     }
 
     @Override
-    public boolean testDataEntry(ItemEntry itemEntry) {
+    public double testDataEntry(ItemEntry itemEntry) {
         System.out.println("VALUE: " + itemEntry.getData(KEY));
-        if(QUERY == null || QUERY.equals("")) return true;
-        return itemEntry.getData(KEY).trim().toLowerCase().contains(QUERY);
+        if(QUERY == null || QUERY.equals("")) return 1;
+        if(itemEntry.getData(KEY).trim().toLowerCase().contains(QUERY)) return 1;
+        return -1;
     }
 }

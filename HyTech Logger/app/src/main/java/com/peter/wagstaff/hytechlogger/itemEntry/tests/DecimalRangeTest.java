@@ -21,14 +21,16 @@ public class DecimalRangeTest extends AttributeTest {
     }
 
     @Override
-    public boolean testDataEntry(ItemEntry itemEntry) {
+    public double testDataEntry(ItemEntry itemEntry) {
         Double value = Double.parseDouble(itemEntry.getData(KEY));
 
         if(MIN != 0 && value <= MIN) {
-            return false;
+            return -1;
         } else if(MAX != 0 && value >= MAX) {
-            return false;
+            return -1;
         }
-        return true;
+        //Instead of just returning 1, returns value - MIN, which will always by greater than 0
+        //Allows outcome to be sorted by the value in question
+        return value - MIN;
     }
 }

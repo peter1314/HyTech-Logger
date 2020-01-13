@@ -19,8 +19,9 @@ public class DecimalTest extends AttributeTest {
     }
 
     @Override
-    public boolean testDataEntry(ItemEntry itemEntry) {
+    public double testDataEntry(ItemEntry itemEntry) {
         Double value = Double.parseDouble(itemEntry.getData(KEY));
-        return value == VALUE;
+        if(value == VALUE) return 1;
+        return -1;
     }
 }

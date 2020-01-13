@@ -17,6 +17,7 @@ public class CellType extends  ItemType{
             Attributes.VOLTAGE,
             Attributes.VOLTAGE_DATE,
             Attributes.DISCHARGE_CAP,
+            Attributes.STARTING_VOLTAGE,
             Attributes.INTERNAL_RES,
             Attributes.CAPACITY_DATE,
             Attributes.CHARGE_DATE,

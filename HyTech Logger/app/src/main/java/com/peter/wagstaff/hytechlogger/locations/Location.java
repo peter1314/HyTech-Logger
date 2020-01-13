@@ -1,5 +1,7 @@
 package com.peter.wagstaff.hytechlogger.locations;
 
+import android.os.Build;
+
 import com.peter.wagstaff.hytechlogger.itemTypes.typeBuildingBlocks.LocationConfigurations;
 
 import org.json.JSONException;
@@ -67,7 +69,13 @@ public abstract class Location {
      * @param tag Tag to seach for
      * @return The value of the tag, null if the Location does not have such a tag
      */
-    public Object getTagValue(String tag) { return tags.getOrDefault(tag, null); }
+    public Object getTagValue(String tag) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return tags.getOrDefault(tag, null);
+        } else {
+            return tags.get(tag);
+        }
+    }
 
     /**
      * Gets the value of the special type tag
